@@ -7,8 +7,6 @@ Makefile.in
 /autom4te.cache
 /aclocal.m4
 /compile
-/depcomp
-/missing
 /stamp-h1
 /config.log
 /Makefile
@@ -50,3 +48,4 @@ Makefile.in
 *.app
 /.libs/libMoBaCommon.so.0.0.0
 /.libs/libMoBaCommon.so.0
+!/Makefile.in
