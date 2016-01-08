@@ -49,3 +49,6 @@ Makefile.in
 /.libs/libMoBaCommon.so.0.0.0
 /.libs/libMoBaCommon.so.0
 !/Makefile.in
+/libtool
+/config.h
+/config.status
