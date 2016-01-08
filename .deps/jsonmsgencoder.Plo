@@ -1,3 +1,0 @@
-jsonmsgencoder.lo: src/jsonmsgencoder.cpp src/jsonmsgencoder.h
-
-src/jsonmsgencoder.h:
