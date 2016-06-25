@@ -192,6 +192,7 @@ typedef boost::shared_ptr<JsonArray>        JsonArrayPtr;
 typedef boost::shared_ptr<JsonObject>       JsonObjectPtr;
 typedef boost::shared_ptr<JsonString>       JsonStringPtr;
 typedef boost::shared_ptr<JsonBool>         JsonBoolPtr;
+typedef boost::shared_ptr<JsonNULL>         JsonNULLPtr;
 typedef boost::shared_ptr<JsonThreeState>   JsonThreeStatePtr;
 
 inline JsonBoolPtr toJsonBoolPtr(bool v) {
@@ -204,6 +205,10 @@ inline JsonStringPtr toJsonStringPtr(const std::string &v) {
 
 inline JsonThreeStatePtr toJsonThreeStatePtr(JsonThreeState::ThreeState v) {
     return JsonThreeStatePtr(new JsonThreeState(v));
+}
+
+inline JsonNULLPtr toJsonNULLPtr() {
+    return JsonNULLPtr(new JsonNULL());
 }
 
 template <typename T>
