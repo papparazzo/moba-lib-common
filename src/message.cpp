@@ -41,11 +41,13 @@ namespace {
         {Message::MT_CLIENT_CLOSE,            "CLIENT_CLOSE"           },
         {Message::MT_CLIENT_SHUTDOWN,         "CLIENT_SHUTDOWN"        },
         {Message::MT_CLIENT_RESET,            "CLIENT_RESET"           },
+        {Message::MT_CLIENT_SELF_TESTING,     "CLIENT_SELF_TESTING"    },
 
         {Message::MT_MAX_CLIENT_COUNT,        "MAX_CLIENT_COUNT"       },
         {Message::MT_NEW_CLIENT_STARTED,      "NEW_CLIENT_STARTED"     },
         {Message::MT_CLIENT_CLOSED,           "CLIENT_CLOSED"          },
         {Message::MT_RESET_CLIENT,            "RESET_CLIENT"           },
+        {Message::MT_SELF_TESTING_CLIENT,     "SELF_TESTING_CLIENT"    },
 
         {Message::MT_SERVER_INFO_REQ,         "SERVER_INFO_REQ"        },
         {Message::MT_SERVER_INFO_RES,         "SERVER_INFO_RES"        },

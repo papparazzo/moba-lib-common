@@ -43,6 +43,7 @@ class Message {
             MT_CLIENT_CLOSE,
             MT_CLIENT_SHUTDOWN,
             MT_CLIENT_RESET,
+            MT_CLIENT_SELF_TESTING,
 
         // ---- SERV ----
             MT_MAX_CLIENT_COUNT,
@@ -54,6 +55,7 @@ class Message {
             MT_SERVER_INFO_RES,
             MT_CON_CLIENTS_REQ,
             MT_CON_CLIENTS_RES,
+            MT_SELF_TESTING_CLIENT,
 
         // ---- ENV ----
             MT_GLOBAL_TIMER_EVENT,
