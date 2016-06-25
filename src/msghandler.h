@@ -72,6 +72,8 @@ class MsgHandler {
         // ---- Server ----
         void sendResetClient(long id) {this->sendMsg(Message::MT_RESET_CLIENT, toJsonNumberPtr(id));}
 
+        void sendSelfTestingClient(long id) {this->sendMsg(Message::MT_SELF_TESTING_CLIENT, toJsonNumberPtr(id));}
+
         void sendServerInfoReq() {this->sendMsg(Message::MT_SERVER_INFO_REQ);}
 
         void sendConClientsReq() {this->sendMsg(Message::MT_CON_CLIENTS_REQ);}
@@ -79,15 +81,17 @@ class MsgHandler {
         // ---- Environment ----
         void sendGetGlobalTimer() {this->sendMsg(Message::MT_GET_GLOBAL_TIMER);}
 
-        void sendSetGlobalTimer(bool fireEvents, const std::string &curModelTime, unsigned int timing, unsigned int intervall);
+        void sendSetGlobalTimer(const std::string &curModelTime, unsigned int intervall, unsigned int multiplicator);
 
         void sendGetEnvironment() {this->sendMsg(Message::MT_GET_ENVIRONMENT);}
 
-        void sendSetEnvironment();
+        void sendSetEnvironment(JsonThreeState::ThreeState thunder, JsonThreeState::ThreeState wind, JsonThreeState::ThreeState rain, bool curtainUp, bool mainLightOn, JsonThreeState::ThreeState aux1, JsonThreeState::ThreeState aux2, JsonThreeState::ThreeState aux3);
 
         void sendSetAutoMode(bool on) {this->sendMsg(Message::MT_SET_AUTO_MODE, toJsonBoolPtr(on));}
 
-        void sendSetAutoMode() {this->sendMsg(Message::MT_SET_AUTO_MODE);}
+        void sendGetColorTheme() {this->sendMsg(Message::MT_GET_COLOR_THEME);}
+
+        void sendSetColorTheme(const std::string &dimTime, const std::string &brightTime);
 
         // ---- System ----
         void sendEmergencyStop() {this->sendMsg(Message::MT_EMERGENCY_STOP);}
@@ -140,7 +144,8 @@ class MsgHandler {
 
         void sendMsg(const Message::MessageType type, const JsonItemPtr &msgData);
         void sendMsg(const std::string &msgType, const std::string &msgData);
-        void sendMsg(const Message::MessageType type, const std::string &msgData = "");
+        void sendMsg(const Message::MessageType type);
+        void sendMsg(const Message::MessageType type, const std::string &msgData);
         void sendMsg(const Message &msg);
         void sendMsg(const JsonObject &obj);
 };

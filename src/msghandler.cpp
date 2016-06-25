@@ -128,25 +128,37 @@ MessagePtr MsgHandler::recieveMsg(time_t timeoutSec) {
     return decoder.decodeMsg();
 }
 
-void MsgHandler::sendSetGlobalTimer(bool fireEvents, const std::string &curModelTime, unsigned int multiplicator, unsigned int intervall) {
+void MsgHandler::sendSetGlobalTimer(const std::string &curModelTime, unsigned int intervall, unsigned int multiplicator) {
     JsonObjectPtr obj(new JsonObject());
-    (*obj)["fireEvents"   ] = toJsonBoolPtr(fireEvents);
     (*obj)["curModelTime" ] = toJsonStringPtr(curModelTime);
-    (*obj)["multiplicator"] = toJsonNumberPtr(multiplicator);
     (*obj)["intervall"    ] = toJsonNumberPtr(intervall);
+    (*obj)["multiplicator"] = toJsonNumberPtr(multiplicator);
     this->sendMsg(Message(Message::MT_SET_GLOBAL_TIMER, obj));
 }
 
-void MsgHandler::sendSetEnvironment() {
+void MsgHandler::sendSetEnvironment(
+    JsonThreeState::ThreeState thunder, JsonThreeState::ThreeState wind,
+    JsonThreeState::ThreeState rain, bool curtainUp, bool mainLightOn,
+    JsonThreeState::ThreeState aux1, JsonThreeState::ThreeState aux2,
+    JsonThreeState::ThreeState aux3
+) {
     JsonObjectPtr obj(new JsonObject());
-    // FIXME: parameter fehlen noch...
-    (*obj)["thunderStorm"      ] = toJsonThreeStatePtr(JsonThreeState::ON);
-    (*obj)["wind"              ] = toJsonThreeStatePtr(JsonThreeState::AUTO);
-    (*obj)["rain"              ] = toJsonThreeStatePtr(JsonThreeState::OFF);
-    (*obj)["curtainUp"         ] = toJsonBoolPtr(true);
-    (*obj)["mainLightOn"       ] = toJsonBoolPtr(false);
-    (*obj)["aux01"             ] = toJsonThreeStatePtr(JsonThreeState::OFF);
+    (*obj)["thunderStorm"      ] = toJsonThreeStatePtr(thunder);
+    (*obj)["wind"              ] = toJsonThreeStatePtr(wind);
+    (*obj)["rain"              ] = toJsonThreeStatePtr(rain);
+    (*obj)["curtainUp"         ] = toJsonBoolPtr(curtainUp);
+    (*obj)["mainLightOn"       ] = toJsonBoolPtr(mainLightOn);
+    (*obj)["aux01"             ] = toJsonThreeStatePtr(aux1);
+    (*obj)["aux02"             ] = toJsonThreeStatePtr(aux2);
+    (*obj)["aux03"             ] = toJsonThreeStatePtr(aux3);
     this->sendMsg(Message(Message::MT_SET_ENVIRONMENT, obj));
+}
+
+void MsgHandler::sendSetColorTheme(const std::string &dimTime, const std::string &brightTime) {
+    JsonObjectPtr obj(new JsonObject());
+    (*obj)["dimTime"   ] = toJsonStringPtr(dimTime);
+    (*obj)["brightTime"] = toJsonStringPtr(brightTime);
+    this->sendMsg(Message(Message::MT_SET_COLOR_THEME, obj));
 }
 
 void MsgHandler::sendSetHardwareState(HardwareState state) {
@@ -220,10 +232,17 @@ void MsgHandler::sendMsg(const Message::MessageType type, const JsonItemPtr &msg
     this->sendMsg(obj);
 }
 
+void MsgHandler::sendMsg(const Message::MessageType type) {
+    JsonObject obj;
+    obj["msgType"] = Message::convertToString(type);
+    obj["msgData"] = toJsonNULLPtr();
+    this->sendMsg(obj);
+}
+
 void MsgHandler::sendMsg(const Message::MessageType type, const std::string &msgData) {
     JsonObject obj;
     obj["msgType"] = Message::convertToString(type);
-    obj["msgData"] = JsonStringPtr(new JsonString(msgData));
+    obj["msgData"] = toJsonStringPtr(msgData);
     this->sendMsg(obj);
 }
 
@@ -236,8 +255,8 @@ void MsgHandler::sendMsg(const Message &msg) {
 
 void MsgHandler::sendMsg(const std::string &msgType, const std::string &msgData) {
     JsonObject obj;
-    obj["msgType"] = JsonStringPtr(new JsonString(msgType));
-    obj["msgData"] = JsonStringPtr(new JsonString(msgData));
+    obj["msgType"] = toJsonStringPtr(msgType);
+    obj["msgData"] = toJsonStringPtr(msgData);
     this->sendMsg(obj);
 }
 
