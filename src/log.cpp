@@ -105,7 +105,7 @@ namespace tlog {
                 break;
 
             case Notice:
-                std::cerr << " Debug:   ";
+                std::cerr << " Notice:  ";
                 break;
         }
         std::cerr << strLogText << std::endl;
