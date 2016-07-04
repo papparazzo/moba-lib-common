@@ -34,7 +34,10 @@ class JsonAbstractItem {
         virtual std::string getJsonString() const = 0;
 };
 
-class JsonArray : public JsonAbstractItem, public std::vector<boost::shared_ptr<JsonAbstractItem> > {
+typedef boost::shared_ptr<JsonAbstractItem> JsonItemPtr;
+
+class JsonArray : public JsonAbstractItem, public std::vector<JsonItemPtr> {
+
     public:
         std::string getJsonString() const {
             std::stringstream ss;
@@ -54,7 +57,10 @@ class JsonArray : public JsonAbstractItem, public std::vector<boost::shared_ptr<
         }
 };
 
-class JsonObject : public JsonAbstractItem, public std::map<std::string, boost::shared_ptr<JsonAbstractItem> > {
+typedef boost::shared_ptr<JsonArray> JsonArrayPtr;
+
+class JsonObject : public JsonAbstractItem, public std::map<std::string, JsonItemPtr> {
+
     public:
         std::string getJsonString() const {
             std::stringstream ss;
@@ -74,7 +80,10 @@ class JsonObject : public JsonAbstractItem, public std::map<std::string, boost::
         }
 };
 
+typedef boost::shared_ptr<JsonObject> JsonObjectPtr;
+
 class JsonBool : public JsonAbstractItem {
+
     public:
         JsonBool(bool v) : v(v) {
         }
@@ -98,7 +107,10 @@ class JsonBool : public JsonAbstractItem {
         bool v;
 };
 
+typedef boost::shared_ptr<JsonBool> JsonBoolPtr;
+
 class JsonNULL : public JsonAbstractItem {
+
     public:
         operator bool() const {
             return false;
@@ -108,12 +120,58 @@ class JsonNULL : public JsonAbstractItem {
         };
 };
 
+typedef boost::shared_ptr<JsonNULL> JsonNULLPtr;
+
+class JsonSwitch : public JsonAbstractItem {
+
+    public:
+        enum Switch {
+            ON,
+            AUTO,
+            UNSET,
+            TRIGGER,
+            OFF
+        };
+
+        JsonSwitch(JsonSwitch::Switch v) : v(v) {
+        }
+
+        std::string getJsonString() const {
+            switch(this->v) {
+                case ON:
+                    return "ON";
+
+                case OFF:
+                    return "OFF";
+
+                case AUTO:
+                    return "AUTO";
+
+                case UNSET:
+                    return "UNSET";
+
+                case TRIGGER:
+                    return "TRIGGER";
+            }
+        }
+
+        Switch getVal() {
+            return this->v;
+        }
+
+    protected:
+        Switch v;
+};
+
+typedef boost::shared_ptr<JsonSwitch> JsonSwitchPtr;
+
 class JsonThreeState : public JsonAbstractItem {
+
     public:
         enum ThreeState {
             ON,
             OFF,
-            AUTO
+            UNSET
         };
 
         JsonThreeState(JsonThreeState::ThreeState v) : v(v) {
@@ -123,16 +181,24 @@ class JsonThreeState : public JsonAbstractItem {
             switch(this->v) {
                 case ON:
                     return "ON";
+
                 case OFF:
                     return "OFF";
-                case AUTO:
-                    return "AUTO";
+
+                case UNSET:
+                    return "UNSET";
             }
+        }
+
+        ThreeState getVal() {
+            return this->v;
         }
 
     protected:
         ThreeState v;
 };
+
+typedef boost::shared_ptr<JsonThreeState> JsonThreeStatePtr;
 
 class JsonString : public JsonAbstractItem, public std::string {
 
@@ -161,7 +227,10 @@ class JsonString : public JsonAbstractItem, public std::string {
         };
 };
 
+typedef boost::shared_ptr<JsonString>         JsonStringPtr;
+
 template <typename T> class JsonNumber : public JsonAbstractItem {
+
     public:
         JsonNumber(T v) : v(v){
         }
@@ -187,13 +256,8 @@ template <typename T> class JsonNumber : public JsonAbstractItem {
         T v;
 };
 
-typedef boost::shared_ptr<JsonAbstractItem> JsonItemPtr;
-typedef boost::shared_ptr<JsonArray>        JsonArrayPtr;
-typedef boost::shared_ptr<JsonObject>       JsonObjectPtr;
-typedef boost::shared_ptr<JsonString>       JsonStringPtr;
-typedef boost::shared_ptr<JsonBool>         JsonBoolPtr;
-typedef boost::shared_ptr<JsonNULL>         JsonNULLPtr;
-typedef boost::shared_ptr<JsonThreeState>   JsonThreeStatePtr;
+typedef boost::shared_ptr<JsonNumber<int> >   JsonIntPtr;
+typedef boost::shared_ptr<JsonNumber<float> > JsonFloatPtr;
 
 inline JsonBoolPtr toJsonBoolPtr(bool v) {
     return JsonBoolPtr(new JsonBool(v));
@@ -201,6 +265,10 @@ inline JsonBoolPtr toJsonBoolPtr(bool v) {
 
 inline JsonStringPtr toJsonStringPtr(const std::string &v) {
     return JsonStringPtr(new JsonString(v));
+}
+
+inline JsonSwitchPtr toJsonSwitchPtr(JsonSwitch::Switch v) {
+    return JsonSwitchPtr(new JsonSwitch(v));
 }
 
 inline JsonThreeStatePtr toJsonThreeStatePtr(JsonThreeState::ThreeState v) {
@@ -212,8 +280,41 @@ inline JsonNULLPtr toJsonNULLPtr() {
 }
 
 template <typename T>
-boost::shared_ptr<JsonNumber<T> > toJsonNumberPtr(T v) {
+inline boost::shared_ptr<JsonNumber<T> > toJsonNumberPtr(T v) {
     return boost::shared_ptr<JsonNumber<T> >(new JsonNumber<T>(v));
+}
+
+inline int castToInt(JsonItemPtr ptr) {
+    return boost::dynamic_pointer_cast<JsonNumber<int> >(ptr)->getVal();
+}
+
+inline float castToFloat(JsonItemPtr ptr) {
+    return boost::dynamic_pointer_cast<JsonNumber<float> >(ptr)->getVal();
+}
+
+inline std::string castToString(JsonItemPtr ptr) {
+    return *boost::dynamic_pointer_cast<std::string>(ptr);
+}
+
+inline bool castToBool(JsonItemPtr ptr) {
+    return boost::dynamic_pointer_cast<JsonBool>(ptr)->getVal();
+}
+
+inline JsonSwitch::Switch castToSwitch(JsonItemPtr ptr) {
+    return boost::dynamic_pointer_cast<JsonSwitch>(ptr)->getVal();
+}
+
+inline JsonThreeState::ThreeState castToThreeState(JsonItemPtr ptr) {
+    switch(boost::dynamic_pointer_cast<JsonSwitch>(ptr)->getVal()) {
+        case JsonSwitch::OFF:
+            return JsonThreeState::OFF;
+
+        case JsonSwitch::ON:
+            return JsonThreeState::ON;
+
+        default:
+            return JsonThreeState::UNSET;
+    }
 }
 
 #endif	// JSONITEM_H

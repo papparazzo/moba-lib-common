@@ -133,9 +133,8 @@ std::string JsonDecoder::nextKey() {
             boost::algorithm::trim(s);
             if(s.length() == 0) {
                 throw JsonException("key is empty");
-            } else {
-                return s;
             }
+            return s;
         }
         sb << c;
     }
@@ -147,10 +146,13 @@ JsonItemPtr JsonDecoder::nextValue() {
     switch(c) {
         case '"':
             return this->nextString();
+
         case '{':
             return this->nextObject();
+
         case '[':
             return this->nextArray();
+
         default:
             this->lastChar = c;
             return this->nextJValue();
@@ -206,7 +208,7 @@ JsonStringPtr JsonDecoder::nextString() {
                 break;
 
             case '"':
-                return JsonStringPtr(new JsonString(sb.str()));
+                return toJsonStringPtr(sb.str());
 
             default:
                 sb << c;
@@ -275,22 +277,28 @@ JsonItemPtr JsonDecoder::parseValue(const std::string &s) {
     }
 
     if(boost::iequals(s, "true")) {
-        return JsonItemPtr(new JsonBool(true));
+        return toJsonBoolPtr(true);
     }
     if(boost::iequals(s, "false")) {
-        return JsonItemPtr(new JsonBool(false));
+        return toJsonBoolPtr(false);
     }
     if(boost::iequals(s, "null")) {
-        return JsonItemPtr(new JsonNULL());
+        return toJsonNULLPtr();
     }
     if(boost::iequals(s, "on")) {
-        return JsonItemPtr(new JsonThreeState(JsonThreeState::ON));
+        return toJsonSwitchPtr(JsonSwitch::ON);
     }
     if(boost::iequals(s, "off")) {
-        return JsonItemPtr(new JsonThreeState(JsonThreeState::OFF));
+        return toJsonSwitchPtr(JsonSwitch::OFF);
     }
     if(boost::iequals(s, "auto")) {
-        return JsonItemPtr(new JsonThreeState(JsonThreeState::AUTO));
+        return toJsonSwitchPtr(JsonSwitch::AUTO);
+    }
+    if(boost::iequals(s, "unset")) {
+        return toJsonSwitchPtr(JsonSwitch::UNSET);
+    }
+    if(boost::iequals(s, "trigger")) {
+        return toJsonSwitchPtr(JsonSwitch::TRIGGER);
     }
 
     char b = s[0];
@@ -315,10 +323,9 @@ JsonItemPtr JsonDecoder::parseValue(const std::string &s) {
                 double output;
                 buffer << s;
                 buffer >> output;
-                return JsonItemPtr(new JsonNumber<double>(output));
-            } else {
-                return JsonItemPtr(new JsonNumber<long int>(atol(s.c_str())));
+                return toJsonNumberPtr(output);
             }
+            return toJsonNumberPtr(atol(s.c_str()));
         }
     } catch(std::exception e) {
         throw JsonException(
@@ -326,7 +333,7 @@ JsonItemPtr JsonDecoder::parseValue(const std::string &s) {
             std::string(e.what()) + ">"
         );
     }
-    std::cout << "---" << s << "----" << std::endl;
+    std::cout << "---" << s << "---" << std::endl;
 
     throw JsonException("parsing error, could not determine value" );
 }

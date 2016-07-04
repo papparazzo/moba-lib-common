@@ -137,21 +137,28 @@ void MsgHandler::sendSetGlobalTimer(const std::string &curModelTime, unsigned in
 }
 
 void MsgHandler::sendSetEnvironment(
-    JsonThreeState::ThreeState thunder, JsonThreeState::ThreeState wind,
-    JsonThreeState::ThreeState rain, bool curtainUp, bool mainLightOn,
-    JsonThreeState::ThreeState aux1, JsonThreeState::ThreeState aux2,
-    JsonThreeState::ThreeState aux3
+    JsonSwitch::Switch thunder, JsonSwitch::Switch wind,
+    JsonSwitch::Switch rain, JsonSwitch::Switch environmentSound,
+    JsonSwitch::Switch aux1, JsonSwitch::Switch aux2, JsonSwitch::Switch aux3
 ) {
     JsonObjectPtr obj(new JsonObject());
-    (*obj)["thunderStorm"      ] = toJsonThreeStatePtr(thunder);
-    (*obj)["wind"              ] = toJsonThreeStatePtr(wind);
-    (*obj)["rain"              ] = toJsonThreeStatePtr(rain);
-    (*obj)["curtainUp"         ] = toJsonBoolPtr(curtainUp);
-    (*obj)["mainLightOn"       ] = toJsonBoolPtr(mainLightOn);
-    (*obj)["aux01"             ] = toJsonThreeStatePtr(aux1);
-    (*obj)["aux02"             ] = toJsonThreeStatePtr(aux2);
-    (*obj)["aux03"             ] = toJsonThreeStatePtr(aux3);
+    (*obj)["thunderStorm"      ] = toJsonSwitchPtr(thunder);
+    (*obj)["wind"              ] = toJsonSwitchPtr(wind);
+    (*obj)["rain"              ] = toJsonSwitchPtr(rain);
+    (*obj)["environmentSound"  ] = toJsonSwitchPtr(environmentSound);
+    (*obj)["aux01"             ] = toJsonSwitchPtr(aux1);
+    (*obj)["aux02"             ] = toJsonSwitchPtr(aux2);
+    (*obj)["aux03"             ] = toJsonSwitchPtr(aux3);
     this->sendMsg(Message(Message::MT_SET_ENVIRONMENT, obj));
+}
+
+void MsgHandler::sendSetAmbience(
+    JsonThreeState::ThreeState curtainUp, JsonThreeState::ThreeState mainLightOn
+) {
+    JsonObjectPtr obj(new JsonObject());
+    (*obj)["curtainUp"   ] = toJsonThreeStatePtr(curtainUp);
+    (*obj)["mainLightOn" ] = toJsonThreeStatePtr(mainLightOn);
+    this->sendMsg(Message(Message::MT_SET_AMBIENCE, obj));
 }
 
 void MsgHandler::sendSetColorTheme(const std::string &dimTime, const std::string &brightTime) {

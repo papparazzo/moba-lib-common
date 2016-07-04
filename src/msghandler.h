@@ -85,9 +85,15 @@ class MsgHandler {
 
         void sendGetEnvironment() {this->sendMsg(Message::MT_GET_ENVIRONMENT);}
 
-        void sendSetEnvironment(JsonThreeState::ThreeState thunder, JsonThreeState::ThreeState wind, JsonThreeState::ThreeState rain, bool curtainUp, bool mainLightOn, JsonThreeState::ThreeState aux1, JsonThreeState::ThreeState aux2, JsonThreeState::ThreeState aux3);
+        void sendSetEnvironment(JsonSwitch::Switch thunder, JsonSwitch::Switch wind, JsonSwitch::Switch rain, JsonSwitch::Switch environmentSound, JsonSwitch::Switch aux1, JsonSwitch::Switch aux2, JsonSwitch::Switch aux3);
+
+        void sendGetAmbience() {this->sendMsg(Message::MT_GET_AMBIENCE);}
+
+        void sendSetAmbience(JsonThreeState::ThreeState curtainUp, JsonThreeState::ThreeState mainLightOn);
 
         void sendSetAutoMode(bool on) {this->sendMsg(Message::MT_SET_AUTO_MODE, toJsonBoolPtr(on));}
+
+        void sendGetAutoMode() {this->sendMsg(Message::MT_GET_AUTO_MODE);}
 
         void sendGetColorTheme() {this->sendMsg(Message::MT_GET_COLOR_THEME);}
 
