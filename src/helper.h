@@ -21,8 +21,7 @@
  *
  */
 
-#ifndef HELPER_H
-#define	HELPER_H
+#pragma once
 
 #include <string>
 
@@ -41,6 +40,3 @@ bool setCoreFileSizeToULimit();
 std::string getLicense(bool briefly);
 
 void printAppData(const AppData &appData);
-
-#endif	// HELPER_H
-

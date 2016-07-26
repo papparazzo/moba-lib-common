@@ -18,8 +18,7 @@
  *
  */
 
-#ifndef JSONSTREAMREADER_H
-#define	JSONSTREAMREADER_H
+#pragma once
 
 #include <boost/shared_ptr.hpp>
 #include <exception>
@@ -55,6 +54,3 @@ class JsonStreamReader {
     private:
 
 };
-
-#endif	/* JSONSTREAMREADER_H */
-

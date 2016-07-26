@@ -18,8 +18,7 @@
  *
  */
 
-#ifndef JSONDECODER_H
-#define	JSONDECODER_H
+#pragma once
 
 #include <memory>
 
@@ -77,6 +76,4 @@ class JsonDecoder {
         JsonStreamReaderPtr reader;
 
 };
-
-#endif	/* JSONDECODER_H */
 

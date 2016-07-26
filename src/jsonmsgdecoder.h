@@ -18,8 +18,7 @@
  *
  */
 
-#ifndef JSONMSGDECODER_H
-#define	JSONMSGDECODER_H
+#pragma once
 
 #include "jsondecoder.h"
 #include "message.h"
@@ -32,6 +31,3 @@ class JsonMsgDecoder: public JsonDecoder {
     private:
 
 };
-
-#endif	/* JSONMSGDECODER_H */
-

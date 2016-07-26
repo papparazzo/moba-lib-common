@@ -21,8 +21,7 @@
  *
  */
 
-#ifndef VERSION_H
-#define	VERSION_H
+#pragma once
 
 #include <string>
 #include <exception>
@@ -103,6 +102,4 @@ class Version : public JsonAbstractItem {
         int buildn;
         int patchn;
 };
-
-#endif	// VERSION_H
 

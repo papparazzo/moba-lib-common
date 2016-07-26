@@ -21,8 +21,7 @@
  *
  */
 
-#ifndef _LOGGER_H_
-#define _LOGGER_H_
+#pragma once
 
 #include <iostream>
 #include <iomanip>
@@ -40,7 +39,7 @@ namespace tlog {
         Error   = 3,
         Warning = 4,
         Info    = 5,
-        Notice  = 6,                  
+        Notice  = 6,
     };
 
     class CLog;
@@ -98,8 +97,3 @@ namespace tlog {
             );
     };
 } // namespace tlog
-
-#endif // _LOGGER_H_
-
-
-

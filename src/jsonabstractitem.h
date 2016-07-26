@@ -18,8 +18,7 @@
  *
  */
 
-#ifndef JSONITEM_H
-#define	JSONITEM_H
+#pragma once
 
 #include <string>
 #include <map>
@@ -316,5 +315,3 @@ inline JsonThreeState::ThreeState castToThreeState(JsonItemPtr ptr) {
             return JsonThreeState::UNSET;
     }
 }
-
-#endif	// JSONITEM_H

@@ -18,8 +18,7 @@
  *
  */
 
-#ifndef JSONMSGENCODER_H
-#define	JSONMSGENCODER_H
+#pragma once
 
 class JsonMsgEncoder {
     public:
@@ -30,6 +29,4 @@ class JsonMsgEncoder {
     private:
 
 };
-
-#endif	/* JSONMSGENCODER_H */
 

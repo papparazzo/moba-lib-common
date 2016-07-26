@@ -18,8 +18,7 @@
  *
  */
 
-#ifndef JSONSTREAMREADERSOCKET_H
-#define	JSONSTREAMREADERSOCKET_H
+#pragma once
 
 #include "jsonstreamreader.h"
 
@@ -41,6 +40,3 @@ class JsonStreamReaderSocket : public JsonStreamReader {
         int socket;
 
 };
-
-#endif	/* JSONSTREAMREADERSOCKET_H */
-

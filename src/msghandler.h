@@ -21,8 +21,7 @@
  *
  */
 
-#ifndef MSGHANDLER_H
-#define	MSGHANDLER_H
+#pragma once
 
 #include <exception>
 #include <string>
@@ -155,5 +154,3 @@ class MsgHandler {
         void sendMsg(const Message &msg);
         void sendMsg(const JsonObject &obj);
 };
-
-#endif	// MSGHANDLER_H

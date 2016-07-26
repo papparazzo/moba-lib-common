@@ -21,8 +21,7 @@
  *
  */
 
-#ifndef MESSAGE_H
-#define	MESSAGE_H
+#pragma once
 
 #include <string>
 #include <boost/any.hpp>
@@ -130,5 +129,3 @@ class Message {
 };
 
 typedef boost::shared_ptr<Message> MessagePtr;
-
-#endif	// MESSAGE_H
