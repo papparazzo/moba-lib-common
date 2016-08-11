@@ -98,6 +98,22 @@ class MsgHandler {
 
         void sendSetColorTheme(const std::string &dimTime, const std::string &brightTime);
 
+        void sendGetAmbientLight() {this->sendMsg(Message::MT_GET_AMBIENT_LIGHT);}
+
+        struct AmbientLightData {
+            AmbientLightData() {};
+            AmbientLightData(int red, int blue, int white) {
+                this->red = red;
+                this->blue = blue;
+                this->white = white;
+            }
+            int red;
+            int blue;
+            int white;
+        };
+
+        void sendSetAmbientLight(const std::vector<AmbientLightData> &aldv);
+
         // ---- System ----
         void sendEmergencyStop() {this->sendMsg(Message::MT_EMERGENCY_STOP);}
 

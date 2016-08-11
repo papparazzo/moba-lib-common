@@ -66,6 +66,8 @@ namespace {
         {Message::MT_GET_COLOR_THEME,         "GET_COLOR_THEME"        },
         {Message::MT_SET_COLOR_THEME,         "SET_COLOR_THEME"        },
         {Message::MT_COLOR_THEME_EVENT,       "COLOR_THEME_EVENT"      },
+        {Message::MT_GET_AMBIENT_LIGHT,       "GET_AMBIENT_LIGHT"      },
+        {Message::MT_SET_AMBIENT_LIGHT,       "SET_AMBIENT_LIGHT"      },
 
         {Message::MT_EMERGENCY_STOP,          "EMERGENCY_STOP"         },
         {Message::MT_EMERGENCY_STOP_CLEARING, "EMERGENCY_STOP_CLEARING"},

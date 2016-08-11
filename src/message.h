@@ -69,6 +69,8 @@ class Message {
             MT_GET_COLOR_THEME,
             MT_SET_COLOR_THEME,
             MT_COLOR_THEME_EVENT,
+            MT_GET_AMBIENT_LIGHT,
+            MT_SET_AMBIENT_LIGHT,
 
         // ---- SYS ----
             MT_EMERGENCY_STOP,

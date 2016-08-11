@@ -168,6 +168,22 @@ void MsgHandler::sendSetColorTheme(const std::string &dimTime, const std::string
     this->sendMsg(Message(Message::MT_SET_COLOR_THEME, obj));
 }
 
+void MsgHandler::sendSetAmbientLight(const std::vector<MsgHandler::AmbientLightData> &aldv) {
+    JsonArrayPtr arr(new JsonArray());
+    for(
+        std::vector<MsgHandler::AmbientLightData>::const_iterator iter = aldv.begin();
+        iter != aldv.end();
+        ++iter
+    ) {
+        JsonObjectPtr obj(new JsonObject());
+        (*obj)["red"  ] = toJsonNumberPtr(iter->red);
+        (*obj)["blue" ] = toJsonNumberPtr(iter->blue);
+        (*obj)["white"] = toJsonNumberPtr(iter->white);
+        arr->push_back(obj);
+    }
+    this->sendMsg(Message(Message::MT_SET_AMBIENT_LIGHT, arr));
+}
+
 void MsgHandler::sendSetHardwareState(HardwareState state) {
     JsonStringPtr str;
     switch(state) {
