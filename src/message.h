@@ -117,6 +117,8 @@ class Message {
             return this->data;
         }
 
+        std::string getRawMessage() const;
+
         std::string msgTypeAsString() const;
 
         template<typename charT, typename traits>

@@ -137,6 +137,13 @@ JsonStringPtr Message::convertToString(Message::MessageType mt) {
     return JsonStringPtr(new JsonString("UNKNOWN"));
 }
 
+std::string Message::getRawMessage() const {
+    JsonObject obj;
+    obj["msgType"] = Message::convertToString(this->msgType);
+    obj["msgData"] = this->data;
+    return obj.getJsonString();
+}
+
 std::string Message::msgTypeAsString() const {
     int size =
         sizeof(__msgEnumClearTextStruct) / sizeof(__msgEnumClearTextStruct[0]);
