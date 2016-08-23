@@ -285,22 +285,6 @@ JsonItemPtr JsonDecoder::parseValue(const std::string &s) {
     if(boost::iequals(s, "null")) {
         return toJsonNULLPtr();
     }
-    if(boost::iequals(s, "on")) {
-        return toJsonSwitchPtr(JsonSwitch::ON);
-    }
-    if(boost::iequals(s, "off")) {
-        return toJsonSwitchPtr(JsonSwitch::OFF);
-    }
-    if(boost::iequals(s, "auto")) {
-        return toJsonSwitchPtr(JsonSwitch::AUTO);
-    }
-    if(boost::iequals(s, "unset")) {
-        return toJsonSwitchPtr(JsonSwitch::UNSET);
-    }
-    if(boost::iequals(s, "trigger")) {
-        return toJsonSwitchPtr(JsonSwitch::TRIGGER);
-    }
-
     char b = s[0];
     try {
         if((b >= '0' && b <= '9') || b == '-') {

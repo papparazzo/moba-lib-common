@@ -138,19 +138,19 @@ class JsonSwitch : public JsonAbstractItem {
         std::string getJsonString() const {
             switch(this->v) {
                 case ON:
-                    return "ON";
+                    return "\"ON\"";
 
                 case OFF:
-                    return "OFF";
+                    return "\"OFF\"";
 
                 case AUTO:
-                    return "AUTO";
+                    return "\"AUTO\"";
 
                 case UNSET:
-                    return "UNSET";
+                    return "\"UNSET\"";
 
                 case TRIGGER:
-                    return "TRIGGER";
+                    return "\"TRIGGER\"";
             }
         }
 
@@ -179,13 +179,13 @@ class JsonThreeState : public JsonAbstractItem {
         std::string getJsonString() const {
             switch(this->v) {
                 case ON:
-                    return "ON";
+                    return "\"ON\"";
 
                 case OFF:
-                    return "OFF";
+                    return "\"OFF\"";
 
                 case UNSET:
-                    return "UNSET";
+                    return "\"UNSET\"";
             }
         }
 
