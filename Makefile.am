@@ -1,3 +1,4 @@
+AUTOMAKE_OPTIONS = subdir-objects
 lib_LTLIBRARIES = libMoBaCommon.la
 libMoBaCommon_la_SOURCES = src/log.cpp src/jsonstreamreadersocket.cpp src/jsonmsgencoder.cpp src/version.cpp src/jsonmsgdecoder.cpp src/msghandler.cpp src/message.cpp src/helper.cpp src/jsondecoder.cpp
 otherincludedir = $(includedir)/moba
