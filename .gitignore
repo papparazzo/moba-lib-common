@@ -52,3 +52,5 @@ Makefile.in
 /libtool
 /config.h
 /config.status
+/configure.scan
+/autoscan.log
