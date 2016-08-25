@@ -164,16 +164,16 @@ class JsonSwitch : public JsonAbstractItem {
 
 typedef boost::shared_ptr<JsonSwitch> JsonSwitchPtr;
 
-class JsonThreeState : public JsonAbstractItem {
+class JsonToggleState : public JsonAbstractItem {
 
     public:
-        enum ThreeState {
+        enum ToggleState {
             ON,
             OFF,
             UNSET
         };
 
-        JsonThreeState(JsonThreeState::ThreeState v) : v(v) {
+        JsonToggleState(JsonToggleState::ToggleState v) : v(v) {
         }
 
         std::string getJsonString() const {
@@ -189,12 +189,51 @@ class JsonThreeState : public JsonAbstractItem {
             }
         }
 
+        ToggleState getVal() {
+            return this->v;
+        }
+
+    protected:
+        ToggleState v;
+};
+
+typedef boost::shared_ptr<JsonToggleState> JsonToggleStatePtr;
+
+class JsonThreeState : public JsonAbstractItem {
+    public:
+        enum ThreeState {
+            ON,
+            OFF,
+            AUTO,
+            UNSET
+        };
+
+        JsonThreeState(JsonThreeState::ThreeState v) : v(v) {
+        }
+
+        std::string getJsonString() const {
+            switch(this->v) {
+                case ON:
+                    return "\"ON\"";
+
+                case OFF:
+                    return "\"OFF\"";
+
+                case AUTO:
+                    return "\"AUTO\"";
+
+                case UNSET:
+                    return "\"UNSET\"";
+            }
+        }
+
         ThreeState getVal() {
             return this->v;
         }
 
     protected:
         ThreeState v;
+
 };
 
 typedef boost::shared_ptr<JsonThreeState> JsonThreeStatePtr;
@@ -270,6 +309,10 @@ inline JsonSwitchPtr toJsonSwitchPtr(JsonSwitch::Switch v) {
     return JsonSwitchPtr(new JsonSwitch(v));
 }
 
+inline JsonToggleStatePtr toJsonToggleStatePtr(JsonToggleState::ToggleState v) {
+    return JsonToggleStatePtr(new JsonToggleState(v));
+}
+
 inline JsonThreeStatePtr toJsonThreeStatePtr(JsonThreeState::ThreeState v) {
     return JsonThreeStatePtr(new JsonThreeState(v));
 }
@@ -303,15 +346,10 @@ inline JsonSwitch::Switch castToSwitch(JsonItemPtr ptr) {
     return boost::dynamic_pointer_cast<JsonSwitch>(ptr)->getVal();
 }
 
+inline JsonToggleState::ToggleState castToggleState(JsonItemPtr ptr) {
+    return boost::dynamic_pointer_cast<JsonToggleState>(ptr)->getVal();
+}
+
 inline JsonThreeState::ThreeState castToThreeState(JsonItemPtr ptr) {
-    switch(boost::dynamic_pointer_cast<JsonSwitch>(ptr)->getVal()) {
-        case JsonSwitch::OFF:
-            return JsonThreeState::OFF;
-
-        case JsonSwitch::ON:
-            return JsonThreeState::ON;
-
-        default:
-            return JsonThreeState::UNSET;
-    }
+    return boost::dynamic_pointer_cast<JsonThreeState>(ptr)->getVal();
 }

@@ -88,7 +88,7 @@ class MsgHandler {
 
         void sendGetAmbience() {this->sendMsg(Message::MT_GET_AMBIENCE);}
 
-        void sendSetAmbience(JsonThreeState::ThreeState curtainUp, JsonThreeState::ThreeState mainLightOn);
+        void sendSetAmbience(JsonToggleState::ToggleState curtainUp, JsonToggleState::ToggleState mainLightOn);
 
         void sendSetAutoMode(bool on) {this->sendMsg(Message::MT_SET_AUTO_MODE, toJsonBoolPtr(on));}
 

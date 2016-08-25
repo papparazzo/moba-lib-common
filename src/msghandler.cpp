@@ -153,11 +153,11 @@ void MsgHandler::sendSetEnvironment(
 }
 
 void MsgHandler::sendSetAmbience(
-    JsonThreeState::ThreeState curtainUp, JsonThreeState::ThreeState mainLightOn
+    JsonToggleState::ToggleState curtainUp, JsonToggleState::ToggleState mainLightOn
 ) {
     JsonObjectPtr obj(new JsonObject());
-    (*obj)["curtainUp"   ] = toJsonThreeStatePtr(curtainUp);
-    (*obj)["mainLightOn" ] = toJsonThreeStatePtr(mainLightOn);
+    (*obj)["curtainUp"   ] = toJsonToggleStatePtr(curtainUp);
+    (*obj)["mainLightOn" ] = toJsonToggleStatePtr(mainLightOn);
     this->sendMsg(Message(Message::MT_SET_AMBIENCE, obj));
 }
 
