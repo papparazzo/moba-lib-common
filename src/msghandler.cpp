@@ -161,10 +161,13 @@ void MsgHandler::sendSetAmbience(
     this->sendMsg(Message(Message::MT_SET_AMBIENCE, obj));
 }
 
-void MsgHandler::sendSetColorTheme(const std::string &dimTime, const std::string &brightTime) {
+void MsgHandler::sendSetColorTheme(
+    const std::string &dimTime, const std::string &brightTime, JsonThreeState::ThreeState condition
+) {
     JsonObjectPtr obj(new JsonObject());
     (*obj)["dimTime"   ] = toJsonStringPtr(dimTime);
     (*obj)["brightTime"] = toJsonStringPtr(brightTime);
+    (*obj)["condition" ] = toJsonThreeStatePtr(condition);
     this->sendMsg(Message(Message::MT_SET_COLOR_THEME, obj));
 }
 
