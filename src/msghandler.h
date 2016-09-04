@@ -96,7 +96,7 @@ class MsgHandler {
 
         void sendGetColorTheme() {this->sendMsg(Message::MT_GET_COLOR_THEME);}
 
-        void sendSetColorTheme(const std::string &dimTime, const std::string &brightTime);
+        void sendSetColorTheme(const std::string &dimTime, const std::string &brightTime, JsonThreeState::ThreeState condition);
 
         void sendGetAmbientLight() {this->sendMsg(Message::MT_GET_AMBIENT_LIGHT);}
 
