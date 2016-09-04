@@ -346,7 +346,7 @@ inline JsonSwitch::Switch castToSwitch(JsonItemPtr ptr) {
     return boost::dynamic_pointer_cast<JsonSwitch>(ptr)->getVal();
 }
 
-inline JsonToggleState::ToggleState castToggleState(JsonItemPtr ptr) {
+inline JsonToggleState::ToggleState castToToggleState(JsonItemPtr ptr) {
     return boost::dynamic_pointer_cast<JsonToggleState>(ptr)->getVal();
 }
 
