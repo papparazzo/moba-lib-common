@@ -55,6 +55,27 @@ template <typename T> class Atomic {
             return t;
         }
 
+        Atomic<T>& operator++() {
+            ++this->v;
+            return *this;
+        }
+
+        Atomic<T>& operator--() {
+            --this->v;
+            return *this;
+        }
+
+        Atomic<T>& operator++(int) {
+            Atomic<T> t = *this;
+            ++*this;
+            return t;
+        }
+
+        Atomic<T>& operator--(int) {
+            Atomic<T> t = *this;
+            --*this;
+            return t;
+        }
     protected:
         T v;
         pthread_mutex_t m;
