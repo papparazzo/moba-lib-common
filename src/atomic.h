@@ -27,6 +27,10 @@
 
 template <typename T> class Atomic {
     public:
+        Atomic() {
+            pthread_mutex_init(&this->m, NULL);
+        }
+
         Atomic(const T& s) {
             pthread_mutex_init(&this->m, NULL);
             this->v = s;
