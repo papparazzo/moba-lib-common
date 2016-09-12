@@ -2,9 +2,8 @@
  *  Project:    CommonLib
  *
  *  Version:    1.0.0
- *  History:    V1.0    07/12/2013  SP - created
  *
- *  Copyright (C) 2013 Stefan Paproth <pappi-@gmx.de>
+ *  Copyright (C) 2016 Stefan Paproth <pappi-@gmx.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
@@ -20,13 +19,21 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/agpl.txt>.
  *
  */
+
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <cerrno>
 #include <cstring>
+#include <iosfwd>
 
 #include "helper.h"
 #include "log.h"
+
+std::string getErrno(const std::string &txt) {
+    std::stringstream ss;
+    ss << txt << " <" << errno << ": " << strerror(errno) << ">";
+    return ss.str();
+}
 
 bool setCoreFileSizeToULimit() {
     struct rlimit currResource;

@@ -1,7 +1,9 @@
 /*
- *  json
+ *  Project:    CommonLib
  *
- *  Copyright (C) 2013 Stefan Paproth <pappi-@gmx.de>
+ *  Version:    1.0.0
+ *
+ *  Copyright (C) 2016 Stefan Paproth <pappi-@gmx.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as

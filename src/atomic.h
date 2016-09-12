@@ -2,9 +2,8 @@
  *  Project:    CommonLib
  *
  *  Version:    1.0.0
- *  History:    V1.0    07/12/2013  SP - created
  *
- *  Copyright (C) 2013 Stefan Paproth <pappi-@gmx.de>
+ *  Copyright (C) 2016 Stefan Paproth <pappi-@gmx.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
