@@ -52,7 +52,7 @@ void IPC::init() {
 
     if(
         stat(this->ffile.c_str(), &attribut) == 0 &&
-        S_ISFIFO(fifostat.st_mode) == 0 &&
+        S_ISFIFO(attribut.st_mode) == 0 &&
         unlink(this->ffile.c_str()) == -1
     ) {
         throw IPCException(getErrno("unlink failed"));

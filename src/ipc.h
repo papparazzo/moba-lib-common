@@ -51,7 +51,7 @@ class IPC {
             READING,
             WRITING
         };
-        //std::string file = "/tmp/fifo0001";
+
         IPC(IPC_TYPE type, const std::string &ffile);
         virtual ~IPC();
 
