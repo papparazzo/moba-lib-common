@@ -6,6 +6,9 @@
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
 
+/* Define to 1 if you have the <fcntl.h> header file. */
+#undef HAVE_FCNTL_H
+
 /* Define to 1 if you have the `ftime' function. */
 #undef HAVE_FTIME
 
@@ -21,6 +24,9 @@
 /* Define to 1 if you have the `memset' function. */
 #undef HAVE_MEMSET
 
+/* Define to 1 if you have the `mkfifo' function. */
+#undef HAVE_MKFIFO
+
 /* Define to 1 if you have the <netdb.h> header file. */
 #undef HAVE_NETDB_H
 
@@ -32,9 +38,6 @@
 
 /* Define to 1 if you have the `socket' function. */
 #undef HAVE_SOCKET
-
-/* Define to 1 if stdbool.h conforms to C99. */
-#undef HAVE_STDBOOL_H
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
