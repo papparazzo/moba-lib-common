@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -32,7 +32,9 @@
 
 #include "jsonstreamreadersocket.h"
 
-JsonStreamReaderSocket::JsonStreamReaderSocket(const std::string &host, int port) {
+namespace moba {
+
+    JsonStreamReaderSocket::JsonStreamReaderSocket(const std::string &host, int port) {
     struct sockaddr_in host_addr;
 
     ::memset(&host_addr, 0, sizeof (host_addr));
@@ -62,8 +64,9 @@ JsonStreamReaderSocket::JsonStreamReaderSocket(const std::string &host, int port
     }
 }
 
-char JsonStreamReaderSocket::read() {
-    char data;
-    ::recv(this->socket, &data, sizeof(data), 0);
-    return data;
+    char JsonStreamReaderSocket::read() {
+        char data;
+        ::recv(this->socket, &data, sizeof(data), 0);
+        return data;
+    }
 }

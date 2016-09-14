@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -27,108 +27,112 @@
 
 #include "jsonabstractitem.h"
 
-class Message {
-    public:
-        enum MessageType {
-        // ---- CLIENT ----
-            MT_VOID,
-            MT_ECHO_RES,
-            MT_ECHO_REQ,
-            MT_ERROR,
+namespace moba {
 
-            MT_CLIENT_START,
-            MT_CLIENT_CONNECTED,
-            MT_CLIENT_CLOSE,
-            MT_CLIENT_SHUTDOWN,
-            MT_CLIENT_RESET,
-            MT_CLIENT_SELF_TESTING,
+    class Message {
 
-        // ---- SERV ----
-            MT_MAX_CLIENT_COUNT,
-            MT_NEW_CLIENT_STARTED,
-            MT_CLIENT_CLOSED,
-            MT_RESET_CLIENT,
+        public:
+            enum MessageType {
+            // ---- CLIENT ----
+                MT_VOID,
+                MT_ECHO_RES,
+                MT_ECHO_REQ,
+                MT_ERROR,
 
-            MT_SERVER_INFO_REQ,
-            MT_SERVER_INFO_RES,
-            MT_CON_CLIENTS_REQ,
-            MT_CON_CLIENTS_RES,
-            MT_SELF_TESTING_CLIENT,
+                MT_CLIENT_START,
+                MT_CLIENT_CONNECTED,
+                MT_CLIENT_CLOSE,
+                MT_CLIENT_SHUTDOWN,
+                MT_CLIENT_RESET,
+                MT_CLIENT_SELF_TESTING,
 
-        // ---- ENV ----
-            MT_GLOBAL_TIMER_EVENT,
-            MT_GET_GLOBAL_TIMER,
-            MT_SET_GLOBAL_TIMER,
-            MT_GET_ENVIRONMENT,
-            MT_SET_ENVIRONMENT,
-            MT_GET_AMBIENCE,
-            MT_SET_AMBIENCE,
-            MT_GET_AUTO_MODE,
-            MT_SET_AUTO_MODE,
-            MT_GET_COLOR_THEME,
-            MT_SET_COLOR_THEME,
-            MT_COLOR_THEME_EVENT,
-            MT_GET_AMBIENT_LIGHT,
-            MT_SET_AMBIENT_LIGHT,
+            // ---- SERV ----
+                MT_MAX_CLIENT_COUNT,
+                MT_NEW_CLIENT_STARTED,
+                MT_CLIENT_CLOSED,
+                MT_RESET_CLIENT,
 
-        // ---- SYS ----
-            MT_EMERGENCY_STOP,
-            MT_EMERGENCY_STOP_CLEARING,
-            MT_GET_HARDWARE_STATE,
-            MT_SET_HARDWARE_STATE,
-            MT_HARDWARE_STATE_CHANGED,
-            MT_HARDWARE_SHUTDOWN,
-            MT_HARDWARE_RESET,
-            MT_HARDWARE_SWITCH_STANDBY,
+                MT_SERVER_INFO_REQ,
+                MT_SERVER_INFO_RES,
+                MT_CON_CLIENTS_REQ,
+                MT_CON_CLIENTS_RES,
+                MT_SELF_TESTING_CLIENT,
 
-        // ---- TLT ----
-            MT_GET_LAYOUTS_REQ,
-            MT_GET_LAYOUTS_RES,
-            MT_DEL_LAYOUT,
-            MT_LAYOUT_DELETED,
-            MT_CREATE_LAYOUT_REQ,
-            MT_CREATE_LAYOUT_RES,
-            MT_LAYOUT_CREATED,
-            MT_UPDATE_LAYOUT,
-            MT_LAYOUT_UPDATED,
+            // ---- ENV ----
+                MT_GLOBAL_TIMER_EVENT,
+                MT_GET_GLOBAL_TIMER,
+                MT_SET_GLOBAL_TIMER,
+                MT_GET_ENVIRONMENT,
+                MT_SET_ENVIRONMENT,
+                MT_GET_AMBIENCE,
+                MT_SET_AMBIENCE,
+                MT_GET_AUTO_MODE,
+                MT_SET_AUTO_MODE,
+                MT_GET_COLOR_THEME,
+                MT_SET_COLOR_THEME,
+                MT_COLOR_THEME_EVENT,
+                MT_GET_AMBIENT_LIGHT,
+                MT_SET_AMBIENT_LIGHT,
 
-            MT_SYSTEM_NOTICE,
+            // ---- SYS ----
+                MT_EMERGENCY_STOP,
+                MT_EMERGENCY_STOP_CLEARING,
+                MT_GET_HARDWARE_STATE,
+                MT_SET_HARDWARE_STATE,
+                MT_HARDWARE_STATE_CHANGED,
+                MT_HARDWARE_SHUTDOWN,
+                MT_HARDWARE_RESET,
+                MT_HARDWARE_SWITCH_STANDBY,
 
-            MT_UNKNOWN
-        };
+            // ---- TLT ----
+                MT_GET_LAYOUTS_REQ,
+                MT_GET_LAYOUTS_RES,
+                MT_DEL_LAYOUT,
+                MT_LAYOUT_DELETED,
+                MT_CREATE_LAYOUT_REQ,
+                MT_CREATE_LAYOUT_RES,
+                MT_LAYOUT_CREATED,
+                MT_UPDATE_LAYOUT,
+                MT_LAYOUT_UPDATED,
 
-        Message(MessageType msgType = MT_VOID);
-        Message(MessageType msgType, JsonItemPtr data);
+                MT_SYSTEM_NOTICE,
 
-        virtual ~Message();
+                MT_UNKNOWN
+            };
 
-        static const std::string MSG_HEADER;
-        static const std::string DATA_HEADER;
+            Message(MessageType msgType = MT_VOID);
+            Message(MessageType msgType, JsonItemPtr data);
 
-        static JsonStringPtr convertToString(MessageType mt);
-        static MessageType convertToMsgType(const std::string &msgName);
+            virtual ~Message();
 
-        MessageType getMsgType() const {
-            return this->msgType;
-        }
+            static const std::string MSG_HEADER;
+            static const std::string DATA_HEADER;
 
-        JsonItemPtr getData() const {
-            return this->data;
-        }
+            static JsonStringPtr convertToString(MessageType mt);
+            static MessageType convertToMsgType(const std::string &msgName);
 
-        std::string getRawMessage() const;
+            MessageType getMsgType() const {
+                return this->msgType;
+            }
 
-        std::string msgTypeAsString() const;
+            JsonItemPtr getData() const {
+                return this->data;
+            }
 
-        template<typename charT, typename traits>
-        friend std::basic_ostream<charT, traits> &
-        operator<< (std::basic_ostream<charT, traits> &lhs, Message const &rhs) {
-            return lhs << rhs.msgTypeAsString();
-        }
+            std::string getRawMessage() const;
 
-    protected:
-        MessageType msgType;
-        JsonItemPtr data;
-};
+            std::string msgTypeAsString() const;
 
-typedef boost::shared_ptr<Message> MessagePtr;
+            template<typename charT, typename traits>
+            friend std::basic_ostream<charT, traits> &
+            operator<< (std::basic_ostream<charT, traits> &lhs, Message const &rhs) {
+                return lhs << rhs.msgTypeAsString();
+            }
+
+        protected:
+            MessageType msgType;
+            JsonItemPtr data;
+    };
+
+    typedef boost::shared_ptr<Message> MessagePtr;
+}

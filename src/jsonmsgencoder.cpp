@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -22,12 +22,14 @@
 
 #include "jsonmsgencoder.h"
 
-JsonMsgEncoder::JsonMsgEncoder() {
-}
+namespace moba {
 
-JsonMsgEncoder::JsonMsgEncoder(const JsonMsgEncoder& orig) {
-}
+    JsonMsgEncoder::JsonMsgEncoder() {
+    }
 
-JsonMsgEncoder::~JsonMsgEncoder() {
-}
+    JsonMsgEncoder::JsonMsgEncoder(const JsonMsgEncoder& orig) {
+    }
 
+    JsonMsgEncoder::~JsonMsgEncoder() {
+    }
+}

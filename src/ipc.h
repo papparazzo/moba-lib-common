@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -26,49 +26,56 @@
 #include <string>
 #include <exception>
 
-class IPCException : public std::exception {
-    public:
-        explicit IPCException(const std::string &err) throw() : what_(err) {
-        }
+namespace moba {
 
-        IPCException() throw() : what_("Unknown error") {
-        }
+    class IPCException : public std::exception {
 
-        virtual ~IPCException() throw() {
-        }
+        public:
+            explicit IPCException(const std::string &err) throw() : what_(err) {
+            }
 
-        virtual const char *what() const throw() {
-            return what_.c_str();
-        }
+            IPCException() throw() : what_("Unknown error") {
+            }
 
-    private:
-        std::string what_;
-};
+            virtual ~IPCException() throw() {
+            }
 
-class IPC {
-    public:
-        enum IPC_TYPE {
-            READING,
-            WRITING
-        };
+            virtual const char *what() const throw() {
+                return what_.c_str();
+            }
 
-        IPC(IPC_TYPE type, const std::string &ffile);
-        virtual ~IPC();
+        private:
+            std::string what_;
+    };
+    
+    class IPC {
 
-        void readLine(std::string &data);
-        void writeLine(const std::string &data);
+        public:
+            enum IPC_TYPE {
+                READING,
+                WRITING
+            };
 
-    protected:
-        static const int BUFFER_SIZE = 1024;
+            IPC(IPC_TYPE type, const std::string &ffile);
+            virtual ~IPC();
 
-        std::string ffile;
-        int fd;
-        IPC_TYPE type;
+            void readLine(std::string &data);
+            void writeLine(const std::string &data);
 
-        void init();
-        void terminate();
-        void reset();
-        IPC(const IPC&) {
+        protected:
+            static const int BUFFER_SIZE = 1024;
 
-        }
-};
+            std::string ffile;
+            int fd;
+            IPC_TYPE type;
+
+            void init();
+            void terminate();
+            void reset();
+            IPC(const IPC&) {
+
+            }
+    };
+}
+
+

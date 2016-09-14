@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -25,34 +25,35 @@
 #include <boost/shared_ptr.hpp>
 #include <exception>
 
-class JsonStreamReaderException : public std::exception {
+namespace moba {
 
-    public:
-        virtual ~JsonStreamReaderException() throw() {
+    class JsonStreamReaderException : public std::exception {
 
-        }
+        public:
+            virtual ~JsonStreamReaderException() throw() {
 
-        JsonStreamReaderException(const std::string& what) {
-            this->what__ = what;
-        }
+            }
 
-        virtual const char* what() const throw() {
-            return this->what__.c_str();
-        }
+            JsonStreamReaderException(const std::string& what) {
+                this->what__ = what;
+            }
 
-    private:
-        std::string what__;
-};
+            virtual const char* what() const throw() {
+                return this->what__.c_str();
+            }
 
-class JsonStreamReader;
+        private:
+            std::string what__;
+    };
 
-typedef boost::shared_ptr<JsonStreamReader> JsonStreamReaderPtr;
+    class JsonStreamReader;
 
-class JsonStreamReader {
-    public:
-        virtual ~JsonStreamReader() {};
-        virtual char read() = 0;
+    typedef boost::shared_ptr<JsonStreamReader> JsonStreamReaderPtr;
 
-    private:
+    class JsonStreamReader {
 
-};
+        public:
+            virtual ~JsonStreamReader() {};
+            virtual char read() = 0;
+    };
+}

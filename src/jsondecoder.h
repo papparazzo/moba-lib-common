@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -27,55 +27,56 @@
 #include "jsonabstractitem.h"
 #include "jsonstreamreader.h"
 
-class JsonException : public std::exception {
+namespace moba {
 
-    public:
-        virtual ~JsonException() throw() {
+    class JsonException : public std::exception {
 
-        }
+        public:
+            virtual ~JsonException() throw() {
 
-        JsonException() {
+            }
 
-        }
+            JsonException() {
 
-        JsonException(const std::string& what) {
-            this->what__ = what;
-        }
+            }
 
-        virtual const char* what() const throw() {
-            return this->what__.c_str();
-        }
+            JsonException(const std::string& what) {
+                this->what__ = what;
+            }
 
-    private:
-        std::string what__;
-};
+            virtual const char* what() const throw() {
+                return this->what__.c_str();
+            }
 
-class JsonDecoder {
-    public:
-        JsonDecoder(JsonStreamReaderPtr reader, bool strict = false) : lastChar(0), reader(reader), strict(strict) {}
-        JsonItemPtr decode();
+        private:
+            std::string what__;
+    };
 
-    protected:
-        void checkNext(const char x);
-        char next(bool ignoreWhitespace = false);
-        std::string next(int n);
-        std::string nextKey();
+    class JsonDecoder {
 
-        JsonItemPtr nextValue();
-        JsonItemPtr parseValue(const std::string &s);
-        JsonItemPtr nextJValue();
+        public:
+            JsonDecoder(JsonStreamReaderPtr reader, bool strict = false) : lastChar(0), reader(reader), strict(strict) {}
+            JsonItemPtr decode();
 
-        JsonStringPtr nextString();
-        JsonObjectPtr nextObject();
-        JsonArrayPtr nextArray();
+        protected:
+            void checkNext(const char x);
+            char next(bool ignoreWhitespace = false);
+            std::string next(int n);
+            std::string nextKey();
 
-        char read();
+            JsonItemPtr nextValue();
+            JsonItemPtr parseValue(const std::string &s);
+            JsonItemPtr nextJValue();
 
-    protected:
-        bool strict;
-        static const int  MAX_STRING_LENGTH = 1024;
-        char lastChar;
-        JsonStreamReaderPtr reader;
+            JsonStringPtr nextString();
+            JsonObjectPtr nextObject();
+            JsonArrayPtr nextArray();
 
-};
+            char read();
 
+            bool strict;
+            static const int  MAX_STRING_LENGTH = 1024;
+            char lastChar;
+            JsonStreamReaderPtr reader;
+    };
+}

@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -24,21 +24,25 @@
 
 #include "jsonstreamreader.h"
 
-class JsonStreamReaderSocket;
+namespace moba {
 
-typedef boost::shared_ptr<JsonStreamReaderSocket> JsonStreamReaderSocketPtr;
+    class JsonStreamReaderSocket;
 
-class JsonStreamReaderSocket : public JsonStreamReader {
-    public:
-        JsonStreamReaderSocket(const std::string &host, int port);
-        JsonStreamReaderSocket(int socket) : socket(socket) {
-        }
-        JsonStreamReaderSocket(const JsonStreamReaderSocket& orig) {}
-        virtual ~JsonStreamReaderSocket() {};
+    typedef boost::shared_ptr<JsonStreamReaderSocket> JsonStreamReaderSocketPtr;
 
-        virtual char read();
+    class JsonStreamReaderSocket : public JsonStreamReader {
 
-    protected:
-        int socket;
+        public:
+            JsonStreamReaderSocket(const std::string &host, int port);
+            JsonStreamReaderSocket(int socket) : socket(socket) {
+            }
+            JsonStreamReaderSocket(const JsonStreamReaderSocket& orig) {}
+            virtual ~JsonStreamReaderSocket() {};
 
-};
+            virtual char read();
+
+        protected:
+            int socket;
+
+    };
+}

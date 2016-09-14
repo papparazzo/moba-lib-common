@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -22,31 +22,34 @@
 
 #include "jsonmsgdecoder.h"
 
-MessagePtr JsonMsgDecoder::decodeMsg() {
+namespace moba {
 
-    this->checkNext('{');
-    this->checkNext('"');
-    std::string key = this->nextKey();
+    MessagePtr JsonMsgDecoder::decodeMsg() {
 
-    if(key != Message::MSG_HEADER) {
-        throw JsonException("invalid msg-header!");
+        this->checkNext('{');
+        this->checkNext('"');
+        std::string key = this->nextKey();
+
+        if(key != Message::MSG_HEADER) {
+            throw JsonException("invalid msg-header!");
+        }
+
+        this->checkNext(':');
+        this->checkNext('"');
+
+        std::string msgkey = this->nextKey();
+
+        this->checkNext(',');
+        this->checkNext('"');
+        key = this->nextKey();
+
+        if(key != Message::DATA_HEADER) {
+            throw JsonException("invalid data-header!");
+        }
+
+        this->checkNext(':');
+        JsonItemPtr o = this->nextValue();
+        this->checkNext('}');
+        return MessagePtr(new Message(Message::convertToMsgType(msgkey), o));
     }
-
-    this->checkNext(':');
-    this->checkNext('"');
-
-    std::string msgkey = this->nextKey();
-
-    this->checkNext(',');
-    this->checkNext('"');
-    key = this->nextKey();
-
-    if(key != Message::DATA_HEADER) {
-        throw JsonException("invalid data-header!");
-    }
-
-    this->checkNext(':');
-    JsonItemPtr o = this->nextValue();
-    this->checkNext('}');
-    return MessagePtr(new Message(Message::convertToMsgType(msgkey), o));
 }

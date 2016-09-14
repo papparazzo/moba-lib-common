@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -23,21 +23,28 @@
 #pragma once
 
 #include <string>
+#include "version.h"
 
-struct AppData {
-    std::string appName;
-    std::string version;
-    std::string date;
-    std::string time;
+namespace moba {
 
-    std::string host;
-    int port;
-};
+    struct AppData {
+        std::string appName;
+        Version version;
+        std::string date;
+        std::string time;
 
-std::string getErrno(const std::string &txt);
+        std::string host;
+        int port;
+    };
 
-bool setCoreFileSizeToULimit();
+    std::string getErrno(const std::string &txt);
 
-std::string getLicense(bool briefly);
+    std::string baseName(const std::string &path);
 
-void printAppData(const AppData &appData);
+    bool setCoreFileSizeToULimit();
+
+    std::string getLicense(bool briefly);
+
+    void printAppData(const AppData &appData);
+}
+

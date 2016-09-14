@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -25,11 +25,11 @@
 #include "jsondecoder.h"
 #include "message.h"
 
-class JsonMsgDecoder: public JsonDecoder {
-    public:
-        JsonMsgDecoder(JsonStreamReaderPtr reader, bool strict = false) : JsonDecoder(reader, strict) {};
-        MessagePtr decodeMsg();
+namespace moba {
+    class JsonMsgDecoder: public JsonDecoder {
 
-    private:
-
-};
+        public:
+            JsonMsgDecoder(JsonStreamReaderPtr reader, bool strict = false) : JsonDecoder(reader, strict) {};
+            MessagePtr decodeMsg();
+    };
+}

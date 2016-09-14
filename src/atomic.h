@@ -24,58 +24,60 @@
 
 #include <pthread.h>
 
-template <typename T> class Atomic {
-    public:
-        Atomic() {
-            pthread_mutex_init(&this->m, NULL);
-        }
+namespace moba {
+    template <typename T> class Atomic {
+        public:
+            Atomic() {
+                pthread_mutex_init(&this->m, NULL);
+            }
 
-        Atomic(const T& s) {
-            pthread_mutex_init(&this->m, NULL);
-            this->v = s;
-        }
+            Atomic(const T& s) {
+                pthread_mutex_init(&this->m, NULL);
+                this->v = s;
+            }
 
-        Atomic& operator = (const T& s) {
-            pthread_mutex_lock(&this->m);
-            this->v = s;
-            pthread_mutex_unlock(&this->m);
-            return *this;
-        }
+            Atomic& operator = (const T& s) {
+                pthread_mutex_lock(&this->m);
+                this->v = s;
+                pthread_mutex_unlock(&this->m);
+                return *this;
+            }
 
-        ~Atomic() {
-            pthread_mutex_destroy(&this->m);
-        }
+            ~Atomic() {
+                pthread_mutex_destroy(&this->m);
+            }
 
-        operator T() {
-            T t;
-            pthread_mutex_lock(&this->m);
-            t = this->v;
-            pthread_mutex_unlock(&this->m);
-            return t;
-        }
+            operator T() {
+                T t;
+                pthread_mutex_lock(&this->m);
+                t = this->v;
+                pthread_mutex_unlock(&this->m);
+                return t;
+            }
 
-        Atomic<T>& operator++() {
-            ++this->v;
-            return *this;
-        }
+            Atomic<T>& operator++() {
+                ++this->v;
+                return *this;
+            }
 
-        Atomic<T>& operator--() {
-            --this->v;
-            return *this;
-        }
+            Atomic<T>& operator--() {
+                --this->v;
+                return *this;
+            }
 
-        Atomic<T>& operator++(int) {
-            Atomic<T> t = *this;
-            ++*this;
-            return t;
-        }
+            Atomic<T>& operator++(int) {
+                Atomic<T> t = *this;
+                ++*this;
+                return t;
+            }
 
-        Atomic<T>& operator--(int) {
-            Atomic<T> t = *this;
-            --*this;
-            return t;
-        }
-    protected:
-        T v;
-        pthread_mutex_t m;
-};
+            Atomic<T>& operator--(int) {
+                Atomic<T> t = *this;
+                --*this;
+                return t;
+            }
+        protected:
+            T v;
+            pthread_mutex_t m;
+    };
+}

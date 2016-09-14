@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -22,13 +22,13 @@
 
 #pragma once
 
-class JsonMsgEncoder {
-    public:
-        JsonMsgEncoder();
-        JsonMsgEncoder(const JsonMsgEncoder& orig);
-        virtual ~JsonMsgEncoder();
+namespace moba {
 
-    private:
+    class JsonMsgEncoder {
 
-};
-
+        public:
+            JsonMsgEncoder();
+            JsonMsgEncoder(const JsonMsgEncoder& orig);
+            virtual ~JsonMsgEncoder();
+    };
+}

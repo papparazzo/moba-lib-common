@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -27,78 +27,80 @@
 
 #include "jsonabstractitem.h"
 
-class VersionException : public std::exception {
+namespace moba {
 
-    public:
-        virtual ~VersionException() throw() {
-        }
+    class VersionException : public std::exception {
 
-        VersionException(const std::string &what) {
-            this->what__ = what;
-        }
+        public:
+            virtual ~VersionException() throw() {
+            }
 
-        virtual const char *what() const throw() {
-            return this->what__.c_str();
-        }
+            VersionException(const std::string &what) {
+                this->what__ = what;
+            }
 
-    private:
-        std::string what__;
-};
+            virtual const char *what() const throw() {
+                return this->what__.c_str();
+            }
 
-class Version : public JsonAbstractItem {
-    public:
-        Version() : majorn(-1) {
-        }
+        private:
+            std::string what__;
+    };
 
-        Version(int major, int minor, int build, int patch) :
-        majorn(majorn), minorn(minorn), buildn(buildn), patchn(patchn) {
-        }
+    class Version : public JsonAbstractItem {
 
-        Version(const Version &orig) :
-        majorn(orig.majorn), minorn(orig.minorn),
-        buildn(orig.buildn), patchn(orig.patchn) {
-        }
+        public:
+            Version() : majorn(-1) {
+            }
 
-        Version(const std::string &version);
+            Version(int major, int minor = 0, int build = 0, int patch = 0) :
+            majorn(majorn), minorn(minorn), buildn(buildn), patchn(patchn) {
+            }
 
-        virtual ~Version() {
-        };
+            Version(const Version &orig) :
+            majorn(orig.majorn), minorn(orig.minorn),
+            buildn(orig.buildn), patchn(orig.patchn) {
+            }
 
-        int compareMajor(const Version &v) const;
+            virtual ~Version() {
+            };
 
-        int compareMinor(const Version &v) const;
+            int compareMajor(const Version &v) const;
 
-        inline bool operator == (const Version &v) const {
-            return
-                this->majorn == v.majorn &&
-                this->minorn == v.minorn &&
-                this->buildn == v.buildn &&
-                this->patchn == v.patchn;
-        }
+            int compareMinor(const Version &v) const;
 
-        inline bool operator != (const Version &v) const {
-            return !this->operator ==(v);
-        }
+            inline bool operator == (const Version &v) const {
+                return
+                    this->majorn == v.majorn &&
+                    this->minorn == v.minorn &&
+                    this->buildn == v.buildn &&
+                    this->patchn == v.patchn;
+            }
 
-        bool operator <(const Version &v) const;
-        bool operator >(const Version &v) const;
+            inline bool operator != (const Version &v) const {
+                return !this->operator ==(v);
+            }
 
-        bool operator <=(const Version &v) const;
-        bool operator >=(const Version &v) const;
+            bool operator <(const Version &v) const;
+            bool operator >(const Version &v) const;
 
-        friend std::ostream& operator<<(std::ostream &out, const Version &v);
+            bool operator <=(const Version &v) const;
+            bool operator >=(const Version &v) const;
+
+            friend std::ostream& operator<<(std::ostream &out, const Version &v);
 
 
-        std::string getJsonString() const;
+            std::string getJsonString() const;
 
-        JsonItemPtr toJsonPtr() {
-            return JsonItemPtr(new Version(*this));
-        }
+            JsonItemPtr toJsonPtr() {
+                return JsonItemPtr(new Version(*this));
+            }
 
-    protected:
-        int majorn;
-        int minorn;
-        int buildn;
-        int patchn;
-};
+        protected:
+            int majorn;
+            int minorn;
+            int buildn;
+            int patchn;
+    };
+}
 

@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -22,77 +22,22 @@
 
 #pragma once
 
-#include <iostream>
-#include <iomanip>
-#include <sstream>
 #include <string>
-#include <ctime>
-#include <sys/timeb.h>
+#include <ostream>
 
-#define LOG(loglevel) static_cast<std::ostream&>(tlog::CLog::theLogger()(__FILE__, __LINE__, (loglevel)))
+#define LOG(loglevel)          moba::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, (loglevel))
+#define VC_LOG(VarName)        moba::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, moba::NOTICE) << "content of [" #VarName "]\t = <" << (VarName) << ">"
+#define EXC_LOG(excType, What) moba::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, moba::WARNING) << (excType) << " exception occurred >> what(" << (What) << ") <<"
 
-namespace tlog {
-    enum enuLogLevel {
-        Emerg   = 1,
-        Alert   = 2,
-        Error   = 3,
-        Warning = 4,
-        Info    = 5,
-        Notice  = 6,
+namespace moba {
+
+    enum LogLevel {
+        ERROR,
+        WARNING,
+        INFO,
+        NOTICE,
+        DEBUG
     };
 
-    class CLog;
-    class CLogEntry {
-        friend class CLog;
-
-        private:
-            CLogEntry(
-                CLog & log,
-                const char* szFile,
-                int iLine,
-                tlog::enuLogLevel logLevel
-            ) : log_(log), szFile_(szFile), iLine_(iLine), logLevel_(logLevel) {
-            }
-
-            CLogEntry(
-                const CLogEntry& le
-            ) : log_(le.log_), szFile_(le.szFile_), iLine_(le.iLine_), logLevel_(le.logLevel_) {
-            }
-
-        public:
-            virtual ~CLogEntry();
-
-            operator std::ostream&() {
-                return buffer;
-            }
-
-        private:
-            CLog& log_;
-            const char* szFile_;
-            int iLine_;
-            tlog::enuLogLevel logLevel_;
-            std::ostringstream buffer;
-    };
-
-    class CLog {
-        private:
-            CLog() {}                   // Konstruktor
-            CLog(const CLog&);          // Copy-Konstruktor
-
-        public:
-            static CLog& theLogger();
-
-            CLogEntry operator()(
-                const char* szFile, int iLine, tlog::enuLogLevel logLevel
-            ) {
-                return CLogEntry(*this, szFile, iLine, logLevel);
-            }
-
-            void write(
-                const std::string &strLogText,
-                const char* szFile,
-                const int &iLine,
-                const enuLogLevel &logLevel
-            );
-    };
-} // namespace tlog
+    std::ostream &writeLoggerPrefix(std::ostream &stream, const std::string &file, const int &line, const LogLevel &logLevel);
+}

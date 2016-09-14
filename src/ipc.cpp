@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Version:    1.0.0
  *
@@ -33,79 +33,83 @@
 #include "helper.h"
 #include "ipc.h"
 
-IPC::IPC(IPC_TYPE type, const std::string &ffile) : type(type), ffile(ffile) {
-    sigignore(SIGPIPE);
-    this->init();
+namespace moba {
+    
+    IPC::IPC(IPC_TYPE type, const std::string &ffile) : type(type), ffile(ffile) {
+        sigignore(SIGPIPE);
+        this->init();
+    }
+
+    IPC::~IPC() {
+        this->terminate();
+    }
+
+    void IPC::reset() {
+        this->terminate();
+        this->init();
+    }
+
+    void IPC::init() {
+        struct stat attribut;
+
+        if(
+            stat(this->ffile.c_str(), &attribut) == 0 &&
+            S_ISFIFO(attribut.st_mode) == 0 &&
+            unlink(this->ffile.c_str()) == -1
+        ) {
+            throw IPCException(getErrno("unlink failed"));
+        }
+
+        if(mkfifo(this->ffile.c_str(), S_IRUSR | S_IWUSR) == -1 && errno != EEXIST) {
+            throw IPCException(getErrno("Unable to create FIFO"));
+        }
+
+        int params;
+        if(this->type == READING) {
+            params = O_RDONLY;
+        } else {
+            params = O_WRONLY;
+        }
+
+        this->fd = open(this->ffile.c_str(), params);
+        if(this->fd == -1) {
+            throw IPCException(getErrno("Unable to open FIFO"));
+        }
+    }
+
+    void IPC::terminate() {
+        if(this->fd == -1) {
+            return;
+        }
+        close(this->fd);
+        this->fd = -1;
+    }
+
+    void IPC::writeLine(const std::string &data) {
+        if(this->type == READING) {
+            throw IPCException("type is set to reading");
+        }
+        std::string line = data + "\n";
+        if(write(this->fd, line.c_str(), line.size()) == -1) {
+            throw IPCException(getErrno("writing failed"));
+        }
+    }
+
+    void IPC::readLine(std::string &data) {
+        if(this->type == WRITING) {
+            throw IPCException("type is set to writing");
+        }
+
+        char buffer[IPC::BUFFER_SIZE];
+
+        FILE *stream = fdopen(this->fd, "r");
+        if(stream == NULL) {
+            throw IPCException(getErrno("converting failed"));
+        }
+        if(fgets(buffer, IPC::BUFFER_SIZE, stream) == NULL) {
+            throw IPCException("could not read");
+        }
+        data = std::string(buffer);
+    }
 }
 
-IPC::~IPC() {
-    this->terminate();
-}
-
-void IPC::reset() {
-    this->terminate();
-    this->init();
-}
-
-void IPC::init() {
-    struct stat attribut;
-
-    if(
-        stat(this->ffile.c_str(), &attribut) == 0 &&
-        S_ISFIFO(attribut.st_mode) == 0 &&
-        unlink(this->ffile.c_str()) == -1
-    ) {
-        throw IPCException(getErrno("unlink failed"));
-    }
-
-    if(mkfifo(this->ffile.c_str(), S_IRUSR | S_IWUSR) == -1 && errno != EEXIST) {
-        throw IPCException(getErrno("Unable to create FIFO"));
-    }
-
-    int params;
-    if(this->type == READING) {
-        params = O_RDONLY;
-    } else {
-        params = O_WRONLY;
-    }
-
-    this->fd = open(this->ffile.c_str(), params);
-    if(this->fd == -1) {
-        throw IPCException(getErrno("Unable to open FIFO"));
-    }
-}
-
-void IPC::terminate() {
-    if(this->fd == -1) {
-        return;
-    }
-    close(this->fd);
-    this->fd = -1;
-}
-
-void IPC::writeLine(const std::string &data) {
-    if(this->type == READING) {
-        throw IPCException("type is set to reading");
-    }
-    std::string line = data + "\n";
-    if(write(this->fd, line.c_str(), line.size()) == -1) {
-        throw IPCException(getErrno("writing failed"));
-    }
-}
-
-void IPC::readLine(std::string &data) {
-    if(this->type == WRITING) {
-        throw IPCException("type is set to writing");
-    }
-
-    char buffer[IPC::BUFFER_SIZE];
-
-    FILE *stream = fdopen(this->fd, "r");
-    if(stream == NULL) {
-        throw IPCException(getErrno("converting failed"));
-    }
-    if(fgets(buffer, IPC::BUFFER_SIZE, stream) == NULL) {
-        throw IPCException("could not read");
-    }
-    data = std::string(buffer);
-}
