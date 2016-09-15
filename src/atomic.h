@@ -1,5 +1,5 @@
 /*
- *  Project:    CommonLib
+ *  Project:    moba-common
  *
  *  Copyright (C) 2016 Stefan Paproth <pappi-@gmx.de>
  *
