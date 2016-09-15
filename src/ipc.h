@@ -1,8 +1,6 @@
 /*
  *  Project:    moba-common
  *
- *  Version:    1.0.0
- *
  *  Copyright (C) 2016 Stefan Paproth <pappi-@gmx.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -47,7 +45,7 @@ namespace moba {
         private:
             std::string what_;
     };
-    
+
     class IPC {
 
         public:
