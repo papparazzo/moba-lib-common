@@ -1,8 +1,6 @@
 /*
  *  Project:    moba-common
  *
- *  Version:    1.0.0
- *
  *  Copyright (C) 2016 Stefan Paproth <pappi-@gmx.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -50,17 +48,25 @@ namespace moba {
     class Version : public JsonAbstractItem {
 
         public:
-            Version() : majorn(-1) {
+
+            Version() {
+                this->ver[MAJOR] = -1;
             }
 
-            Version(int major, int minor = 0, int build = 0, int patch = 0) :
-            majorn(majorn), minorn(minorn), buildn(buildn), patchn(patchn) {
+            Version(int major, int minor = 0, int build = 0, int patch = 0) {
+                this->ver[MAJOR] = major;
+                this->ver[MINOR] = minor;
+                this->ver[BUILD] = build;
+                this->ver[PATCH] = patch;
             }
 
-            Version(const Version &orig) :
-            majorn(orig.majorn), minorn(orig.minorn),
-            buildn(orig.buildn), patchn(orig.patchn) {
+            Version(const Version &orig) {
+                for(int i = 0; i < 4; ++i) {
+                    this->ver[0] = orig.ver[0];
+                }
             }
+
+            Version(const std::string &version);
 
             virtual ~Version() {
             };
@@ -71,10 +77,10 @@ namespace moba {
 
             inline bool operator == (const Version &v) const {
                 return
-                    this->majorn == v.majorn &&
-                    this->minorn == v.minorn &&
-                    this->buildn == v.buildn &&
-                    this->patchn == v.patchn;
+                    this->ver[MAJOR] == v.ver[MAJOR] &&
+                    this->ver[MINOR] == v.ver[MINOR] &&
+                    this->ver[BUILD] == v.ver[BUILD] &&
+                    this->ver[PATCH] == v.ver[PATCH];
             }
 
             inline bool operator != (const Version &v) const {
@@ -97,10 +103,13 @@ namespace moba {
             }
 
         protected:
-            int majorn;
-            int minorn;
-            int buildn;
-            int patchn;
+            enum VersionPart {
+                MAJOR = 0,
+                MINOR = 1,
+                BUILD = 2,
+                PATCH = 3
+            };
+            int ver[4];
     };
 }
 

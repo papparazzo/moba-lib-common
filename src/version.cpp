@@ -1,8 +1,6 @@
 /*
  *  Project:    moba-common
  *
- *  Version:    1.0.0
- *
  *  Copyright (C) 2016 Stefan Paproth <pappi-@gmx.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -25,55 +23,94 @@
 #include <vector>
 #include <iomanip>
 
+#include <boost/lexical_cast.hpp>
+
 namespace moba {
 
+    Version::Version(const std::string &version) {
+        std::string str = version;
+
+        if(str.length() == 0) {
+            throw VersionException(
+                "version-string is empty or not set"
+            );
+        }
+
+        try {
+            size_t p = version.rfind('-');
+            if(p != std::string::npos) {
+                this->ver[3] = boost::lexical_cast<int>(version.substr(p + 1));
+            }
+            size_t f;
+            --p;
+            for(int i = 2; i >= 0; --i) {
+                f = version.rfind('.', p);
+                if(f == std::string::npos) {
+                    f = -1;
+                }
+                this->ver[i] = boost::lexical_cast<int>(version.substr(f + 1, p - f));
+                p = f - 1;
+            }
+        } catch(...) {
+            throw VersionException("converting failed");
+        }
+    }
+
     std::string Version::getJsonString() const {
-        if(this->majorn == -1) {
+        if(this->ver[MAJOR] == -1) {
             return "\"0.0.0.0\"";
         }
         std::stringstream ss;
         ss <<
-            '"' << this->majorn << '.' <<
-            this->minorn << '.' <<
-            this->buildn << '.' <<
-            this->patchn << '"';
+            '"' << this->ver[MAJOR] << '.' <<
+            this->ver[MINOR] << '.' <<
+            this->ver[BUILD] << '.' <<
+            this->ver[PATCH] << '"';
         return ss.str();;
     }
 
     int Version::compareMajor(const Version &v) const {
-        if(this->majorn < v.majorn) {
+        if(this->ver[MAJOR] < v.ver[MAJOR]) {
             return -1;
-        } else if(this->majorn > v.majorn) {
+        }
+        if(this->ver[MAJOR] > v.ver[MAJOR]) {
             return 1;
         }
         return 0;
     }
 
     int Version::compareMinor(const Version &v) const {
-        if(this->minorn < v.minorn) {
+        if(this->ver[MINOR] < v.ver[MINOR]) {
             return -1;
-        } else if(this->minorn > v.minorn) {
+        } else if(this->ver[MINOR] > v.ver[MINOR]) {
             return 1;
         }
         return 0;
     }
 
     bool Version::operator <(const Version &v) const {
-        if(this->majorn < v.majorn) {
+        if(this->ver[MAJOR] < v.ver[MAJOR]) {
             return true;
-        } else if(this->majorn > v.majorn) {
+        }
+        if(this->ver[MAJOR] > v.ver[MAJOR]) {
             return false;
-        } else if(this->minorn < v.minorn) {
+        }
+        if(this->ver[MINOR] < v.ver[MINOR]) {
             return true;
-        } else if(this->minorn > v.minorn) {
+        }
+        if(this->ver[MINOR] > v.ver[MINOR]) {
             return false;
-        } else if(this->buildn < v.buildn) {
+        }
+        if(this->ver[BUILD] < v.ver[BUILD]) {
             return true;
-        } else if(this->buildn > v.buildn) {
+        }
+        if(this->ver[BUILD] > v.ver[BUILD]) {
             return false;
-        } else if(this->patchn < v.patchn) {
+        }
+        if(this->ver[PATCH] < v.ver[PATCH]) {
             return true;
-        } else if(this->patchn > v.patchn) {
+        }
+        if(this->ver[PATCH] > v.ver[PATCH]) {
             return false;
         }
         return false;
@@ -92,14 +129,15 @@ namespace moba {
     }
 
     std::ostream& operator<<(std::ostream &out, const Version &v) {
-        if(v.majorn == -1) {
+        if(v.ver[Version::MAJOR] == -1) {
             out << "0.0.0-0000";
             return out;
         }
 
         out <<
-            v.majorn << "." << v.minorn << "." << v.buildn << "-" <<
-            std::setw(4) << std::setfill('0') << v.patchn;
+            v.ver[Version::MAJOR] << "." << v.ver[Version::MINOR] << "." <<
+            v.ver[Version::BUILD] << "-" << std::setw(4) <<
+            std::setfill('0') << v.ver[Version::PATCH];
 
         return out;
     }
