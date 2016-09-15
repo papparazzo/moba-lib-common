@@ -38,11 +38,17 @@ namespace moba {
     }
 
     std::string baseName(const std::string &path) {
-        size_t found = path.rfind('/');
-        if(found == std::string::npos) {
+        size_t i;
+        for(i = path.length(); i > 0; i--) {
+            if(path[i - 1] != '/') {
+                break;
+            }
+        }
+        size_t p = path.rfind('/');
+        if(p == std::string::npos || i == 0) {
             return path;
         }
-        return std::string(path, found + 1);
+        return std::string(path, p + 1, i - p);
     }
 
     bool setCoreFileSizeToULimit() {
