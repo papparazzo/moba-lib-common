@@ -22,6 +22,7 @@
 
 #include <string>
 #include <ostream>
+#include <iostream>
 
 #define LOG(loglevel)          moba::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, (loglevel))
 #define VC_LOG(VarName)        moba::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, moba::NOTICE) << "content of [" #VarName "]\t = <" << (VarName) << ">"
