@@ -64,11 +64,10 @@ namespace moba {
         int setRetu = setrlimit(RLIMIT_CORE, &currResource);
 
         if(setRetu != 0) {
-            LOG(WARNING) << "unable to set core file size to unlimited";
-            LOG(INFO) << strerror(errno);
+            LOG(WARNING) << getErrno("unable to set core file size to unlimited") << std::endl;
             return false;
         }
-        LOG(NOTICE) << "core file size set to unlimited.";
+        LOG(NOTICE) << "core file size set to unlimited." << std::endl;
         return true;
     }
 
