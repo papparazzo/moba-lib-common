@@ -23,6 +23,7 @@
 #include <cerrno>
 #include <cstring>
 #include <iosfwd>
+#include <sstream>
 
 #include "helper.h"
 #include "log.h"
