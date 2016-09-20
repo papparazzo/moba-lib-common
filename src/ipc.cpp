@@ -104,10 +104,14 @@ namespace moba {
         if(stream == NULL) {
             throw IPCException(getErrno("converting failed"));
         }
-        if(fgets(buffer, IPC::BUFFER_SIZE, stream) == NULL) {
-            throw IPCException("could not read");
+        if(fgets(buffer, IPC::BUFFER_SIZE, stream) != NULL) {
+            data = std::string(buffer);
+            return;
         }
-        data = std::string(buffer);
+        if(feof(stream)) {
+            throw IPCException("end-of-file reached.");
+        }
+        throw IPCException(getErrno("could not read"));
     }
 }
 
