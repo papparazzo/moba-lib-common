@@ -62,25 +62,20 @@ namespace moba {
             throw IPCException(getErrno("Unable to create FIFO"));
         }
 
-        int params;
-        if(this->type == READING) {
-            params = O_RDONLY;
-        } else {
-            params = O_WRONLY;
-        }
-
-        this->fd = open(this->ffile.c_str(), params);
-        if(this->fd == -1) {
+        this->stream = fopen(this->ffile.c_str(), "w+");
+        if(this->stream == NULL) {
             throw IPCException(getErrno("Unable to open FIFO"));
         }
+        int fd = fileno(this->stream);
+        fcntl(fd, F_SETFD, fcntl(fd, F_GETFD, 0) | FD_CLOEXEC);
     }
 
     void IPC::terminate() {
-        if(this->fd == -1) {
+        if(this->stream == NULL) {
             return;
         }
-        close(this->fd);
-        this->fd = -1;
+        fclose(this->stream);
+        this->stream = NULL;
     }
 
     void IPC::writeLine(const std::string &data) {
@@ -88,7 +83,8 @@ namespace moba {
             throw IPCException("type is set to reading");
         }
         std::string line = data + "\n";
-        if(write(this->fd, line.c_str(), line.size()) == -1) {
+        size_t l = line.length();
+        if(fwrite(line.c_str(), 1, l, this->stream) != l) {
             throw IPCException(getErrno("writing failed"));
         }
     }
@@ -100,15 +96,11 @@ namespace moba {
 
         char buffer[IPC::BUFFER_SIZE];
 
-        FILE *stream = fdopen(this->fd, "r");
-        if(stream == NULL) {
-            throw IPCException(getErrno("converting failed"));
-        }
-        if(fgets(buffer, IPC::BUFFER_SIZE, stream) != NULL) {
+        if(fgets(buffer, IPC::BUFFER_SIZE, this->stream) != NULL) {
             data = std::string(buffer);
             return;
         }
-        if(feof(stream)) {
+        if(feof(this->stream)) {
             throw IPCException("end-of-file reached.");
         }
         throw IPCException(getErrno("could not read"));

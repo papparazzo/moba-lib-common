@@ -64,7 +64,7 @@ namespace moba {
             static const int BUFFER_SIZE = 1024;
 
             std::string ffile;
-            int fd;
+            FILE *stream;
             IPC_TYPE type;
 
             void init();
