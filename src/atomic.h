@@ -54,12 +54,16 @@ namespace moba {
             }
 
             Atomic<T>& operator++() {
+                pthread_mutex_lock(&this->m);
                 ++this->v;
+                pthread_mutex_unlock(&this->m);
                 return *this;
             }
 
             Atomic<T>& operator--() {
+                pthread_mutex_lock(&this->m);
                 --this->v;
+                pthread_mutex_unlock(&this->m);
                 return *this;
             }
 
