@@ -59,6 +59,8 @@ namespace moba {
         if(sigaction(signr, &handler, NULL) < 0) {
             throw SignalHandlerException(getErrno("sigaction failed"));
         }
+        this->signr = signr;
+        sigmap[this->signr] = 0;
     }
 
     SignalHandler::~SignalHandler() {
@@ -69,6 +71,7 @@ namespace moba {
         handler.sa_flags = SA_RESTART;
 
         sigaction(this->signr, &handler, NULL);
+        sigmap[this->signr] = -1;
     }
 
     void SignalHandler::resetSignalState() {

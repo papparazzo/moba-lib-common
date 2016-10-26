@@ -23,6 +23,7 @@
 #include <csignal>
 #include <exception>
 #include <string>
+#include <boost/noncopyable.hpp>
 
 namespace moba {
 
@@ -45,7 +46,7 @@ namespace moba {
             std::string what__;
     };
 
-    class SignalHandler {
+    class SignalHandler : private boost::noncopyable {
 
         public:
             SignalHandler(int signr);
@@ -56,9 +57,6 @@ namespace moba {
             bool hasSignalTriggered();
 
         protected:
-            SignalHandler(const SignalHandler&) {}
-            SignalHandler& operator= (const SignalHandler&) {}
-
             void lockSignal();
             void unlockSignal();
 
