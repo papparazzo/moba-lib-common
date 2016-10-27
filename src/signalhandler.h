@@ -53,7 +53,6 @@ namespace moba {
 
             virtual ~SignalHandler();
 
-            void resetSignalState();
             bool hasSignalTriggered();
 
         protected:
