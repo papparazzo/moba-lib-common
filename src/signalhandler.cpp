@@ -36,7 +36,7 @@ namespace {
     };
 
     void signalCallBack(int sig) {
-        sigmap[sig] = 1;
+        sigmap[sig]++;
     }
 }
 
@@ -74,10 +74,19 @@ namespace moba {
         sigmap[this->signr] = -1;
     }
 
+    void SignalHandler::resetSignalState() {
+        this->lockSignal();
+        sigmap[this->signr] = 0;
+        this->unlockSignal();
+
+    }
+
     bool SignalHandler::hasSignalTriggered() {
         this->lockSignal();
         bool retVal = (bool)sigmap[this->signr];
-        sigmap[this->signr] = 0;
+        if(retVal) {
+            sigmap[this->signr]--;
+        }
         this->unlockSignal();
         return retVal;
     }
