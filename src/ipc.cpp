@@ -18,92 +18,77 @@
  *
  */
 
-#include <unistd.h>
 #include <sys/types.h>
-#include <sys/stat.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
 #include <fcntl.h>
-#include <signal.h>
-
 #include <cerrno>
-#include <cstdio>
 #include <cstring>
 
 #include "helper.h"
 #include "ipc.h"
+#include "log.h"
 
 namespace moba {
 
-    IPC::IPC(IPC_TYPE type, const std::string &ffile) : type(type), ffile(ffile) {
-        sigignore(SIGPIPE);
-        this->init();
+    IPC::IPC(key_t key, IPC_TYPE type) {
+        int flags = S_IRWXU | S_IWGRP | S_IWOTH;;
+        if(type == SERVER) {
+            flags |= IPC_CREAT | IPC_EXCL;
+        }
+        this->mID = msgget(key, flags);
+        this->type = type;
+        if(this->mID == -1) {
+             throw IPCException(getErrno("msgget failed"));
+        }
     }
 
     IPC::~IPC() {
-        this->terminate();
-    }
-
-    void IPC::reset() {
-        this->terminate();
-        this->init();
-    }
-
-    void IPC::init() {
-        struct stat attribut;
-
-        if(
-            stat(this->ffile.c_str(), &attribut) == 0 &&
-            S_ISFIFO(attribut.st_mode) == 0 &&
-            unlink(this->ffile.c_str()) == -1
-        ) {
-            throw IPCException(getErrno("unlink failed"));
-        }
-
-        if(mkfifo(this->ffile.c_str(), S_IRUSR | S_IWUSR) == -1 && errno != EEXIST) {
-            throw IPCException(getErrno("Unable to create FIFO"));
-        }
-
-        this->stream = fopen(this->ffile.c_str(), "w+");
-        if(this->stream == NULL) {
-            throw IPCException(getErrno("Unable to open FIFO"));
-        }
-        int fd = fileno(this->stream);
-        fcntl(fd, F_SETFD, fcntl(fd, F_GETFD, 0) | FD_CLOEXEC);
-    }
-
-    void IPC::terminate() {
-        if(this->stream == NULL) {
+        if(this->type == CLIENT) {
             return;
         }
-        fclose(this->stream);
-        this->stream = NULL;
-    }
-
-    void IPC::writeLine(const std::string &data) {
-        if(this->type == READING) {
-            throw IPCException("type is set to reading");
-        }
-        std::string line = data + "\n";
-        size_t l = line.length();
-        if(fwrite(line.c_str(), 1, l, this->stream) != l) {
-            throw IPCException(getErrno("writing failed"));
+        if(msgctl(this->mID, IPC_RMID, NULL) == -1) {
+            LOG(ERROR) << getErrno("unable to delete msg-queue! ") << std::endl;
         }
     }
 
-    void IPC::readLine(std::string &data) {
-        if(this->type == WRITING) {
-            throw IPCException("type is set to writing");
+    bool IPC::receive(long msgtyp, bool except) {
+        Message msg;
+        return this->receive(msg, msgtyp, except);
+    }
+
+    bool IPC::receive(Message &msg, long msgtyp, bool except) {
+        memset(msg.mtext, '\0', moba::IPC::MSG_LEN);
+        int msgflg = IPC_NOWAIT;
+        if(except) {
+            msgflg |= MSG_EXCEPT;
+        }
+        if(msgrcv(this->mID, &msg, IPC::MSG_LEN, msgtyp, msgflg) > 0) {
+            return true;
+        }
+        if(errno == ENOMSG) {
+            return false;
+        }
+        throw IPCException(getErrno("msgrcv failed"));
+    }
+
+    bool IPC::send(const std::string &data, long type) {
+        Message msg;
+        msg.mtype = type;
+        memset(msg.mtext, '\0', moba::IPC::MSG_LEN);
+        strncpy(msg.mtext, data.c_str(), moba::IPC::MSG_LEN);
+        this->send(msg);
+    }
+
+    bool IPC::send(const Message &msg) {
+        if(msgsnd(this->mID, &msg, IPC::MSG_LEN, IPC_NOWAIT) == 0) {
+            return true;
         }
 
-        char buffer[IPC::BUFFER_SIZE];
+        if(errno == EAGAIN) {
+            return false;
+        }
 
-        if(fgets(buffer, IPC::BUFFER_SIZE, this->stream) != NULL) {
-            data = std::string(buffer);
-            return;
-        }
-        if(feof(this->stream)) {
-            throw IPCException("end-of-file reached.");
-        }
-        throw IPCException(getErrno("could not read"));
+        throw IPCException(getErrno("msgsnd failed"));
     }
 }
-

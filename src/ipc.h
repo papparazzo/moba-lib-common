@@ -23,6 +23,7 @@
 #include <cstdio>
 #include <string>
 #include <exception>
+#include <boost/noncopyable.hpp>
 
 namespace moba {
 
@@ -46,33 +47,45 @@ namespace moba {
             std::string what_;
     };
 
-    class IPC {
+    class IPC : private boost::noncopyable {
 
         public:
-            enum IPC_TYPE {
-                READING,
-                WRITING
+            static const size_t MSG_LEN = 1024;
+
+            struct Message {
+                long mtype;
+                char mtext[IPC::MSG_LEN];
             };
 
-            IPC(IPC_TYPE type, const std::string &ffile);
+            enum IPC_TYPE {
+                SERVER,
+                CLIENT
+            };
+
+            enum IPC_CMD {
+                EMERGENCY_STOP     = 1,
+                EMERGENCY_RELEASE  = 3,
+                TEST               = 4,
+                RUN                = 6,
+
+                //HALT               = 2,
+                //CONTINUE           = 5,
+                //STORE              = 7,
+                //RESUME             = 8
+            };
+
+            IPC(key_t key, IPC_TYPE type = CLIENT);
+
+            bool receive(long type, bool except = false);
+            bool receive(Message &msg, long type = 0, bool except = false);
+            bool send(const std::string &data, long type);
+            bool send(const Message &msg);
+
             virtual ~IPC();
 
-            void readLine(std::string &data);
-            void writeLine(const std::string &data);
-
         protected:
-            static const int BUFFER_SIZE = 1024;
-
-            std::string ffile;
-            FILE *stream;
+            int mID;
             IPC_TYPE type;
-
-            void init();
-            void terminate();
-            void reset();
-            IPC(const IPC&) {
-
-            }
     };
 }
 
