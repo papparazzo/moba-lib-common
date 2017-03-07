@@ -24,6 +24,7 @@
 #include <cstring>
 #include <iosfwd>
 #include <sstream>
+#include <cstdio>
 
 #include "helper.h"
 #include "log.h"
@@ -57,7 +58,7 @@ namespace moba {
         errno = 0;
 
         if(getrlimit(RLIMIT_CORE, &currResource) != 0) {
-            LOG(ERROR) << "unable to get ressource limitations for core files!" << std::endl;
+            LOG(ERROR) << "unable to get resource limitations for core files!" << std::endl;
             return false;
         }
 
