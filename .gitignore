@@ -54,3 +54,4 @@ Makefile.in
 /config.status
 /configure.scan
 /autoscan.log
+/src/.deps/
