@@ -35,7 +35,7 @@ namespace moba {
         std::stringstream ss;
 
         char buffer[BUFSIZ];
-        ss << txt << " <" << strerror_r(buffer, BUFSIZ) << ": " << strerror(errno) << ">";
+        ss << txt << " <" << errno << ": " << strerror_r(errno, buffer, BUFSIZ) << ">";
         return ss.str();
     }
 
