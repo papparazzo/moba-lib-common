@@ -32,7 +32,9 @@ namespace moba {
 
     std::string getErrno(const std::string &txt) {
         std::stringstream ss;
-        ss << txt << " <" << errno << ": " << strerror(errno) << ">";
+
+        char buffer[BUFSIZ];
+        ss << txt << " <" << strerror_r(buffer, BUFSIZ) << ": " << strerror(errno) << ">";
         return ss.str();
     }
 
