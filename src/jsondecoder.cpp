@@ -23,6 +23,7 @@
 #include <boost/algorithm/string.hpp>
 #include <exception>
 #include <sstream>
+#include <iostream>
 
 namespace moba {
 
