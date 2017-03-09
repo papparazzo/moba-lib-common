@@ -55,3 +55,8 @@ Makefile.in
 /configure.scan
 /autoscan.log
 /src/.deps/
+
+# misc
+
+.deps/
+.dirstamp
