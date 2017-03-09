@@ -61,9 +61,10 @@ namespace moba {
             }
 
             Version(const Version &orig) {
-                for(int i = 0; i < 4; ++i) {
-                    this->ver[0] = orig.ver[0];
-                }
+                this->ver[MAJOR] = orig.ver[MAJOR];
+                this->ver[MINOR] = orig.ver[MINOR];
+                this->ver[BUILD] = orig.ver[BUILD];
+                this->ver[PATCH] = orig.ver[PATCH];
             }
 
             Version(const std::string &version);

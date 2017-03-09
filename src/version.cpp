@@ -62,11 +62,13 @@ namespace moba {
         }
         std::stringstream ss;
         ss <<
-            '"' << this->ver[MAJOR] << '.' <<
+            '"' << 
+            this->ver[MAJOR] << '.' <<
             this->ver[MINOR] << '.' <<
             this->ver[BUILD] << '.' <<
             this->ver[PATCH] << '"';
-        return ss.str();;
+        
+        return ss.str();
     }
 
     int Version::compareMajor(const Version &v) const {
