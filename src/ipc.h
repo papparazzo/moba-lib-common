@@ -50,8 +50,9 @@ namespace moba {
     class IPC : private boost::noncopyable {
 
         public:
-            static const size_t MSG_LEN = 1024;
-
+            static const size_t MSG_LEN     = 1024;
+            static const int    DEFAULT_KEY = 123133;
+            
             struct Message {
                 long mtype;
                 char mtext[IPC::MSG_LEN];
@@ -64,17 +65,12 @@ namespace moba {
 
             enum IPC_CMD {
                 EMERGENCY_STOP     = 1,
-                EMERGENCY_RELEASE  = 3,
-                TEST               = 4,
-                RUN                = 6,
-
-                //HALT               = 2,
-                //CONTINUE           = 5,
-                //STORE              = 7,
-                //RESUME             = 8
+                EMERGENCY_RELEASE  = 2,
+                TEST               = 3,
+                RUN                = 4,
             };
 
-            IPC(key_t key, IPC_TYPE type = CLIENT);
+            IPC(key_t key = IPC::DEFAULT_KEY, IPC_TYPE type = CLIENT);
 
             bool receive(long type, bool except = false);
             bool receive(Message &msg, long type = 0, bool except = false);
