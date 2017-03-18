@@ -59,18 +59,21 @@ namespace moba {
             };
 
             enum IPC_TYPE {
-                SERVER,
-                CLIENT
+                TYPE_SERVER,
+                TYPE_CLIENT
             };
 
             enum IPC_CMD {
-                EMERGENCY_STOP     = 1,
-                EMERGENCY_RELEASE  = 2,
-                TEST               = 3,
-                RUN                = 4,
+                CMD_EMERGENCY_STOP    = 1,
+                CMD_EMERGENCY_RELEASE = 2,
+                CMD_TEST              = 3,
+                CMD_RUN               = 4,
+                CMD_HALT              = 5,
+                CMD_CONTINUE          = 6,
+                CMD_RESET             = 7
             };
 
-            IPC(key_t key = IPC::DEFAULT_KEY, IPC_TYPE type = CLIENT);
+            IPC(key_t key = IPC::DEFAULT_KEY, IPC_TYPE type = TYPE_CLIENT);
 
             bool receive(long type, bool except = false);
             bool receive(Message &msg, long type = 0, bool except = false);

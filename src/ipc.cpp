@@ -33,7 +33,7 @@ namespace moba {
 
     IPC::IPC(key_t key, IPC_TYPE type) {
         int flags = S_IRWXU | S_IWGRP | S_IWOTH;;
-        if(type == SERVER) {
+        if(type == TYPE_SERVER) {
             flags |= IPC_CREAT | IPC_EXCL;
         }
         this->mID = msgget(key, flags);
@@ -44,7 +44,7 @@ namespace moba {
     }
 
     IPC::~IPC() {
-        if(this->type == CLIENT) {
+        if(this->type == TYPE_CLIENT) {
             return;
         }
         if(msgctl(this->mID, IPC_RMID, NULL) == -1) {
