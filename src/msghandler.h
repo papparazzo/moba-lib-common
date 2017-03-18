@@ -37,7 +37,7 @@ namespace moba {
 
             }
 
-            MsgHandlerException(const std::string& what) {
+            MsgHandlerException(const std::string &what) {
                 this->what__ = what;
             }
 

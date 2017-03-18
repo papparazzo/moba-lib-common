@@ -38,7 +38,7 @@ namespace moba {
 
             }
 
-            JsonException(const std::string& what) {
+            JsonException(const std::string &what) {
                 this->what__ = what;
             }
 

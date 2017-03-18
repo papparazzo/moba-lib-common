@@ -32,7 +32,7 @@ namespace moba {
 
             }
 
-            JsonStreamReaderException(const std::string& what) {
+            JsonStreamReaderException(const std::string &what) {
                 this->what__ = what;
             }
 
