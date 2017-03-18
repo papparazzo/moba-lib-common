@@ -92,7 +92,7 @@ namespace moba {
 
         Message msg(Message::MT_CLIENT_START, obj);
         this->sendMsg(msg);
-        MessagePtr mptr = this->recieveMsg(MSG_HANDLER_TIME_OUT_SEC);      
+        MessagePtr mptr = this->recieveMsg(MSG_HANDLER_TIME_OUT_SEC);
         if(!mptr || mptr->getMsgType() != Message::MT_CLIENT_CONNECTED) {
             MsgHandlerException("did not recieve CLIENT_CONNECTED");
         }

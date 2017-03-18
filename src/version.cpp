@@ -67,7 +67,7 @@ namespace moba {
             this->ver[MINOR] << '.' <<
             this->ver[BUILD] << '.' <<
             this->ver[PATCH] << '"';
-        
+
         return ss.str();
     }
 

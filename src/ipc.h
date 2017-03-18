@@ -52,7 +52,7 @@ namespace moba {
         public:
             static const size_t MSG_LEN     = 1024;
             static const int    DEFAULT_KEY = 123133;
-            
+
             struct Message {
                 long mtype;
                 char mtext[IPC::MSG_LEN];
