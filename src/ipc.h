@@ -70,7 +70,8 @@ namespace moba {
                 CMD_RUN               = 4,
                 CMD_HALT              = 5,
                 CMD_CONTINUE          = 6,
-                CMD_RESET             = 7
+                CMD_RESET             = 7,
+                CMD_TERMINATE         = 8
             };
 
             IPC(key_t key = IPC::DEFAULT_KEY, IPC_TYPE type = TYPE_CLIENT);
