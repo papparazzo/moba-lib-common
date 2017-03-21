@@ -81,7 +81,7 @@ namespace moba {
             bool send(const std::string &data, long type);
             bool send(const Message &msg);
 
-            Command getCMDFromString(const std::string &cmd);
+            static Command getCMDFromString(const std::string &cmd);
 
             virtual ~IPC();
 
