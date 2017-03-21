@@ -24,6 +24,9 @@
 #include <fcntl.h>
 #include <cerrno>
 #include <cstring>
+#include <string>
+
+#include <boost/algorithm/string.hpp>
 
 #include "helper.h"
 #include "ipc.h"
@@ -31,7 +34,7 @@
 
 namespace moba {
 
-    IPC::IPC(key_t key, IPC_TYPE type) {
+    IPC::IPC(key_t key, Type type) {
         int flags = S_IRWXU | S_IWGRP | S_IWOTH;;
         if(type == TYPE_SERVER) {
             flags |= IPC_CREAT | IPC_EXCL;
@@ -90,5 +93,33 @@ namespace moba {
         }
 
         throw IPCException(getErrno("msgsnd failed"));
+    }
+
+    IPC::Command IPC::getCMDFromString(const std::string &cmd) {
+        if(boost::iequals(cmd, "EMERGENCY_STOP")) {
+            return CMD_EMERGENCY_STOP;
+        }
+        if(boost::iequals(cmd, "EMERGENCY_RELEASE")) {
+            return CMD_EMERGENCY_RELEASE;
+        }
+        if(boost::iequals(cmd, "TEST")) {
+            return CMD_TEST;
+        }
+        if(boost::iequals(cmd, "RUN")) {
+            return CMD_RUN;
+        }
+        if(boost::iequals(cmd, "HALT")) {
+            return CMD_HALT;
+        }
+        if(boost::iequals(cmd, "CONTINUE")) {
+            return CMD_CONTINUE;
+        }
+        if(boost::iequals(cmd, "RESET")) {
+            return CMD_RESET;
+        }
+        if(boost::iequals(cmd, "TERMINATE")) {
+            return CMD_TERMINATE;
+        }
+        throw IPCException(std::string("unknown command <" + cmd + ">"));
     }
 }

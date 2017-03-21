@@ -58,12 +58,12 @@ namespace moba {
                 char mtext[IPC::MSG_LEN];
             };
 
-            enum IPC_TYPE {
+            enum Type {
                 TYPE_SERVER,
                 TYPE_CLIENT
             };
 
-            enum IPC_CMD {
+            enum Command {
                 CMD_EMERGENCY_STOP    = 1,
                 CMD_EMERGENCY_RELEASE = 2,
                 CMD_TEST              = 3,
@@ -74,18 +74,20 @@ namespace moba {
                 CMD_TERMINATE         = 8
             };
 
-            IPC(key_t key = IPC::DEFAULT_KEY, IPC_TYPE type = TYPE_CLIENT);
+            IPC(key_t key = IPC::DEFAULT_KEY, Type type = TYPE_CLIENT);
 
             bool receive(long type, bool except = false);
             bool receive(Message &msg, long type = 0, bool except = false);
             bool send(const std::string &data, long type);
             bool send(const Message &msg);
 
+            Command getCMDFromString(const std::string &cmd);
+
             virtual ~IPC();
 
         protected:
             int mID;
-            IPC_TYPE type;
+            Type type;
     };
 }
 
