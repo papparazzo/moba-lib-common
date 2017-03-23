@@ -49,17 +49,14 @@ namespace moba {
     class SignalHandler : private boost::noncopyable {
 
         public:
-            SignalHandler(int signr);
-
-            virtual ~SignalHandler();
-
-            void resetSignalState();
-            bool hasSignalTriggered();
+            bool observeSignal(int signr);
+            void resetSignalState(int signr);
+            bool hasSignalTriggered(int signr);
+            bool hasAnySignalTriggered();
+            bool removeSignal(int signr);
 
         protected:
-            void lockSignal();
-            void unlockSignal();
-
-            int signr;
+            void lockSignal(int signr);
+            void unlockSignal(int signr);
     };
 }
