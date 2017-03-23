@@ -68,8 +68,10 @@ namespace moba {
 
             void reset(std::size_t newSize = 0) {
                 delete[] this->items;
-                this->items = new T[newSize];
-                this->size = newSize;
+                if(newSize > 0) {
+                    this->size = newSize;
+                }
+                this->items = new T[this->size];
                 this->ptrW = 0;
                 this->ptrR = 0;
             }
