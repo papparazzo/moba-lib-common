@@ -87,6 +87,13 @@ namespace {
 
         {moba::Message::MT_UPDATE_LAYOUT,           "UPDATE_LAYOUT"          },
         {moba::Message::MT_LAYOUT_UPDATED,          "LAYOUT_UPDATED"         },
+
+        {moba::Message::MT_UNLOCK_LAYOUT,           "UNLOCK_LAYOUT"          },
+        {moba::Message::MT_LAYOUT_UNLOCKED,         "LAYOUT_UNLOCKED"        },
+
+        {moba::Message::MT_GET_LAYOUT_REQ,          "GET_LAYOUT_REQ"         },
+        {moba::Message::MT_GET_LAYOUT_RES,          "GET_LAYOUT_RES"         },
+
     };
 }
 

@@ -92,6 +92,11 @@ namespace moba {
                 MT_LAYOUT_CREATED,
                 MT_UPDATE_LAYOUT,
                 MT_LAYOUT_UPDATED,
+                MT_UNLOCK_LAYOUT,
+                MT_LAYOUT_UNLOCKED,
+
+                MT_GET_LAYOUT_REQ,
+                MT_GET_LAYOUT_RES,
 
                 MT_SYSTEM_NOTICE,
 
@@ -113,9 +118,7 @@ namespace moba {
                 return this->msgType;
             }
 
-            JsonItemPtr getData() const {
-                return this->data;
-            }
+            JsonItemPtr getData() const;
 
             std::string getRawMessage() const;
 

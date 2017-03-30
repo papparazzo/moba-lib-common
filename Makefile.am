@@ -1,7 +1,13 @@
 AUTOMAKE_OPTIONS = subdir-objects
 lib_LTLIBRARIES = libMoBaCommon.la
-libMoBaCommon_la_SOURCES = src/log.cpp src/jsonstreamreadersocket.cpp src/jsonmsgencoder.cpp src/version.cpp src/jsonmsgdecoder.cpp src/msghandler.cpp src/message.cpp src/helper.cpp src/jsondecoder.cpp src/ipc.cpp src/signalhandler.cpp
+libMoBaCommon_la_SOURCES = src/log.cpp src/jsonstreamreadersocket.cpp \
+src/jsonmsgencoder.cpp src/version.cpp src/jsonmsgdecoder.cpp src/msghandler.cpp \
+src/message.cpp src/helper.cpp src/jsondecoder.cpp src/ipc.cpp src/signalhandler.cpp \
+src/environmenthandler.cpp src/layouthandler.cpp src/systemhandler.cpp
 otherincludedir = $(includedir)/moba
-otherinclude_HEADERS = src/jsonabstractitem.h src/jsonmsgdecoder.h src/jsonstreamreader.h src/log.h src/msghandler.h src/helper.h src/jsondecoder.h src/jsonmsgencoder.h src/jsonstreamreadersocket.h src/message.h src/version.h src/atomic.h src/ipc.h src/signalhandler.h src/ringbuffer.h
+otherinclude_HEADERS = src/jsonabstractitem.h src/jsonmsgdecoder.h src/jsonstreamreader.h \
+src/log.h src/msghandler.h src/helper.h src/jsondecoder.h src/jsonmsgencoder.h \
+src/jsonstreamreadersocket.h src/message.h src/version.h src/atomic.h src/ipc.h \
+src/signalhandler.h src/ringbuffer.h src/environmenthandler.h src/layouthandler.h src/systemhandler.h
 ACLOCAL_AMFLAGS = -I m4
 
