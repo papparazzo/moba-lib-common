@@ -34,7 +34,7 @@ namespace moba {
             }
 
             // ---- Tracklayout ----
-            void sendTrackLayoutRequest() {this->mhp->sendMsg(Message::MT_GET_LAYOUTS_REQ);}
+            void sendGetTrackLayoutRequest() {this->mhp->sendMsg(Message::MT_GET_LAYOUTS_REQ);}
 
             void sendDeleteLayout(long id) {this->mhp->sendMsg(Message::MT_DEL_LAYOUT, toJsonNumberPtr(id));}
 
@@ -42,7 +42,7 @@ namespace moba {
 
             void sendUpdateLayout(long id, const std::string &name, const std::string &description, int width, int height);
 
-            //void s e n d();
+            void sendGetLayoutRequest(long id) {this->mhp->sendMsg(Message::MT_GET_LAYOUT_REQ, toJsonNumberPtr(id));}
 
         protected:
             MsgHandlerPtr mhp;
