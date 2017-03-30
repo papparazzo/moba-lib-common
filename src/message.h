@@ -118,7 +118,9 @@ namespace moba {
                 return this->msgType;
             }
 
-            JsonItemPtr getData() const;
+            JsonItemPtr getData() const {
+                return this->data;
+            }
 
             std::string getRawMessage() const;
 
