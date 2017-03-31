@@ -64,7 +64,9 @@ Makefile.in
 /config.status
 /configure.scan
 /autoscan.log
+/response.log
 /src/.deps/
+/core
 
 # misc
 
