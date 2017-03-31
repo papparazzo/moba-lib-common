@@ -42,6 +42,8 @@ namespace moba {
 
             void sendUpdateLayout(long id, const std::string &name, const std::string &description, int width, int height);
 
+            void sendUnlockLayout(long id) {this->mhp->sendMsg(Message::MT_UNLOCK_LAYOUT, toJsonNumberPtr(id));}
+
             void sendGetLayoutRequest(long id) {this->mhp->sendMsg(Message::MT_GET_LAYOUT_REQ, toJsonNumberPtr(id));}
 
         protected:
