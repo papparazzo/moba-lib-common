@@ -34,7 +34,7 @@ namespace moba {
             }
 
             // ---- Tracklayout ----
-            void sendGetTrackLayoutRequest() {this->mhp->sendMsg(Message::MT_GET_LAYOUTS_REQ);}
+            void sendGetLayoutsRequest() {this->mhp->sendMsg(Message::MT_GET_LAYOUTS_REQ);}
 
             void sendDeleteLayout(long id) {this->mhp->sendMsg(Message::MT_DEL_LAYOUT, toJsonNumberPtr(id));}
 
