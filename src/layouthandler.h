@@ -38,9 +38,9 @@ namespace moba {
 
             void sendDeleteLayout(long id) {this->mhp->sendMsg(Message::MT_DEL_LAYOUT, toJsonNumberPtr(id));}
 
-            void sendCreateLayout(const std::string &name, const std::string &description, int width, int height);
+            void sendCreateLayout(const std::string &name, const std::string &description);
 
-            void sendUpdateLayout(long id, const std::string &name, const std::string &description, int width, int height);
+            void sendUpdateLayout(long id, const std::string &name, const std::string &description);
 
             void sendUnlockLayout(long id) {this->mhp->sendMsg(Message::MT_UNLOCK_LAYOUT, toJsonNumberPtr(id));}
 

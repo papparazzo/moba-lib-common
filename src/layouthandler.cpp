@@ -22,22 +22,18 @@
 #include "message.h"
 
 namespace moba {
-    void LayoutHandler::sendCreateLayout(const std::string &name, const std::string &description, int width, int height) {
+    void LayoutHandler::sendCreateLayout(const std::string &name, const std::string &description) {
         JsonObjectPtr obj(new JsonObject());
         (*obj)["name"       ] = toJsonStringPtr(name);
         (*obj)["description"] = toJsonStringPtr(description);
-        (*obj)["width"      ] = toJsonNumberPtr(width);
-        (*obj)["height"     ] = toJsonNumberPtr(height);
         this->mhp->sendMsg(Message(Message::MT_CREATE_LAYOUT_REQ, obj));
     }
 
-    void LayoutHandler::sendUpdateLayout(long id, const std::string &name, const std::string &description, int width, int height) {
+    void LayoutHandler::sendUpdateLayout(long id, const std::string &name, const std::string &description) {
         JsonObjectPtr obj(new JsonObject());
         (*obj)["id"         ] = toJsonNumberPtr(id);
         (*obj)["name"       ] = toJsonStringPtr(name);
         (*obj)["description"] = toJsonStringPtr(description);
-        (*obj)["width"      ] = toJsonNumberPtr(width);
-        (*obj)["height"     ] = toJsonNumberPtr(height);
         this->mhp->sendMsg(Message(Message::MT_UPDATE_LAYOUT, obj));
     }
 }
