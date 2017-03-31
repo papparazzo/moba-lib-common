@@ -30,7 +30,7 @@ namespace moba {
     class Message {
 
         public:
-            enum MessageType {
+            enum MessageType { // FIXME: Enum ausplitten und den einzlenen Handlern zuteilen
             // ---- CLIENT ----
                 MT_VOID,
                 MT_ECHO_RES,
