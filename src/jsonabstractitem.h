@@ -24,6 +24,8 @@
 #include <map>
 #include <vector>
 #include <sstream>
+#include <fstream>
+#include <iomanip>
 
 #include <boost/shared_ptr.hpp>
 
@@ -359,5 +361,39 @@ namespace moba {
 
     inline JsonThreeState::ThreeState castToThreeState(JsonItemPtr ptr) {
         return boost::dynamic_pointer_cast<JsonThreeState>(ptr)->getVal();
+    }
+
+    inline void prettyPrint(JsonItemPtr ptr, std::ofstream &out) {
+
+        if(!ptr) {
+            out << "{}";
+            return;
+        }
+
+        std::string str = ptr->getJsonString();
+        unsigned int indent = 0;
+
+        for(size_t i = 0; i < str.length(); ++i) {
+            switch(str[i]) {
+                case '{':
+                case '[':
+                    out << str[i] << std::endl << std::setw(++indent * 4);
+                    break;
+
+                case ',':
+                    out << str[i] << std::endl << std::setw(indent * 4);
+                    break;
+
+                case '}':
+                case ']':
+                    out << std::endl << std::setw(--indent * 4) << str[i];
+                    break;
+
+                default:
+                    out << str[i];
+            }
+        }
+        out << std::endl;
+        return;
     }
 }
