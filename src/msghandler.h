@@ -100,7 +100,7 @@ namespace moba {
 
             static const int MSG_HANDLER_BUFF_SIZ = 2048;
             static const int MSG_HANDLER_TIME_OUT_SEC = 2;
-            static const int MSG_HANDLER_TIME_OUT_USEC = 500000;
+            static const int MSG_HANDLER_TIME_OUT_USEC = 0;
     };
 
     typedef boost::shared_ptr<MsgHandler> MsgHandlerPtr;
