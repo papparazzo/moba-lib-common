@@ -24,7 +24,7 @@
 #include <map>
 #include <vector>
 #include <sstream>
-#include <fstream>
+#include <ostream>
 #include <iomanip>
 
 #include <boost/shared_ptr.hpp>
@@ -363,7 +363,7 @@ namespace moba {
         return boost::dynamic_pointer_cast<JsonThreeState>(ptr)->getVal();
     }
 
-    inline void prettyPrint(JsonItemPtr ptr, std::ofstream &out) {
+    inline void prettyPrint(JsonItemPtr ptr, std::ostream &out) {
 
         if(!ptr) {
             out << "{}";
