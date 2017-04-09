@@ -303,8 +303,8 @@ namespace moba {
             T v;
     };
 
-    typedef boost::shared_ptr<JsonNumber<int> >   JsonIntPtr;
-    typedef boost::shared_ptr<JsonNumber<float> > JsonFloatPtr;
+    typedef boost::shared_ptr<JsonNumber<long int> > JsonIntPtr;
+    typedef boost::shared_ptr<JsonNumber<float> >    JsonFloatPtr;
 
     inline JsonBoolPtr toJsonBoolPtr(bool v) {
         return JsonBoolPtr(new JsonBool(v));
@@ -336,7 +336,7 @@ namespace moba {
     }
 
     inline int castToInt(JsonItemPtr ptr) {
-        return boost::dynamic_pointer_cast<JsonNumber<int> >(ptr)->getVal();
+        return boost::dynamic_pointer_cast<JsonNumber<long int> >(ptr)->getVal();
     }
 
     inline float castToFloat(JsonItemPtr ptr) {
