@@ -314,7 +314,7 @@ namespace moba {
                 }
                 return toJsonNumberPtr(atol(s.c_str()));
             }
-        } catch(std::exception e) {
+        } catch(std::exception &e) {
             throw JsonException(
                 std::string("parsing, error could not determine value: <") +
                 std::string(e.what()) + ">"
