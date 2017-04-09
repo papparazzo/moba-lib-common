@@ -73,6 +73,7 @@ namespace moba {
                 MT_SET_AMBIENT_LIGHT,
 
             // ---- SYS ----
+                MT_GET_EMERGENCY_STOP_STATE,
                 MT_EMERGENCY_STOP,
                 MT_EMERGENCY_STOP_CLEARING,
                 MT_GET_HARDWARE_STATE,

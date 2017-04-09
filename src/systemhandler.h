@@ -32,6 +32,8 @@ namespace moba {
             }
 
             // ---- System ----
+            void sendGetEmergencyStopState() {this->mhp->sendMsg(Message::MT_GET_EMERGENCY_STOP_STATE);}
+
             void sendEmergencyStop() {this->mhp->sendMsg(Message::MT_EMERGENCY_STOP);}
 
             void sendEmergencyStopClearing() {this->mhp->sendMsg(Message::MT_EMERGENCY_STOP_CLEARING);}
