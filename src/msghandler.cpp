@@ -52,12 +52,21 @@ namespace moba {
     }
 
     void MsgHandler::connect(const std::string &host, int port) {
+        if(host == "" || port > 64738 || port < 1024) {
+            throw MsgHandlerException("either host or port is invalid!");
+        }
+        this->host = host;
+        this->port = port;
+        this->connect();
+    }
+
+    void MsgHandler::connect() {
         struct sockaddr_in host_addr;
 
         memset(&host_addr, 0, sizeof (host_addr));
         host_addr.sin_family = AF_INET;
-        host_addr.sin_port = htons(port);
-        host_addr.sin_addr.s_addr = inet_addr(host.c_str());
+        host_addr.sin_port = htons(this->port);
+        host_addr.sin_addr.s_addr = inet_addr(this->host.c_str());
 
         if(host_addr.sin_addr.s_addr == INADDR_NONE) {
             struct hostent *hostn;

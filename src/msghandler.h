@@ -59,6 +59,8 @@ namespace moba {
 
             void connect(const std::string &host, int port);
 
+            void connect();
+
             MessagePtr recieveMsg(time_t timeoutSec = 0);
 
             // ---- Client ----
@@ -97,6 +99,9 @@ namespace moba {
         protected:
             int socket;
             long appId;
+
+            std::string host;
+            int port;
 
             static const int MSG_HANDLER_BUFF_SIZ = 2048;
             static const int MSG_HANDLER_TIME_OUT_SEC = 2;
