@@ -40,11 +40,7 @@
 
 namespace moba {
 
-    MsgHandler::MsgHandler() : appId(-1) {
-        this->socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-        if(this->socket == -1) {
-            throw MsgHandlerException("socket creation failed");
-        }
+    MsgHandler::MsgHandler() : appId(-1), socket(-1) {
     }
 
     MsgHandler::~MsgHandler() {
@@ -61,6 +57,14 @@ namespace moba {
     }
 
     void MsgHandler::connect() {
+        if(this->socket != -1) {
+            close(this->socket);
+        }
+        this->socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+        if(this->socket == -1) {
+            throw MsgHandlerException("socket creation failed");
+        }
+
         struct sockaddr_in host_addr;
 
         memset(&host_addr, 0, sizeof (host_addr));
