@@ -40,23 +40,31 @@
 
 namespace moba {
 
-    MsgHandler::MsgHandler() : appId(-1), socket(-1) {
+    MsgHandler::MsgHandler(const std::string &host, int port) : appId(-1), socket(-1) {
+        if(host == "" || port > 64738 || port < 1024) {
+            throw MsgHandlerException("either host or port is invalid!");
+        }
+        this->host = host;
+        this->port = port;
     }
 
     MsgHandler::~MsgHandler() {
         close(this->socket);
     }
 
-    void MsgHandler::connect(const std::string &host, int port) {
-        if(host == "" || port > 64738 || port < 1024) {
-            throw MsgHandlerException("either host or port is invalid!");
-        }
-        this->host = host;
-        this->port = port;
+    long MsgHandler::connect(const std::string &appName, Version version, const JsonArrayPtr &groups) {
+        this->appName = appName;
+        this->version = version;
+        this->groups = groups;
         this->connect();
     }
 
-    void MsgHandler::connect() {
+    long MsgHandler::connect() {
+        this->init();
+        return this->registerApp();
+    }
+
+    void MsgHandler::init() {
         if(this->socket != -1) {
             close(this->socket);
         }
@@ -96,12 +104,12 @@ namespace moba {
         }
     }
 
-    long MsgHandler::registerApp(const std::string &appName, Version version, const JsonArrayPtr &groups) {
+    long MsgHandler::registerApp() {
         JsonObjectPtr obj(new JsonObject());
 
-        (*obj)["appName"] = toJsonStringPtr(appName);
-        (*obj)["version"] = version.toJsonPtr();
-        (*obj)["msgGroups" ] = groups;
+        (*obj)["appName"] = toJsonStringPtr(this->appName);
+        (*obj)["version"] = this->version.toJsonPtr();
+        (*obj)["msgGroups" ] = this->groups;
 
         Message msg(Message::MT_CLIENT_START, obj);
         this->sendMsg(msg);

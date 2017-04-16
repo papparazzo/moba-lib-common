@@ -54,18 +54,16 @@ namespace moba {
     class MsgHandler {
 
         public:
-            MsgHandler();
+            MsgHandler(const std::string &host, int port);
             virtual ~MsgHandler();
 
-            void connect(const std::string &host, int port);
+            long connect();
 
-            void connect();
+            long connect(const std::string &appName, Version version, const JsonArrayPtr &groups);
 
             MessagePtr recieveMsg(time_t timeoutSec = 0);
 
             // ---- Client ----
-            long registerApp(const std::string &appName, Version version, const JsonArrayPtr &groups);
-
             void sendVoid() {this->sendMsg(Message::MT_VOID);}
 
             void sendEchoReq(const std::string &data) {this->sendMsg(Message::MT_ECHO_REQ, data);}
@@ -103,9 +101,16 @@ namespace moba {
             std::string host;
             int port;
 
+            std::string appName;
+            Version version;
+            JsonArrayPtr groups;
+
             static const int MSG_HANDLER_BUFF_SIZ = 2048;
             static const int MSG_HANDLER_TIME_OUT_SEC = 2;
             static const int MSG_HANDLER_TIME_OUT_USEC = 0;
+
+            long registerApp();
+            void init();
     };
 
     typedef boost::shared_ptr<MsgHandler> MsgHandlerPtr;
