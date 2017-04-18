@@ -18,22 +18,30 @@
  *
  */
 
-#include "layouthandler.h"
+#pragma once
+
+#include <string>
+
+#include "msgendpoint.h"
+#include "jsonabstractitem.h"
 #include "message.h"
 
 namespace moba {
-    void LayoutHandler::sendCreateLayout(const std::string &name, const std::string &description) {
-        JsonObjectPtr obj(new JsonObject());
-        (*obj)["name"       ] = toJsonStringPtr(name);
-        (*obj)["description"] = toJsonStringPtr(description);
-        this->mhp->sendMsg(Message(Message::MT_CREATE_LAYOUT_REQ, obj));
-    }
 
-    void LayoutHandler::sendUpdateLayout(long id, const std::string &name, const std::string &description) {
-        JsonObjectPtr obj(new JsonObject());
-        (*obj)["id"         ] = toJsonNumberPtr(id);
-        (*obj)["name"       ] = toJsonStringPtr(name);
-        (*obj)["description"] = toJsonStringPtr(description);
-        this->mhp->sendMsg(Message(Message::MT_UPDATE_LAYOUT, obj));
-    }
+    class MsgLayoutHandler {
+
+        public:
+            MsgLayoutHandler(MsgEndpointPtr msgep) : msgep(msgep) {
+            }
+
+            virtual ~MsgLayoutHandler() {
+            }
+
+            void sendGetLayoutRequest(long id) {msgep->sendMsg(Message::MT_GET_LAYOUT_REQ, toJsonNumberPtr(id));}
+
+        protected:
+            MsgEndpointPtr msgep;
+    };
 }
+
+

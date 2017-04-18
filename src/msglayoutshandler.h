@@ -22,32 +22,35 @@
 
 #include <string>
 
-#include "msghandler.h"
+#include "msgendpoint.h"
 #include "jsonabstractitem.h"
 #include "message.h"
 
 namespace moba {
 
-    class LayoutHandler {
+    class MsgLayoutsHandler {
+
         public:
-            LayoutHandler(MsgHandlerPtr mhp) : mhp(mhp) {
+            MsgLayoutsHandler(MsgEndpointPtr msgep) : msgep(msgep) {
             }
 
-            // ---- Tracklayout ----
-            void sendGetLayoutsRequest() {this->mhp->sendMsg(Message::MT_GET_LAYOUTS_REQ);}
+            virtual ~MsgLayoutsHandler() {
+            }
 
-            void sendDeleteLayout(long id) {this->mhp->sendMsg(Message::MT_DEL_LAYOUT, toJsonNumberPtr(id));}
+            void sendGetLayoutsRequest() {msgep->sendMsg(Message::MT_GET_LAYOUTS_REQ);}
+
+            void sendDeleteLayout(long id) {msgep->sendMsg(Message::MT_DEL_LAYOUT, toJsonNumberPtr(id));}
 
             void sendCreateLayout(const std::string &name, const std::string &description);
 
             void sendUpdateLayout(long id, const std::string &name, const std::string &description);
 
-            void sendUnlockLayout(long id) {this->mhp->sendMsg(Message::MT_UNLOCK_LAYOUT, toJsonNumberPtr(id));}
+            void sendUnlockLayout(long id) {msgep->sendMsg(Message::MT_UNLOCK_LAYOUT, toJsonNumberPtr(id));}
 
-            void sendGetLayoutRequest(long id) {this->mhp->sendMsg(Message::MT_GET_LAYOUT_REQ, toJsonNumberPtr(id));}
+            void sendGetLayoutRequest(long id) {msgep->sendMsg(Message::MT_GET_LAYOUT_REQ, toJsonNumberPtr(id));}
 
         protected:
-            MsgHandlerPtr mhp;
+            MsgEndpointPtr msgep;
     };
 }
 

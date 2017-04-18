@@ -18,20 +18,11 @@
  *
  */
 
-#include "environmenthandler.h"
-#include "msghandler.h"
+#include "msgenvhandler.h"
 
 namespace moba {
 
-    void EnvironmentHandler::sendSetGlobalTimer(const std::string &curModelTime, unsigned int intervall, unsigned int multiplicator) {
-        JsonObjectPtr obj(new JsonObject());
-        (*obj)["curModelTime" ] = toJsonStringPtr(curModelTime);
-        (*obj)["intervall"    ] = toJsonNumberPtr(intervall);
-        (*obj)["multiplicator"] = toJsonNumberPtr(multiplicator);
-        this->mhp->sendMsg(Message(Message::MT_SET_GLOBAL_TIMER, obj));
-    }
-
-    void EnvironmentHandler::sendSetEnvironment(
+    void MsgEnvHandler::sendSetEnvironment(
         JsonSwitch::Switch thunder, JsonSwitch::Switch wind,
         JsonSwitch::Switch rain, JsonSwitch::Switch environmentSound,
         JsonSwitch::Switch aux1, JsonSwitch::Switch aux2, JsonSwitch::Switch aux3
@@ -44,32 +35,22 @@ namespace moba {
         (*obj)["aux01"             ] = toJsonSwitchPtr(aux1);
         (*obj)["aux02"             ] = toJsonSwitchPtr(aux2);
         (*obj)["aux03"             ] = toJsonSwitchPtr(aux3);
-        this->mhp->sendMsg(Message(Message::MT_SET_ENVIRONMENT, obj));
+        msgep->sendMsg(Message(Message::MT_SET_ENVIRONMENT, obj));
     }
 
-    void EnvironmentHandler::sendSetAmbience(
+    void MsgEnvHandler::sendSetAmbience(
         JsonToggleState::ToggleState curtainUp, JsonToggleState::ToggleState mainLightOn
     ) {
         JsonObjectPtr obj(new JsonObject());
         (*obj)["curtainUp"   ] = toJsonToggleStatePtr(curtainUp);
         (*obj)["mainLightOn" ] = toJsonToggleStatePtr(mainLightOn);
-        this->mhp->sendMsg(Message(Message::MT_SET_AMBIENCE, obj));
+        msgep->sendMsg(Message(Message::MT_SET_AMBIENCE, obj));
     }
 
-    void EnvironmentHandler::sendSetColorTheme(
-        const std::string &dimTime, const std::string &brightTime, JsonThreeState::ThreeState condition
-    ) {
-        JsonObjectPtr obj(new JsonObject());
-        (*obj)["dimTime"   ] = toJsonStringPtr(dimTime);
-        (*obj)["brightTime"] = toJsonStringPtr(brightTime);
-        (*obj)["condition" ] = toJsonThreeStatePtr(condition);
-        this->mhp->sendMsg(Message(Message::MT_SET_COLOR_THEME, obj));
-    }
-
-    void EnvironmentHandler::sendSetAmbientLight(const std::vector<EnvironmentHandler::AmbientLightData> &aldv) {
+    void MsgEnvHandler::sendSetAmbientLight(const std::vector<MsgEnvHandler::AmbientLightData> &aldv) {
         JsonArrayPtr arr(new JsonArray());
         for(
-            std::vector<EnvironmentHandler::AmbientLightData>::const_iterator iter = aldv.begin();
+            std::vector<MsgEnvHandler::AmbientLightData>::const_iterator iter = aldv.begin();
             iter != aldv.end();
             ++iter
         ) {
@@ -79,6 +60,6 @@ namespace moba {
             (*obj)["white"] = toJsonNumberPtr(iter->white);
             arr->push_back(obj);
         }
-        this->mhp->sendMsg(Message(Message::MT_SET_AMBIENT_LIGHT, arr));
+        msgep->sendMsg(Message(Message::MT_SET_AMBIENT_LIGHT, arr));
     }
 }

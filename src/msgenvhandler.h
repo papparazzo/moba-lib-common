@@ -24,39 +24,28 @@
 #include <vector>
 
 #include "message.h"
+#include "msgendpoint.h"
 #include "jsonabstractitem.h"
-#include "msghandler.h"
 
 namespace moba {
 
-    class EnvironmentHandler {
+    class MsgEnvHandler {
         public:
-            EnvironmentHandler(MsgHandlerPtr mhp) : mhp(mhp) {
+            MsgEnvHandler(MsgEndpointPtr msgep) : msgep(msgep) {
             }
 
-            // ---- GlobalTimer ----
-            void sendGetGlobalTimer() {this->mhp->sendMsg(Message::MT_GET_GLOBAL_TIMER);}
+            virtual ~MsgEnvHandler() {
+            }
 
-            void sendSetGlobalTimer(const std::string &curModelTime, unsigned int intervall, unsigned int multiplicator);
-
-            void sendSetAutoMode(bool on) {this->mhp->sendMsg(Message::MT_SET_AUTO_MODE, toJsonBoolPtr(on));}
-
-            void sendGetAutoMode() {this->mhp->sendMsg(Message::MT_GET_AUTO_MODE);}
-
-            void sendGetColorTheme() {this->mhp->sendMsg(Message::MT_GET_COLOR_THEME);}
-
-            void sendSetColorTheme(const std::string &dimTime, const std::string &brightTime, JsonThreeState::ThreeState condition);
-
-            // ---- Environment ----
-            void sendGetEnvironment() {this->mhp->sendMsg(Message::MT_GET_ENVIRONMENT);}
+            void sendGetEnvironment() {msgep->sendMsg(Message::MT_GET_ENVIRONMENT);}
 
             void sendSetEnvironment(JsonSwitch::Switch thunder, JsonSwitch::Switch wind, JsonSwitch::Switch rain, JsonSwitch::Switch environmentSound, JsonSwitch::Switch aux1, JsonSwitch::Switch aux2, JsonSwitch::Switch aux3);
 
-            void sendGetAmbience() {this->mhp->sendMsg(Message::MT_GET_AMBIENCE);}
+            void sendGetAmbience() {msgep->sendMsg(Message::MT_GET_AMBIENCE);}
 
             void sendSetAmbience(JsonToggleState::ToggleState curtainUp, JsonToggleState::ToggleState mainLightOn);
 
-            void sendGetAmbientLight() {this->mhp->sendMsg(Message::MT_GET_AMBIENT_LIGHT);}
+            void sendGetAmbientLight() {msgep->sendMsg(Message::MT_GET_AMBIENT_LIGHT);}
 
             struct AmbientLightData {
                 AmbientLightData() {};
@@ -73,7 +62,8 @@ namespace moba {
             void sendSetAmbientLight(const std::vector<AmbientLightData> &aldv);
 
         protected:
-            MsgHandlerPtr mhp;
+            MsgEndpointPtr msgep;
+
     };
 }
 

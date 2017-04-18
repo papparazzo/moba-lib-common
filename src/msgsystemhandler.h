@@ -20,25 +20,27 @@
 
 #pragma once
 
-#include "msghandler.h"
+#include "msgendpoint.h"
 #include "message.h"
 
 namespace moba {
 
-    class SystemHandler {
+    class MsgSystemHandler {
 
         public:
-            SystemHandler(MsgHandlerPtr mhp) : mhp(mhp) {
+            MsgSystemHandler(MsgEndpointPtr msgep) : msgep(msgep) {
             }
 
-            // ---- System ----
-            void sendGetEmergencyStopState() {this->mhp->sendMsg(Message::MT_GET_EMERGENCY_STOP_STATE);}
+            virtual ~MsgSystemHandler() {
+            }
 
-            void sendEmergencyStop() {this->mhp->sendMsg(Message::MT_EMERGENCY_STOP);}
+            void sendGetEmergencyStopState() {msgep->sendMsg(Message::MT_GET_EMERGENCY_STOP_STATE);}
 
-            void sendEmergencyStopClearing() {this->mhp->sendMsg(Message::MT_EMERGENCY_STOP_CLEARING);}
+            void sendEmergencyStop() {msgep->sendMsg(Message::MT_EMERGENCY_STOP);}
 
-            void sendGetHardwareState()  {this->mhp->sendMsg(Message::MT_GET_HARDWARE_STATE);}
+            void sendEmergencyStopClearing() {msgep->sendMsg(Message::MT_EMERGENCY_STOP_CLEARING);}
+
+            void sendGetHardwareState()  {msgep->sendMsg(Message::MT_GET_HARDWARE_STATE);}
 
             enum HardwareState {
                 HS_ERROR,
@@ -49,11 +51,11 @@ namespace moba {
 
             void sendSetHardwareState(HardwareState state);
 
-            void sendHardwareShutdown() {this->mhp->sendMsg(Message::MT_HARDWARE_SHUTDOWN);}
+            void sendHardwareShutdown() {msgep->sendMsg(Message::MT_HARDWARE_SHUTDOWN);}
 
-            void sendHardwareReset() {this->mhp->sendMsg(Message::MT_HARDWARE_RESET);}
+            void sendHardwareReset() {msgep->sendMsg(Message::MT_HARDWARE_RESET);}
 
-            void sendHardwareSwitchStandby() {this->mhp->sendMsg(Message::MT_HARDWARE_SWITCH_STANDBY);}
+            void sendHardwareSwitchStandby() {msgep->sendMsg(Message::MT_HARDWARE_SWITCH_STANDBY);}
 
             enum NoticeType {
                 NT_INFO,
@@ -64,7 +66,6 @@ namespace moba {
             void sendSystemNotice(NoticeType type, const std::string &caption, const std::string &text);
 
         protected:
-            MsgHandlerPtr mhp;
-
+            MsgEndpointPtr msgep;
     };
 }

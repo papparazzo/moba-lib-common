@@ -18,12 +18,14 @@
  *
  */
 
-#include "systemhandler.h"
 #include <string>
+
+#include "msgsystemhandler.h"
+#include "jsonabstractitem.h"
 
 namespace moba {
 
-    void SystemHandler::sendSetHardwareState(HardwareState state) {
+    void MsgSystemHandler::sendSetHardwareState(MsgSystemHandler::HardwareState state) {
         JsonStringPtr str;
         switch(state) {
             case HS_ERROR:
@@ -42,10 +44,10 @@ namespace moba {
                 str = toJsonStringPtr("READY");
                 break;
         }
-        this->mhp->sendMsg(Message(Message::MT_SET_HARDWARE_STATE, str));
+        msgep->sendMsg(Message(Message::MT_SET_HARDWARE_STATE, str));
     }
 
-    void SystemHandler::sendSystemNotice(SystemHandler::NoticeType type, const std::string &caption, const std::string &text) {
+    void MsgSystemHandler::sendSystemNotice(MsgSystemHandler::NoticeType type, const std::string &caption, const std::string &text) {
         JsonObjectPtr obj(new JsonObject());
         JsonStringPtr str;
         switch(type) {
@@ -65,6 +67,6 @@ namespace moba {
         (*obj)["type"   ] = str;
         (*obj)["caption"] = toJsonStringPtr(caption);
         (*obj)["text"   ] = toJsonStringPtr(text);
-        this->mhp->sendMsg(Message(Message::MT_SYSTEM_NOTICE, obj));
+        msgep->sendMsg(Message(Message::MT_SYSTEM_NOTICE, obj));
     }
 }

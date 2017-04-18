@@ -22,9 +22,8 @@
 
 #include <exception>
 #include <string>
-#include <vector>
-
 #include <boost/shared_ptr.hpp>
+#include <ctime>
 
 #include "message.h"
 #include "jsonabstractitem.h"
@@ -32,14 +31,14 @@
 
 namespace moba {
 
-    class MsgHandlerException : public std::exception {
+    class MsgEndpointException : public std::exception {
 
         public:
-            virtual ~MsgHandlerException() throw() {
+            virtual ~MsgEndpointException() throw() {
 
             }
 
-            MsgHandlerException(const std::string &what) {
+            MsgEndpointException(const std::string &what) {
                 this->what__ = what;
             }
 
@@ -51,11 +50,11 @@ namespace moba {
             std::string what__;
     };
 
-    class MsgHandler {
+    class MsgEndpoint {
 
         public:
-            MsgHandler(const std::string &host, int port);
-            virtual ~MsgHandler();
+            MsgEndpoint(const std::string &host, int port);
+            virtual ~MsgEndpoint();
 
             long connect();
 
@@ -63,23 +62,7 @@ namespace moba {
 
             MessagePtr recieveMsg(time_t timeoutSec = 0);
 
-            // ---- Client ----
-            void sendVoid() {this->sendMsg(Message::MT_VOID);}
-
-            void sendEchoReq(const std::string &data) {this->sendMsg(Message::MT_ECHO_REQ, data);}
-
-            void sendClientClose() {this->sendMsg(Message::MT_CLIENT_CLOSE);}
-
-            // ---- Server ----
-            void sendResetClient(long id) {this->sendMsg(Message::MT_RESET_CLIENT, toJsonNumberPtr(id));}
-
-            void sendSelfTestingClient(long id) {this->sendMsg(Message::MT_SELF_TESTING_CLIENT, toJsonNumberPtr(id));}
-
-            void sendServerInfoReq() {this->sendMsg(Message::MT_SERVER_INFO_REQ);}
-
-            void sendConClientsReq() {this->sendMsg(Message::MT_CON_CLIENTS_REQ);}
-
-            long getAppId() {return this->appId;}
+            long getAppId() {return appId;}
 
             // ---- message transmission ----
             void sendMsg(const Message::MessageType type, const JsonItemPtr &msgData);
@@ -113,5 +96,5 @@ namespace moba {
             void init();
     };
 
-    typedef boost::shared_ptr<MsgHandler> MsgHandlerPtr;
+    typedef boost::shared_ptr<MsgEndpoint> MsgEndpointPtr;
 }
