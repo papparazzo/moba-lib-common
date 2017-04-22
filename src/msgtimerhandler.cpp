@@ -22,10 +22,9 @@
 
 namespace moba {
 
-    void MsgTimerHandler::sendSetGlobalTimer(const std::string &curModelTime, unsigned int intervall, unsigned int multiplicator) {
+    void MsgTimerHandler::sendSetGlobalTimer(const std::string &curModelTime, unsigned int multiplicator) {
         JsonObjectPtr obj(new JsonObject());
         (*obj)["curModelTime" ] = toJsonStringPtr(curModelTime);
-        (*obj)["intervall"    ] = toJsonNumberPtr(intervall);
         (*obj)["multiplicator"] = toJsonNumberPtr(multiplicator);
         msgep->sendMsg(Message(Message::MT_SET_GLOBAL_TIMER, obj));
     }

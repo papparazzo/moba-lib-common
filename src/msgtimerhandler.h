@@ -38,7 +38,7 @@ namespace moba {
 
             void sendGetGlobalTimer() {msgep->sendMsg(Message::MT_GET_GLOBAL_TIMER);}
 
-            void sendSetGlobalTimer(const std::string &curModelTime, unsigned int intervall, unsigned int multiplicator);
+            void sendSetGlobalTimer(const std::string &curModelTime, unsigned int multiplicator);
 
             void sendGetAutoMode() {msgep->sendMsg(Message::MT_GET_AUTO_MODE);}
 
