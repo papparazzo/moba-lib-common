@@ -47,19 +47,12 @@ namespace moba {
         msgep->sendMsg(Message(Message::MT_SET_AMBIENCE, obj));
     }
 
-    void MsgEnvHandler::sendSetAmbientLight(const std::vector<MsgEnvHandler::AmbientLightData> &aldv) {
-        JsonArrayPtr arr(new JsonArray());
-        for(
-            std::vector<MsgEnvHandler::AmbientLightData>::const_iterator iter = aldv.begin();
-            iter != aldv.end();
-            ++iter
-        ) {
-            JsonObjectPtr obj(new JsonObject());
-            (*obj)["red"  ] = toJsonNumberPtr(iter->red);
-            (*obj)["blue" ] = toJsonNumberPtr(iter->blue);
-            (*obj)["white"] = toJsonNumberPtr(iter->white);
-            arr->push_back(obj);
-        }
-        msgep->sendMsg(Message(Message::MT_SET_AMBIENT_LIGHT, arr));
+    void MsgEnvHandler::sendSetAmbientLight(const MsgEnvHandler::AmbientLightData &ald) {
+        JsonObjectPtr obj(new JsonObject());
+        (*obj)["red"  ] = toJsonNumberPtr(ald.red);
+        (*obj)["blue" ] = toJsonNumberPtr(ald.blue);
+        (*obj)["green"] = toJsonNumberPtr(ald.blue);
+        (*obj)["white"] = toJsonNumberPtr(ald.white);
+        msgep->sendMsg(Message(Message::MT_SET_AMBIENT_LIGHT, obj));
     }
 }

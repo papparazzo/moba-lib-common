@@ -21,7 +21,6 @@
 #pragma once
 
 #include <string>
-#include <vector>
 
 #include "message.h"
 #include "msgendpoint.h"
@@ -49,17 +48,19 @@ namespace moba {
 
             struct AmbientLightData {
                 AmbientLightData() {};
-                AmbientLightData(int red, int blue, int white) {
+                AmbientLightData(int red, int blue, int green, int white) {
                     this->red = red;
                     this->blue = blue;
+                    this->green = green;
                     this->white = white;
                 }
                 int red;
                 int blue;
+                int green;
                 int white;
             };
 
-            void sendSetAmbientLight(const std::vector<AmbientLightData> &aldv);
+            void sendSetAmbientLight(const AmbientLightData &ald);
 
         protected:
             MsgEndpointPtr msgep;
