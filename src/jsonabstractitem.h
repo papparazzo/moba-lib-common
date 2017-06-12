@@ -129,6 +129,34 @@ namespace moba {
 
     typedef boost::shared_ptr<JsonNULL> JsonNULLPtr;
 
+    class JsonString : public JsonAbstractItem, public std::string {
+
+        public:
+            JsonString(const std::string &v) : std::string(v) {
+            }
+
+            std::string getJsonString() const {
+                std::stringstream ss;
+                ss << '"';
+                for(size_t i = 0; i < this->length(); ++i) {
+                    switch(this->data()[i]) {
+                        case '"':
+                            ss << "\\\"";
+                            break;
+                        case '\n':
+                            ss << "\\n";
+                            break;
+                        default:
+                            ss << this->data()[i];
+                    }
+                }
+                ss << '"';
+                return ss.str();
+            };
+    };
+
+    typedef boost::shared_ptr<JsonString>         JsonStringPtr;
+
     class JsonSwitch : public JsonAbstractItem {
 
         public:
@@ -139,6 +167,20 @@ namespace moba {
                 TRIGGER,
                 OFF
             };
+
+            JsonSwitch(JsonStringPtr s) {
+                if(*s == "ON") {
+                    v = ON;
+                } else if(*s == "AUTO") {
+                    v = AUTO;
+                } else if(*s == "UNSET") {
+                    v = UNSET;
+                } else if(*s == "TRIGGER") {
+                    v = TRIGGER;
+                } else if(*s == "OFF") {
+                    v = OFF;
+                }
+            }
 
             JsonSwitch(JsonSwitch::Switch v) : v(v) {
             }
@@ -181,6 +223,16 @@ namespace moba {
                 UNSET
             };
 
+            JsonToggleState(JsonStringPtr s) {
+                if(*s == "ON") {
+                    v = ON;
+                } else if(*s == "UNSET") {
+                    v = UNSET;
+                } else if(*s == "OFF") {
+                    v = OFF;
+                }
+            }
+
             JsonToggleState(JsonToggleState::ToggleState v) : v(v) {
             }
 
@@ -217,6 +269,18 @@ namespace moba {
                 UNSET
             };
 
+            JsonThreeState(JsonStringPtr s) {
+                if(*s == "ON") {
+                    v = ON;
+                } else if(*s == "OFF") {
+                    v = OFF;
+                } else if(*s == "AUTO") {
+                    v = AUTO;
+                } else if(*s == "UNSET") {
+                    v = UNSET;
+                }
+            }
+
             JsonThreeState(JsonThreeState::ThreeState v) : v(v) {
             }
 
@@ -246,34 +310,6 @@ namespace moba {
     };
 
     typedef boost::shared_ptr<JsonThreeState> JsonThreeStatePtr;
-
-    class JsonString : public JsonAbstractItem, public std::string {
-
-        public:
-            JsonString(const std::string &v) : std::string(v) {
-            }
-
-            std::string getJsonString() const {
-                std::stringstream ss;
-                ss << '"';
-                for(size_t i = 0; i < this->length(); ++i) {
-                    switch(this->data()[i]) {
-                        case '"':
-                            ss << "\\\"";
-                            break;
-                        case '\n':
-                            ss << "\\n";
-                            break;
-                        default:
-                            ss << this->data()[i];
-                    }
-                }
-                ss << '"';
-                return ss.str();
-            };
-    };
-
-    typedef boost::shared_ptr<JsonString>         JsonStringPtr;
 
     template <typename T> class JsonNumber : public JsonAbstractItem {
 
@@ -352,15 +388,15 @@ namespace moba {
     }
 
     inline JsonSwitch::Switch castToSwitch(JsonItemPtr ptr) {
-        return boost::dynamic_pointer_cast<JsonSwitch>(ptr)->getVal();
+        return JsonSwitch(boost::dynamic_pointer_cast<JsonString>(ptr)).getVal();
     }
 
     inline JsonToggleState::ToggleState castToToggleState(JsonItemPtr ptr) {
-        return boost::dynamic_pointer_cast<JsonToggleState>(ptr)->getVal();
+        return JsonToggleState(boost::dynamic_pointer_cast<JsonString>(ptr)).getVal();
     }
 
     inline JsonThreeState::ThreeState castToThreeState(JsonItemPtr ptr) {
-        return boost::dynamic_pointer_cast<JsonThreeState>(ptr)->getVal();
+        return JsonThreeState(boost::dynamic_pointer_cast<JsonString>(ptr)).getVal();
     }
 
     inline void prettyPrint(JsonItemPtr ptr, std::ostream &out) {
