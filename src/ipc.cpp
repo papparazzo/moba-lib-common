@@ -120,6 +120,18 @@ namespace moba {
         if(boost::iequals(cmd, "TERMINATE")) {
             return CMD_TERMINATE;
         }
+        if(boost::iequals(cmd, "INTERRUPT")) {
+            return CMD_INTERRUPT;
+        }
+        if(boost::iequals(cmd, "RESUME")) {
+            return CMD_RESUME;
+        }
+        if(boost::iequals(cmd, "SET_DURATION")) {
+            return CMD_SET_DURATION;
+        }
+        if(boost::iequals(cmd, "SHUTDOWN")) {
+            return CMD_SHUTDOWN;
+        }
         throw IPCException(std::string("unknown command <" + cmd + ">"));
     }
 }
