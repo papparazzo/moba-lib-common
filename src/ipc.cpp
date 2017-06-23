@@ -129,9 +129,6 @@ namespace moba {
         if(boost::iequals(cmd, "SET_DURATION")) {
             return CMD_SET_DURATION;
         }
-        if(boost::iequals(cmd, "SHUTDOWN")) {
-            return CMD_SHUTDOWN;
-        }
         throw IPCException(std::string("unknown command <" + cmd + ">"));
     }
 }
