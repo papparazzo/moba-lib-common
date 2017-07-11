@@ -122,5 +122,12 @@ namespace moba {
                 }
                 return this->size - this->ptrR + this->ptrW;
             }
+
+            bool hasItems() {
+                if(this->isFull) {
+                    return true;
+                }
+                return this->ptrR != this->ptrW;
+            }
     };
 }
