@@ -131,4 +131,41 @@ namespace moba {
         }
         throw IPCException(std::string("unknown command <" + cmd + ">"));
     }
+
+    std::string IPC::getCMDAsString(IPC::Command cmd) {
+        switch(cmd) {
+            case CMD_EMERGENCY_STOP:
+                return "EMERGENCY_STOP";
+
+            case CMD_EMERGENCY_RELEASE:
+                return "EMERGENCY_RELEASE";
+
+            case CMD_TEST:
+                return "TEST";
+
+            case CMD_RUN:
+                return "RUN";
+
+            case CMD_HALT:
+                return "HALT";
+
+            case CMD_CONTINUE:
+                return "CONTINUE";
+
+            case CMD_RESET:
+                return "RESET";
+
+            case CMD_TERMINATE:
+                return "TERMINATE";
+
+            case CMD_INTERRUPT:
+                return "INTERRUPT";
+
+            case CMD_RESUME:
+                return "RESUME";
+
+            case CMD_SET_DURATION:
+                return "SET_DURATION";
+        }
+    }
 }
