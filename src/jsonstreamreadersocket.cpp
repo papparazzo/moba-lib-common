@@ -56,7 +56,7 @@ namespace moba {
         }
 
         if(
-            ::connect(this->socket, (struct sockaddr*) &host_addr, sizeof(host_addr)
+            ::connect(socket, (struct sockaddr*) &host_addr, sizeof(host_addr)
         ) == -1) {
             throw JsonStreamReaderException("connection to host failed");
         }
@@ -64,7 +64,7 @@ namespace moba {
 
     char JsonStreamReaderSocket::read() {
         char data;
-        ::recv(this->socket, &data, sizeof(data), 0);
+        ::recv(socket, &data, sizeof(data), 0);
         return data;
     }
 }
