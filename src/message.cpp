@@ -30,7 +30,6 @@ namespace {
         {moba::Message::MT_ECHO_REQ,                 "ECHO_REQ"                },
         {moba::Message::MT_ECHO_RES,                 "ECHO_RES"                },
         {moba::Message::MT_ERROR,                    "ERROR"                   },
-
         {moba::Message::MT_CLIENT_START,             "CLIENT_START"            },
         {moba::Message::MT_CLIENT_CONNECTED,         "CLIENT_CONNECTED"        },
         {moba::Message::MT_CLIENT_CLOSE,             "CLIENT_CLOSE"            },
@@ -43,7 +42,6 @@ namespace {
         {moba::Message::MT_CLIENT_CLOSED,            "CLIENT_CLOSED"           },
         {moba::Message::MT_RESET_CLIENT,             "RESET_CLIENT"            },
         {moba::Message::MT_SELF_TESTING_CLIENT,      "SELF_TESTING_CLIENT"     },
-
         {moba::Message::MT_SERVER_INFO_REQ,          "SERVER_INFO_REQ"         },
         {moba::Message::MT_SERVER_INFO_RES,          "SERVER_INFO_RES"         },
         {moba::Message::MT_CON_CLIENTS_REQ,          "CON_CLIENTS_REQ"         },
@@ -52,17 +50,20 @@ namespace {
         {moba::Message::MT_GLOBAL_TIMER_EVENT,       "GLOBAL_TIMER_EVENT"      },
         {moba::Message::MT_GET_GLOBAL_TIMER,         "GET_GLOBAL_TIMER"        },
         {moba::Message::MT_SET_GLOBAL_TIMER,         "SET_GLOBAL_TIMER"        },
-        {moba::Message::MT_GET_ENVIRONMENT,          "GET_ENVIRONMENT"         },
-        {moba::Message::MT_SET_ENVIRONMENT,          "SET_ENVIRONMENT"         },
-        {moba::Message::MT_GET_AMBIENCE,             "GET_AMBIENCE"            },
-        {moba::Message::MT_SET_AMBIENCE,             "SET_AMBIENCE"            },
         {moba::Message::MT_GET_AUTO_MODE,            "GET_AUTO_MODE"           },
         {moba::Message::MT_SET_AUTO_MODE,            "SET_AUTO_MODE"           },
         {moba::Message::MT_GET_COLOR_THEME,          "GET_COLOR_THEME"         },
         {moba::Message::MT_SET_COLOR_THEME,          "SET_COLOR_THEME"         },
         {moba::Message::MT_COLOR_THEME_EVENT,        "COLOR_THEME_EVENT"       },
+
+        {moba::Message::MT_GET_ENVIRONMENT,          "GET_ENVIRONMENT"         },
+        {moba::Message::MT_SET_ENVIRONMENT,          "SET_ENVIRONMENT"         },
+        {moba::Message::MT_GET_AMBIENCE,             "GET_AMBIENCE"            },
+        {moba::Message::MT_SET_AMBIENCE,             "SET_AMBIENCE"            },
         {moba::Message::MT_GET_AMBIENT_LIGHT,        "GET_AMBIENT_LIGHT"       },
         {moba::Message::MT_SET_AMBIENT_LIGHT,        "SET_AMBIENT_LIGHT"       },
+
+        {moba::Message::MT_SET_CONNECTIVITY,         "SET_CONNECTIVITY"        },
 
         {moba::Message::MT_GET_EMERGENCY_STOP_STATE, "GET_EMERGENCY_STOP_STATE"},
         {moba::Message::MT_EMERGENCY_STOP,           "EMERGENCY_STOP"          },
@@ -85,10 +86,8 @@ namespace {
         {moba::Message::MT_CREATE_LAYOUT_REQ,        "CREATE_LAYOUT_REQ"       },
         {moba::Message::MT_CREATE_LAYOUT_RES,        "CREATE_LAYOUT_RES"       },
         {moba::Message::MT_LAYOUT_CREATED,           "LAYOUT_CREATED"          },
-
         {moba::Message::MT_UPDATE_LAYOUT,            "UPDATE_LAYOUT"           },
         {moba::Message::MT_LAYOUT_UPDATED,           "LAYOUT_UPDATED"          },
-
         {moba::Message::MT_UNLOCK_LAYOUT,            "UNLOCK_LAYOUT"           },
         {moba::Message::MT_LAYOUT_UNLOCKED,          "LAYOUT_UNLOCKED"         },
 

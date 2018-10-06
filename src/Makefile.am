@@ -7,7 +7,6 @@ libMoBaCommon_la_SOURCES = \
     ipc.cpp \
     jsondecoder.cpp \
     jsonmsgdecoder.cpp \
-    jsonmsgencoder.cpp \
     jsonstreamreadersocket.cpp \
     log.cpp \
     message.cpp \
@@ -15,6 +14,7 @@ libMoBaCommon_la_SOURCES = \
     msgenvhandler.cpp \
     msglayoutshandler.cpp \
     msgsystemhandler.cpp \
+    msginterfacehandler.cpp \
     msgtimerhandler.cpp \
     signalhandler.cpp \
     stopwatch.cpp \
@@ -30,7 +30,6 @@ otherinclude_HEADERS = \
     jsonabstractitem.h \
     jsondecoder.h \
     jsonmsgdecoder.h \
-    jsonmsgencoder.h \
     jsonstreamreader.h \
     jsonstreamreadersocket.h \
     log.h \
@@ -42,6 +41,7 @@ otherinclude_HEADERS = \
     msglayoutshandler.h \
     msgserverhandler.h \
     msgsystemhandler.h \
+    msginterfacehandler.h \
     msgtimerhandler.h \
     ringbuffer.h \
     signalhandler.h \

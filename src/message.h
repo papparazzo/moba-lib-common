@@ -44,7 +44,7 @@ namespace moba {
                 MT_CLIENT_RESET,
                 MT_CLIENT_SELF_TESTING,
 
-            // ---- SERV ----
+            // ---- SERVER ----
                 MT_MAX_CLIENT_COUNT,
                 MT_NEW_CLIENT_STARTED,
                 MT_CLIENT_CLOSED,
@@ -71,6 +71,10 @@ namespace moba {
                 MT_COLOR_THEME_EVENT,
                 MT_GET_AMBIENT_LIGHT,
                 MT_SET_AMBIENT_LIGHT,
+
+            // ---- INTERFACE ----
+
+                MT_SET_CONNECTIVITY,
 
             // ---- SYS ----
                 MT_GET_EMERGENCY_STOP_STATE,
