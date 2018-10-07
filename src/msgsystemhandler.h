@@ -42,15 +42,6 @@ namespace moba {
 
             void sendGetHardwareState()  {msgep->sendMsg(Message::MT_GET_HARDWARE_STATE);}
 
-            enum HardwareState {
-                HS_ERROR,
-                HS_STANDBY,
-                HS_POWER_OFF,
-                HS_READY
-            };
-
-            void sendSetHardwareState(HardwareState state);
-
             void sendHardwareShutdown() {msgep->sendMsg(Message::MT_HARDWARE_SHUTDOWN);}
 
             void sendHardwareReset() {msgep->sendMsg(Message::MT_HARDWARE_RESET);}

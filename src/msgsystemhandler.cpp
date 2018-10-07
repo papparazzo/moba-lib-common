@@ -25,28 +25,6 @@
 
 namespace moba {
 
-    void MsgSystemHandler::sendSetHardwareState(MsgSystemHandler::HardwareState state) {
-        JsonStringPtr str;
-        switch(state) {
-            case HS_ERROR:
-                str = toJsonStringPtr("ERROR");
-                break;
-
-            case HS_STANDBY:
-                str = toJsonStringPtr("STANDBY");
-                break;
-
-            case HS_POWER_OFF:
-                str = toJsonStringPtr("POWER_OFF");
-                break;
-
-            case HS_READY:
-                str = toJsonStringPtr("READY");
-                break;
-        }
-        msgep->sendMsg(Message(Message::MT_SET_HARDWARE_STATE, str));
-    }
-
     void MsgSystemHandler::sendSystemNotice(MsgSystemHandler::NoticeType type, const std::string &caption, const std::string &text) {
         JsonObjectPtr obj(new JsonObject());
         JsonStringPtr str;

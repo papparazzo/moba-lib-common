@@ -81,7 +81,6 @@ namespace moba {
                 MT_EMERGENCY_STOP,
                 MT_EMERGENCY_STOP_CLEARING,
                 MT_GET_HARDWARE_STATE,
-                MT_SET_HARDWARE_STATE,
                 MT_HARDWARE_STATE_CHANGED,
                 MT_HARDWARE_SHUTDOWN,
                 MT_HARDWARE_RESET,

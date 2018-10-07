@@ -69,7 +69,6 @@ namespace {
         {moba::Message::MT_EMERGENCY_STOP,           "EMERGENCY_STOP"          },
         {moba::Message::MT_EMERGENCY_STOP_CLEARING,  "EMERGENCY_STOP_CLEARING" },
         {moba::Message::MT_GET_HARDWARE_STATE,       "GET_HARDWARE_STATE"      },
-        {moba::Message::MT_SET_HARDWARE_STATE,       "SET_HARDWARE_STATE"      },
         {moba::Message::MT_HARDWARE_STATE_CHANGED,   "HARDWARE_STATE_CHANGED"  },
         {moba::Message::MT_HARDWARE_SHUTDOWN,        "HARDWARE_SHUTDOWN"       },
         {moba::Message::MT_HARDWARE_RESET,           "HARDWARE_RESET"          },
