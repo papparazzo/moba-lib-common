@@ -63,9 +63,9 @@ namespace {
 
         {moba::Message::MT_SET_CONNECTIVITY,         "SET_CONNECTIVITY"        },
 
-        {moba::Message::SET_AUTOMATIC_MODE,          "SET_AUTOMATIC_MODE"      },
-        {moba::Message::SET_EMERGENCY_STOP,          "SET_EMERGENCY_STOP"      },
-        {moba::Message::SET_STANDBY_MODE,            "SET_STANDBY_MODE"        },
+        {moba::Message::MT_SET_AUTOMATIC_MODE,       "SET_AUTOMATIC_MODE"      },
+        {moba::Message::MT_SET_EMERGENCY_STOP,       "SET_EMERGENCY_STOP"      },
+        {moba::Message::MT_SET_STANDBY_MODE,         "SET_STANDBY_MODE"        },
         {moba::Message::MT_GET_HARDWARE_STATE,       "GET_HARDWARE_STATE"      },
         {moba::Message::MT_HARDWARE_STATE_CHANGED,   "HARDWARE_STATE_CHANGED"  },
         {moba::Message::MT_HARDWARE_SHUTDOWN,        "HARDWARE_SHUTDOWN"       },

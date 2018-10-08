@@ -77,9 +77,9 @@ namespace moba {
                 MT_SET_CONNECTIVITY,
 
             // ---- SYS ----
-                SET_AUTOMATIC_MODE,
-                SET_EMERGENCY_STOP,
-                SET_STANDBY_MODE,
+                MT_SET_AUTOMATIC_MODE,
+                MT_SET_EMERGENCY_STOP,
+                MT_SET_STANDBY_MODE,
                 MT_GET_HARDWARE_STATE,
                 MT_HARDWARE_STATE_CHANGED,
                 MT_HARDWARE_SHUTDOWN,
