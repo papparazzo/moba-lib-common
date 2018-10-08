@@ -20,6 +20,7 @@
 
 #pragma once
 
+#include "jsonabstractitem.h"
 #include "msgendpoint.h"
 #include "message.h"
 
@@ -34,19 +35,17 @@ namespace moba {
             virtual ~MsgSystemHandler() {
             }
 
-            void sendGetEmergencyStopState() {msgep->sendMsg(Message::MT_GET_EMERGENCY_STOP_STATE);}
+            void sendSetAutomaticMode(bool on) {msgep->sendMsg(Message::SET_AUTOMATIC_MODE, toJsonBoolPtr(on));}
 
-            void sendEmergencyStop() {msgep->sendMsg(Message::MT_EMERGENCY_STOP);}
+            void sendSetEmergencyStop(bool on) {msgep->sendMsg(Message::SET_AUTOMATIC_MODE, toJsonBoolPtr(on));}
 
-            void sendEmergencyStopClearing() {msgep->sendMsg(Message::MT_EMERGENCY_STOP_CLEARING);}
+            void sendSetStandByMode(bool on) {msgep->sendMsg(Message::SET_AUTOMATIC_MODE, toJsonBoolPtr(on));}
 
             void sendGetHardwareState()  {msgep->sendMsg(Message::MT_GET_HARDWARE_STATE);}
 
             void sendHardwareShutdown() {msgep->sendMsg(Message::MT_HARDWARE_SHUTDOWN);}
 
             void sendHardwareReset() {msgep->sendMsg(Message::MT_HARDWARE_RESET);}
-
-            void sendHardwareSwitchStandby() {msgep->sendMsg(Message::MT_HARDWARE_SWITCH_STANDBY);}
 
             enum NoticeType {
                 NT_INFO,

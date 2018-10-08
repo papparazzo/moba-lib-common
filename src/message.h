@@ -56,19 +56,19 @@ namespace moba {
                 MT_CON_CLIENTS_RES,
                 MT_SELF_TESTING_CLIENT,
 
-            // ---- ENV ----
+            // ---- TIMER ----
                 MT_GLOBAL_TIMER_EVENT,
                 MT_GET_GLOBAL_TIMER,
                 MT_SET_GLOBAL_TIMER,
+                MT_GET_COLOR_THEME,
+                MT_SET_COLOR_THEME,
+                MT_COLOR_THEME_EVENT,
+
+            // ---- ENV ----
                 MT_GET_ENVIRONMENT,
                 MT_SET_ENVIRONMENT,
                 MT_GET_AMBIENCE,
                 MT_SET_AMBIENCE,
-                MT_GET_AUTO_MODE,
-                MT_SET_AUTO_MODE,
-                MT_GET_COLOR_THEME,
-                MT_SET_COLOR_THEME,
-                MT_COLOR_THEME_EVENT,
                 MT_GET_AMBIENT_LIGHT,
                 MT_SET_AMBIENT_LIGHT,
 
@@ -77,14 +77,13 @@ namespace moba {
                 MT_SET_CONNECTIVITY,
 
             // ---- SYS ----
-                MT_GET_EMERGENCY_STOP_STATE,
-                MT_EMERGENCY_STOP,
-                MT_EMERGENCY_STOP_CLEARING,
+                SET_AUTOMATIC_MODE,
+                SET_EMERGENCY_STOP,
+                SET_STANDBY_MODE,
                 MT_GET_HARDWARE_STATE,
                 MT_HARDWARE_STATE_CHANGED,
                 MT_HARDWARE_SHUTDOWN,
                 MT_HARDWARE_RESET,
-                MT_HARDWARE_SWITCH_STANDBY,
 
             // ---- TLT ----
                 MT_GET_LAYOUTS_REQ,

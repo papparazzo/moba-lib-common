@@ -40,10 +40,6 @@ namespace moba {
 
             void sendSetGlobalTimer(const std::string &curModelTime, unsigned int multiplicator);
 
-            void sendGetAutoMode() {msgep->sendMsg(Message::MT_GET_AUTO_MODE);}
-
-            void sendSetAutoMode(bool on) {msgep->sendMsg(Message::MT_SET_AUTO_MODE, toJsonBoolPtr(on));}
-
             void sendGetColorTheme() {msgep->sendMsg(Message::MT_GET_COLOR_THEME);}
 
             void sendSetColorTheme(const std::string &dimTime, const std::string &brightTime, JsonThreeState::ThreeState condition);

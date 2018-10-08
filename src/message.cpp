@@ -50,8 +50,6 @@ namespace {
         {moba::Message::MT_GLOBAL_TIMER_EVENT,       "GLOBAL_TIMER_EVENT"      },
         {moba::Message::MT_GET_GLOBAL_TIMER,         "GET_GLOBAL_TIMER"        },
         {moba::Message::MT_SET_GLOBAL_TIMER,         "SET_GLOBAL_TIMER"        },
-        {moba::Message::MT_GET_AUTO_MODE,            "GET_AUTO_MODE"           },
-        {moba::Message::MT_SET_AUTO_MODE,            "SET_AUTO_MODE"           },
         {moba::Message::MT_GET_COLOR_THEME,          "GET_COLOR_THEME"         },
         {moba::Message::MT_SET_COLOR_THEME,          "SET_COLOR_THEME"         },
         {moba::Message::MT_COLOR_THEME_EVENT,        "COLOR_THEME_EVENT"       },
@@ -65,14 +63,13 @@ namespace {
 
         {moba::Message::MT_SET_CONNECTIVITY,         "SET_CONNECTIVITY"        },
 
-        {moba::Message::MT_GET_EMERGENCY_STOP_STATE, "GET_EMERGENCY_STOP_STATE"},
-        {moba::Message::MT_EMERGENCY_STOP,           "EMERGENCY_STOP"          },
-        {moba::Message::MT_EMERGENCY_STOP_CLEARING,  "EMERGENCY_STOP_CLEARING" },
+        {moba::Message::SET_AUTOMATIC_MODE,          "SET_AUTOMATIC_MODE"      },
+        {moba::Message::SET_EMERGENCY_STOP,          "SET_EMERGENCY_STOP"      },
+        {moba::Message::SET_STANDBY_MODE,            "SET_STANDBY_MODE"        },
         {moba::Message::MT_GET_HARDWARE_STATE,       "GET_HARDWARE_STATE"      },
         {moba::Message::MT_HARDWARE_STATE_CHANGED,   "HARDWARE_STATE_CHANGED"  },
         {moba::Message::MT_HARDWARE_SHUTDOWN,        "HARDWARE_SHUTDOWN"       },
         {moba::Message::MT_HARDWARE_RESET,           "HARDWARE_RESET"          },
-        {moba::Message::MT_HARDWARE_SWITCH_STANDBY,  "HARDWARE_SWITCH_STANDBY" },
 
         {moba::Message::MT_SYSTEM_NOTICE,            "SYSTEM_NOTICE"           },
 
