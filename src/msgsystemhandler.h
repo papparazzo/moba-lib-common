@@ -37,9 +37,9 @@ namespace moba {
 
             void sendSetAutomaticMode(bool on) {msgep->sendMsg(Message::MT_SET_AUTOMATIC_MODE, toJsonBoolPtr(on));}
 
-            void sendSetEmergencyStop(bool on) {msgep->sendMsg(Message::MT_SET_AUTOMATIC_MODE, toJsonBoolPtr(on));}
+            void sendSetEmergencyStop(bool on) {msgep->sendMsg(Message::MT_SET_EMERGENCY_STOP, toJsonBoolPtr(on));}
 
-            void sendSetStandByMode(bool on) {msgep->sendMsg(Message::MT_SET_AUTOMATIC_MODE, toJsonBoolPtr(on));}
+            void sendSetStandByMode(bool on) {msgep->sendMsg(Message::MT_SET_STANDBY_MODE, toJsonBoolPtr(on));}
 
             void sendGetHardwareState()  {msgep->sendMsg(Message::MT_GET_HARDWARE_STATE);}
 
