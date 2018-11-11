@@ -314,7 +314,7 @@ namespace moba {
     template <typename T> class JsonNumber : public JsonAbstractItem {
 
         public:
-            JsonNumber(T v) : v(v){
+            JsonNumber(T v) : v(v) {
             }
 
             JsonNumber(const JsonNumber &v) : v(v.v) {

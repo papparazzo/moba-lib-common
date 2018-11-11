@@ -105,7 +105,7 @@ namespace moba {
             switch(this->next(!this->strict)) {
                 case ',':
                     c = this->next(!this->strict);
-                    if(c == '}'){
+                    if(c == '}') {
                         throw JsonException("expected new key");
                     }
                     this->lastChar = c;
