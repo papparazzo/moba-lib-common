@@ -100,6 +100,7 @@ namespace moba {
 
                 MT_GET_LAYOUT_REQ,
                 MT_GET_LAYOUT_RES,
+                MT_SAVE_LAYOUT,
 
                 MT_SYSTEM_NOTICE,
 

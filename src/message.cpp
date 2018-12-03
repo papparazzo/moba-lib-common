@@ -89,7 +89,7 @@ namespace {
 
         {moba::Message::MT_GET_LAYOUT_REQ,           "GET_LAYOUT_REQ"          },
         {moba::Message::MT_GET_LAYOUT_RES,           "GET_LAYOUT_RES"          },
-
+        {moba::Message::MT_SAVE_LAYOUT,              "SAVE_LAYOUT"             },
     };
 }
 
