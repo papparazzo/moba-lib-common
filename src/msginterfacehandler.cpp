@@ -34,6 +34,6 @@ namespace moba {
                 break;
         }
 
-        msgep->sendMsg(Message(Message::MT_SYSTEM_NOTICE, str));
+        msgep->sendMsg(Message(Message::MT_SET_CONNECTIVITY, str));
     }
 }
