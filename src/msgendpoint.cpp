@@ -96,11 +96,7 @@ namespace moba {
             );
         }
 
-        if(::connect(
-            socket,
-            (struct sockaddr*) &host_addr,
-            sizeof (host_addr)
-        ) == -1) {
+        if(::connect(socket, (struct sockaddr*) &host_addr, sizeof (host_addr)) == -1) {
             throw MsgEndpointException("connection to host failed");
         }
     }
