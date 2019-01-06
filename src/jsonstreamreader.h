@@ -29,7 +29,6 @@ namespace moba {
 
         public:
             virtual ~JsonStreamReaderException() throw() {
-
             }
 
             JsonStreamReaderException(const std::string &what) {
@@ -42,6 +41,7 @@ namespace moba {
 
         private:
             std::string what__;
+            
     };
 
     class JsonStreamReader;
