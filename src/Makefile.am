@@ -17,7 +17,6 @@ libMoBaCommon_la_SOURCES = \
     msginterfacehandler.cpp \
     msgtimerhandler.cpp \
     signalhandler.cpp \
-    stopwatch.cpp \
     version.cpp
 
 otherincludedir = \
@@ -45,7 +44,6 @@ otherinclude_HEADERS = \
     msgtimerhandler.h \
     ringbuffer.h \
     signalhandler.h \
-    stopwatch.h \
     version.h
 
 ACLOCAL_AMFLAGS = \
