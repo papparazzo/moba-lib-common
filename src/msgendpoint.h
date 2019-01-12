@@ -96,5 +96,5 @@ namespace moba {
             void init();
     };
 
-    typedef boost::shared_ptr<MsgEndpoint> MsgEndpointPtr;
+    using MsgEndpointPtr = boost::shared_ptr<MsgEndpoint>;
 }
