@@ -62,7 +62,7 @@ namespace moba {
         }
         std::stringstream ss;
         ss <<
-            '"' << 
+            '"' <<
             this->ver[MAJOR] << '.' <<
             this->ver[MINOR] << '.' <<
             this->ver[BUILD] << '.' <<

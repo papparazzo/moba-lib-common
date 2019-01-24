@@ -97,9 +97,9 @@ namespace moba {
             friend std::ostream& operator<<(std::ostream &out, const Version &v);
 
 
-            std::string getJsonString() const;
+            std::string getJsonString() const override;
 
-            JsonItemPtr toJsonPtr() {
+            JsonItemPtr toJsonPtr() const {
                 return JsonItemPtr(new Version(*this));
             }
 

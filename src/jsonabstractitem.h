@@ -98,7 +98,7 @@ namespace moba {
                 return this->v;
             }
 
-            std::string getJsonString() const {
+            std::string getJsonString() const override {
                 if(this->v) {
                     return "true";
                 }
@@ -122,7 +122,7 @@ namespace moba {
                 return false;
             }
 
-            std::string getJsonString() const {
+            std::string getJsonString() const override {
                 return "null";
             };
     };
@@ -135,7 +135,7 @@ namespace moba {
             JsonString(const std::string &v) : std::string(v) {
             }
 
-            std::string getJsonString() const {
+            std::string getJsonString() const override {
                 std::stringstream ss;
                 ss << '"';
                 for(size_t i = 0; i < this->length(); ++i) {
@@ -185,7 +185,7 @@ namespace moba {
             JsonSwitch(JsonSwitch::Switch v) : v(v) {
             }
 
-            std::string getJsonString() const {
+            std::string getJsonString() const override {
                 switch(this->v) {
                     case ON:
                         return "\"ON\"";
@@ -236,7 +236,7 @@ namespace moba {
             JsonToggleState(JsonToggleState::ToggleState v) : v(v) {
             }
 
-            std::string getJsonString() const {
+            std::string getJsonString() const override {
                 switch(this->v) {
                     case ON:
                         return "\"ON\"";
@@ -284,7 +284,7 @@ namespace moba {
             JsonThreeState(JsonThreeState::ThreeState v) : v(v) {
             }
 
-            std::string getJsonString() const {
+            std::string getJsonString() const override {
                 switch(this->v) {
                     case ON:
                         return "\"ON\"";
@@ -321,7 +321,7 @@ namespace moba {
             }
             virtual ~JsonNumber() {};
 
-            std::string getJsonString() const {
+            std::string getJsonString() const override {
                 std::stringstream ss;
                 ss << this->v;
                 return ss.str();
