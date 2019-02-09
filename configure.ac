@@ -32,6 +32,8 @@ AC_TYPE_SSIZE_T
 # Checks for library functions.
 AC_CHECK_FUNCS([ftime gethostbyname memset mkfifo select socket strerror strtol])
 
+AX_CXX_COMPILE_STDCXX_17()
+
 AC_CONFIG_FILES([
     Makefile
     src/Makefile
