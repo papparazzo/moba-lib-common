@@ -71,6 +71,21 @@ namespace moba {
         return ss.str();
     }
 
+    std::string Version::getString() const {
+        if(ver[Version::MAJOR] == -1) {
+            return "0.0.0-0000";
+        }
+
+        std::stringstream o;
+
+        o <<
+            ver[Version::MAJOR] << "." << ver[Version::MINOR] << "." <<
+            ver[Version::BUILD] << "-" << std::setw(4) <<
+            std::setfill('0') << ver[Version::PATCH];
+
+        return o.str();
+    }
+
     int Version::compareMajor(const Version &v) const {
         if(this->ver[MAJOR] < v.ver[MAJOR]) {
             return -1;
@@ -131,16 +146,7 @@ namespace moba {
     }
 
     std::ostream& operator<<(std::ostream &out, const Version &v) {
-        if(v.ver[Version::MAJOR] == -1) {
-            out << "0.0.0-0000";
-            return out;
-        }
-
-        out <<
-            v.ver[Version::MAJOR] << "." << v.ver[Version::MINOR] << "." <<
-            v.ver[Version::BUILD] << "-" << std::setw(4) <<
-            std::setfill('0') << v.ver[Version::PATCH];
-
+        out << v.getString();
         return out;
     }
 }
