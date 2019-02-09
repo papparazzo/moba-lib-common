@@ -31,16 +31,21 @@ namespace moba {
         std::string str = version;
 
         if(str.length() == 0) {
-            throw VersionException(
-                "version-string is empty or not set"
-            );
+            throw VersionException("version-string is empty or not set");
         }
 
         try {
             size_t p = version.rfind('-');
-            if(p != std::string::npos) {
-                this->ver[3] = boost::lexical_cast<int>(version.substr(p + 1));
+
+            if(p == std::string::npos) {
+                p = version.rfind('.');
             }
+            if(p == std::string::npos) {
+                throw VersionException("invalid version-string given");
+            }
+
+            this->ver[3] = boost::lexical_cast<int>(version.substr(p + 1));
+
             size_t f;
             --p;
             for(int i = 2; i >= 0; --i) {
@@ -99,7 +104,8 @@ namespace moba {
     int Version::compareMinor(const Version &v) const {
         if(this->ver[MINOR] < v.ver[MINOR]) {
             return -1;
-        } else if(this->ver[MINOR] > v.ver[MINOR]) {
+        }
+        if(this->ver[MINOR] > v.ver[MINOR]) {
             return 1;
         }
         return 0;
