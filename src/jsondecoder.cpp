@@ -36,9 +36,7 @@ namespace moba {
         char c = this->next(!this->strict);
         if(c != x) {
             throw JsonException(
-                std::string("expected '") +
-                std::string(1, x) + "' found '" +
-                std::string(1, c) + "'!"
+                "expected '" + std::string(1, x) + "' found '" + std::string(1, c) + "'!"
             );
         }
     }
