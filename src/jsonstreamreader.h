@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <exception>
 
 namespace moba {
@@ -41,12 +41,12 @@ namespace moba {
 
         private:
             std::string what__;
-            
+
     };
 
     class JsonStreamReader;
 
-    typedef boost::shared_ptr<JsonStreamReader> JsonStreamReaderPtr;
+    typedef std::shared_ptr<JsonStreamReader> JsonStreamReaderPtr;
 
     class JsonStreamReader {
 

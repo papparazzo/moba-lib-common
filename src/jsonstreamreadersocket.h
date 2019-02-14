@@ -26,7 +26,7 @@ namespace moba {
 
     class JsonStreamReaderSocket;
 
-    typedef boost::shared_ptr<JsonStreamReaderSocket> JsonStreamReaderSocketPtr;
+    typedef std::shared_ptr<JsonStreamReaderSocket> JsonStreamReaderSocketPtr;
 
     class JsonStreamReaderSocket : public JsonStreamReader {
 
