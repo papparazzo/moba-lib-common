@@ -40,23 +40,23 @@ namespace moba {
             std::setw(9) << std::setfill(' ');
 
         switch(logLevel) {
-            case ERROR:
+            case LogLevel::ERROR:
                 stream << "Error: ";
                 break;
 
-            case WARNING:
+            case LogLevel::WARNING:
                 stream << "Warning: ";
                 break;
 
-            case INFO:
+            case LogLevel::INFO:
                 stream << "Info: ";
                 break;
 
-            case NOTICE:
+            case LogLevel::NOTICE:
                 stream << "Notice: ";
                 break;
 
-            case DEBUG:
+            case LogLevel::DEBUG:
                 stream << "Debug: ";
                 break;
 

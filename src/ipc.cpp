@@ -51,7 +51,7 @@ namespace moba {
             return;
         }
         if(msgctl(this->mID, IPC_RMID, NULL) == -1) {
-            LOG(ERROR) << getErrno("unable to delete msg-queue! ") << std::endl;
+            LOG(LogLevel::ERROR) << getErrno("unable to delete msg-queue! ") << std::endl;
         }
     }
 

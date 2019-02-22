@@ -30,7 +30,7 @@
 
 namespace moba {
 
-    enum LogLevel {
+    enum class LogLevel {
         ERROR,
         WARNING,
         INFO,

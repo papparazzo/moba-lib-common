@@ -58,7 +58,7 @@ namespace moba {
         errno = 0;
 
         if(getrlimit(RLIMIT_CORE, &currResource) != 0) {
-            LOG(ERROR) << "unable to get resource limitations for core files!" << std::endl;
+            LOG(LogLevel::ERROR) << "unable to get resource limitations for core files!" << std::endl;
             return false;
         }
 
@@ -68,10 +68,10 @@ namespace moba {
         int setRetu = setrlimit(RLIMIT_CORE, &currResource);
 
         if(setRetu != 0) {
-            LOG(WARNING) << getErrno("unable to set core file size to unlimited") << std::endl;
+            LOG(LogLevel::WARNING) << getErrno("unable to set core file size to unlimited") << std::endl;
             return false;
         }
-        LOG(NOTICE) << "core file size set to unlimited." << std::endl;
+        LOG(LogLevel::NOTICE) << "core file size set to unlimited." << std::endl;
         return true;
     }
 
