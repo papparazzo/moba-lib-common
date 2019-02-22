@@ -44,14 +44,11 @@ namespace moba {
 
     };
 
-    class JsonStreamReader;
-
-    typedef std::shared_ptr<JsonStreamReader> JsonStreamReaderPtr;
-
     class JsonStreamReader {
-
         public:
             virtual ~JsonStreamReader() {};
             virtual char read() = 0;
     };
+
+    using JsonStreamReaderPtr = std::shared_ptr<JsonStreamReader> ;
 }
