@@ -24,23 +24,16 @@
 
 namespace moba {
 
-    class JsonStreamReaderSocket;
-
-    typedef std::shared_ptr<JsonStreamReaderSocket> JsonStreamReaderSocketPtr;
-
     class JsonStreamReaderSocket : public JsonStreamReader {
-
         public:
-            JsonStreamReaderSocket(const std::string &host, int port);
             JsonStreamReaderSocket(int socket) : socket(socket) {
             }
-            JsonStreamReaderSocket(const JsonStreamReaderSocket& orig) {}
             virtual ~JsonStreamReaderSocket() {};
 
             virtual char read();
 
         protected:
             int socket;
-
     };
+    using JsonStreamReaderSocketPtr = std::shared_ptr<JsonStreamReaderSocket>;
 }

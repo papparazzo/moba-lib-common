@@ -32,37 +32,11 @@
 
 namespace moba {
 
-    JsonStreamReaderSocket::JsonStreamReaderSocket(const std::string &host, int port) {
-        struct sockaddr_in host_addr;
-
-        ::memset(&host_addr, 0, sizeof (host_addr));
-        host_addr.sin_family = AF_INET;
-        host_addr.sin_port = htons(port);
-        host_addr.sin_addr.s_addr = inet_addr(host.c_str());
-
-        if(host_addr.sin_addr.s_addr == INADDR_NONE) {
-            struct hostent *hostn;
-
-            hostn = gethostbyname(host.c_str());
-
-            if(hostn == NULL) {
-                throw JsonStreamReaderException("resolving url failed");
-            }
-            memcpy(
-                (char*) &host_addr.sin_addr.s_addr,
-                hostn->h_addr_list[0],
-                hostn->h_length
-            );
-        }
-
-        if(::connect(socket, (struct sockaddr*) &host_addr, sizeof(host_addr)) == -1) {
-            throw JsonStreamReaderException("connection to host failed");
-        }
-    }
-
     char JsonStreamReaderSocket::read() {
         char data;
-        ::recv(socket, &data, sizeof(data), 0);
+        if(::recv(socket, &data, sizeof(data), 0) == -1) {
+            throw JsonStreamReaderException("JsonStreamReaderSocket: reading failed");
+        }
         return data;
     }
 }
