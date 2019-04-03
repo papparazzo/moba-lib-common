@@ -15,6 +15,7 @@ otherincludedir = \
     $(includedir)/moba
 
 otherinclude_HEADERS = \
+    exception.h \
     atomic.h \
     helper.h \
     ipc.h \
