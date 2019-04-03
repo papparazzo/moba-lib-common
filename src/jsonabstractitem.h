@@ -28,6 +28,8 @@
 #include <iomanip>
 #include <memory>
 
+#include "exception.h"
+
 namespace moba {
     class JsonAbstractItem {
 
@@ -200,6 +202,9 @@ namespace moba {
 
                     case TRIGGER:
                         return "\"TRIGGER\"";
+
+                    default:
+                        throw UnsupportedOperationException("IPC::Command is invalid");
                 }
             }
 
@@ -245,6 +250,9 @@ namespace moba {
 
                     case UNSET:
                         return "\"UNSET\"";
+
+                    default:
+                        throw UnsupportedOperationException("IPC::Command is invalid");
                 }
             }
 
@@ -296,6 +304,9 @@ namespace moba {
 
                     case UNSET:
                         return "\"UNSET\"";
+
+                    default:
+                        throw UnsupportedOperationException("IPC::Command is invalid");
                 }
             }
 

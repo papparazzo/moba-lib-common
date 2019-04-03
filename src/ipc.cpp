@@ -31,6 +31,7 @@
 #include "helper.h"
 #include "ipc.h"
 #include "log.h"
+#include "exception.h"
 
 namespace moba {
 
@@ -80,7 +81,7 @@ namespace moba {
         msg.mtype = type;
         memset(msg.mtext, '\0', moba::IPC::MSG_LEN);
         strncpy(msg.mtext, data.c_str(), moba::IPC::MSG_LEN);
-        this->send(msg);
+        return this->send(msg);
     }
 
     bool IPC::send(const Message &msg) {
@@ -166,6 +167,9 @@ namespace moba {
 
             case CMD_SET_DURATION:
                 return "SET_DURATION";
+
+            default:
+                throw UnsupportedOperationException("IPC::Command is invalid");
         }
     }
 }
