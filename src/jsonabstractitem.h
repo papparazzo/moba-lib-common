@@ -46,11 +46,7 @@ namespace moba {
             std::string getJsonString() const {
                 std::stringstream ss;
                 ss << '[';
-                for(
-                    JsonArray::const_iterator iter = this->begin();
-                    iter != this->end();
-                    ++iter
-                ) {
+                for(JsonArray::const_iterator iter = this->begin(); iter != this->end(); ++iter) {
                     if(iter != this->begin()) {
                         ss << ',';
                     }
@@ -69,11 +65,7 @@ namespace moba {
             std::string getJsonString() const {
                 std::stringstream ss;
                 ss << '{';
-                for(
-                    JsonObject::const_iterator iter = this->begin();
-                    iter != this->end();
-                    ++iter
-                ) {
+                for(JsonObject::const_iterator iter = this->begin(); iter != this->end(); ++iter) {
                     if(iter != this->begin()) {
                         ss << ',';
                     }
@@ -139,7 +131,7 @@ namespace moba {
             std::string getJsonString() const override {
                 std::stringstream ss;
                 ss << '"';
-                for(size_t i = 0; i < this->length(); ++i) {
+                for(std::size_t i = 0; i < this->length(); ++i) {
                     switch(this->data()[i]) {
                         case '"':
                             ss << "\\\"";
