@@ -1,28 +1,22 @@
 AUTOMAKE_OPTIONS = subdir-objects
 lib_LTLIBRARIES = \
-    libMoBaCommon.la
+    libmobacommon.la
 
-libMoBaCommon_la_SOURCES = \
+libmobacommon_la_SOURCES = \
     helper.cpp \
     ipc.cpp \
-    jsondecoder.cpp \
-    jsonstreamreadersocket.cpp \
     log.cpp \
     signalhandler.cpp \
     version.cpp
 
 otherincludedir = \
-    $(includedir)/moba
+    $(includedir)/moba-common
 
 otherinclude_HEADERS = \
     exception.h \
     atomic.h \
     helper.h \
     ipc.h \
-    jsonabstractitem.h \
-    jsondecoder.h \
-    jsonstreamreader.h \
-    jsonstreamreadersocket.h \
     log.h \
     ringbuffer.h \
     signalhandler.h \
