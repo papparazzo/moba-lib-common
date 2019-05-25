@@ -1,4 +1,4 @@
-## moba-common
+## moba-lib-common
 
 ```sh
 autoreconf -i
