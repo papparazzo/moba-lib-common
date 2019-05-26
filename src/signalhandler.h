@@ -25,7 +25,7 @@
 #include <string>
 #include <boost/noncopyable.hpp>
 
-namespace moba {
+namespace moba::common {
 
     class SignalHandlerException : public std::exception {
 

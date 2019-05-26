@@ -33,7 +33,7 @@
 #include "log.h"
 #include "exception.h"
 
-namespace moba {
+namespace moba::common {
 
     IPC::IPC(key_t key, Type type) {
         int flags = S_IRWXU | S_IWGRP | S_IWOTH;;
@@ -62,7 +62,7 @@ namespace moba {
     }
 
     bool IPC::receive(Message &msg, long msgtyp, bool except) {
-        memset(msg.mtext, '\0', moba::IPC::MSG_LEN);
+        ::memset(msg.mtext, '\0', IPC::MSG_LEN);
         int msgflg = IPC_NOWAIT;
         if(except) {
             msgflg |= MSG_EXCEPT;
@@ -79,8 +79,8 @@ namespace moba {
     bool IPC::send(const std::string &data, long type) {
         Message msg;
         msg.mtype = type;
-        memset(msg.mtext, '\0', moba::IPC::MSG_LEN);
-        strncpy(msg.mtext, data.c_str(), moba::IPC::MSG_LEN);
+        memset(msg.mtext, '\0', IPC::MSG_LEN);
+        strncpy(msg.mtext, data.c_str(), IPC::MSG_LEN);
         return this->send(msg);
     }
 

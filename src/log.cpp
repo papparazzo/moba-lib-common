@@ -25,7 +25,7 @@
 #include "helper.h"
 #include "log.h"
 
-namespace moba {
+namespace moba::common {
 
     std::ostream &writeLoggerPrefix(std::ostream &stream, const std::string &file, const int &line, const LogLevel &logLevel) {
         timeb actual;
@@ -35,7 +35,7 @@ namespace moba {
         strftime(buffer, 21, "%d.%m.%Y %H:%M:%S.", localtime(&actual.time));
         stream <<
             buffer << std::right << std::setw(3) << std::setfill('0') << actual.millitm <<
-            std::setw(15) << std::setfill(' ') << moba::baseName(file) << ":" <<
+            std::setw(15) << std::setfill(' ') << baseName(file) << ":" <<
             std::setw(4) << std::setfill('0') << line << " " << std::left <<
             std::setw(9) << std::setfill(' ');
 

@@ -29,7 +29,7 @@
 #include "helper.h"
 #include "log.h"
 
-namespace moba {
+namespace moba::common {
 
     std::string getErrno(const std::string &txt) {
         std::stringstream ss;

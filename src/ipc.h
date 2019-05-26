@@ -25,7 +25,7 @@
 #include <exception>
 #include <boost/noncopyable.hpp>
 
-namespace moba {
+namespace moba::common {
 
     class IPCException : public std::exception {
 

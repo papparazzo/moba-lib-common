@@ -24,7 +24,7 @@
 #include <string>
 #include <cstddef>
 
-namespace moba {
+namespace moba::common {
 
     class RingbufferException : public std::exception {
 

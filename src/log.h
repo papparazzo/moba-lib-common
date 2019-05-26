@@ -24,11 +24,11 @@
 #include <ostream>
 #include <iostream>
 
-#define LOG(loglevel)          moba::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, (loglevel))
-#define VC_LOG(VarName)        moba::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, moba::NOTICE) << "content of [" #VarName "]\t = <" << (VarName) << ">"
-#define EXC_LOG(excType, What) moba::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, moba::WARNING) << (excType) << " exception occurred >> what(" << (What) << ") <<"
+#define LOG(loglevel)          moba::common::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, (loglevel))
+#define VC_LOG(VarName)        moba::common::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, moba::NOTICE) << "content of [" #VarName "]\t = <" << (VarName) << ">"
+#define EXC_LOG(excType, What) moba::common::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, moba::WARNING) << (excType) << " exception occurred >> what(" << (What) << ") <<"
 
-namespace moba {
+namespace moba::common {
 
     enum class LogLevel {
         ERROR,

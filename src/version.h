@@ -23,7 +23,7 @@
 #include <string>
 #include <exception>
 
-namespace moba {
+namespace moba::common {
 
     class VersionException : public std::exception {
 

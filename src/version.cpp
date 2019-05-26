@@ -25,7 +25,7 @@
 
 #include <boost/lexical_cast.hpp>
 
-namespace moba {
+namespace moba::common {
 
     Version::Version(const std::string &version) {
         std::string str = version;

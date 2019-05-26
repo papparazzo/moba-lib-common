@@ -23,7 +23,7 @@
 #include <string>
 #include "version.h"
 
-namespace moba {
+namespace moba::common {
 
     struct AppData {
         std::string appName;
