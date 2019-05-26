@@ -23,8 +23,6 @@
 #include <string>
 #include <exception>
 
-#include "jsonabstractitem.h"
-
 namespace moba {
 
     class VersionException : public std::exception {
@@ -45,7 +43,7 @@ namespace moba {
             std::string what__;
     };
 
-    class Version : public JsonAbstractItem {
+    class Version {
 
         public:
 
@@ -96,13 +94,7 @@ namespace moba {
 
             friend std::ostream& operator<<(std::ostream &out, const Version &v);
 
-            std::string getJsonString() const override;
-
             std::string getString() const;
-
-            JsonItemPtr toJsonPtr() const {
-                return JsonItemPtr(new Version(*this));
-            }
 
         protected:
             enum VersionPart {

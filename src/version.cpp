@@ -61,21 +61,6 @@ namespace moba {
         }
     }
 
-    std::string Version::getJsonString() const {
-        if(this->ver[MAJOR] == -1) {
-            return "\"0.0.0.0\"";
-        }
-        std::stringstream ss;
-        ss <<
-            '"' <<
-            this->ver[MAJOR] << '.' <<
-            this->ver[MINOR] << '.' <<
-            this->ver[BUILD] << '.' <<
-            this->ver[PATCH] << '"';
-
-        return ss.str();
-    }
-
     std::string Version::getString() const {
         if(ver[Version::MAJOR] == -1) {
             return "0.0.0-0000";
