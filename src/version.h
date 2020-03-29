@@ -52,20 +52,33 @@ namespace moba::common {
             }
 
             Version(int major, int minor = 0, int build = 0, int patch = 0) {
-                this->ver[MAJOR] = major;
-                this->ver[MINOR] = minor;
-                this->ver[BUILD] = build;
-                this->ver[PATCH] = patch;
+                ver[MAJOR] = major;
+                ver[MINOR] = minor;
+                ver[BUILD] = build;
+                ver[PATCH] = patch;
             }
 
             Version(const Version &orig) {
-                this->ver[MAJOR] = orig.ver[MAJOR];
-                this->ver[MINOR] = orig.ver[MINOR];
-                this->ver[BUILD] = orig.ver[BUILD];
-                this->ver[PATCH] = orig.ver[PATCH];
+                ver[MAJOR] = orig.ver[MAJOR];
+                ver[MINOR] = orig.ver[MINOR];
+                ver[BUILD] = orig.ver[BUILD];
+                ver[PATCH] = orig.ver[PATCH];
             }
 
             Version(const std::string &version);
+
+            Version& operator=(Version v) {
+                ver[MAJOR] = v.ver[MAJOR];
+                ver[MINOR] = v.ver[MINOR];
+                ver[BUILD] = v.ver[BUILD];
+                ver[PATCH] = v.ver[PATCH];
+                return *this;
+            }
+
+            Version& operator=(const std::string &version) {
+                parseFromString(version);
+                return *this;
+            }
 
             virtual ~Version() {
             };
@@ -76,10 +89,10 @@ namespace moba::common {
 
             inline bool operator == (const Version &v) const {
                 return
-                    this->ver[MAJOR] == v.ver[MAJOR] &&
-                    this->ver[MINOR] == v.ver[MINOR] &&
-                    this->ver[BUILD] == v.ver[BUILD] &&
-                    this->ver[PATCH] == v.ver[PATCH];
+                    ver[MAJOR] == v.ver[MAJOR] &&
+                    ver[MINOR] == v.ver[MINOR] &&
+                    ver[BUILD] == v.ver[BUILD] &&
+                    ver[PATCH] == v.ver[PATCH];
             }
 
             inline bool operator != (const Version &v) const {
@@ -104,6 +117,8 @@ namespace moba::common {
                 PATCH = 3
             };
             int ver[4];
+
+            void parseFromString(std::string version);
     };
 }
 
