@@ -19,6 +19,7 @@
  */
 
 #include <iomanip>
+#include <chrono>
 #include <ctime>
 #include <sys/timeb.h>
 
@@ -28,13 +29,17 @@
 namespace moba::common {
 
     std::ostream &writeLoggerPrefix(std::ostream &stream, const std::string &file, const int &line, const LogLevel &logLevel) {
-        timeb actual;
-        char buffer[25] = "";
+        auto now = std::chrono::system_clock::now();
+        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+        auto timer = std::chrono::system_clock::to_time_t(now);
 
-        ftime(&actual);
-        strftime(buffer, 21, "%d.%m.%Y %H:%M:%S.", localtime(&actual.time));
+        std::tm bt;
+
+        localtime_r(&timer, &bt);
+
         stream <<
-            buffer << std::right << std::setw(3) << std::setfill('0') << actual.millitm <<
+            std::put_time(&bt, "%d.%m.%Y %H:%M:%S.") << std::right <<
+            std::setw(3) << std::setfill('0') << ms.count() <<
             std::setw(15) << std::setfill(' ') << baseName(file) << ":" <<
             std::setw(4) << std::setfill('0') << line << " " << std::left <<
             std::setw(9) << std::setfill(' ');
