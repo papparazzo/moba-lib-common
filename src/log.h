@@ -25,8 +25,8 @@
 #include <iostream>
 
 #define LOG(loglevel)          moba::common::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, (loglevel))
-#define VC_LOG(VarName)        moba::common::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, moba::common::LogLevel::NOTICE) << "content of [" #VarName "]\t = <" << (VarName) << ">"
-#define EXC_LOG(excType, What) moba::common::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, moba::common::LogLevel::WARNING) << (excType) << " exception occurred >> what(" << (What) << ") <<"
+#define VC_LOG(VarName)        moba::common::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, moba::common::LogLevel::NOTICE) << "content of [" #VarName "]\t = <" << (VarName) << ">" << std::endl;
+#define EXC_LOG(excType, What) moba::common::writeLoggerPrefix(std::cerr, __FILE__, __LINE__, moba::common::LogLevel::WARNING) << (excType) << " exception occurred >> what(" << (What) << ") <<" << std::endl;
 
 namespace moba::common {
 
