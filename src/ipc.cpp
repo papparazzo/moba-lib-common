@@ -43,7 +43,7 @@ namespace moba::common {
         this->mID = msgget(key, flags);
         this->type = type;
         if(this->mID == -1) {
-             throw IPCException(getErrno("msgget failed"));
+             throw IPCException{getErrno("msgget failed")};
         }
     }
 
@@ -73,7 +73,7 @@ namespace moba::common {
         if(errno == ENOMSG) {
             return false;
         }
-        throw IPCException(getErrno("msgrcv failed"));
+        throw IPCException{getErrno("msgrcv failed")};
     }
 
     bool IPC::send(const std::string &data, long type) {
@@ -93,7 +93,7 @@ namespace moba::common {
             return false;
         }
 
-        throw IPCException(getErrno("msgsnd failed"));
+        throw IPCException{getErrno("msgsnd failed")};
     }
 
     IPC::Command IPC::getCMDFromString(const std::string &cmd) {
@@ -130,7 +130,7 @@ namespace moba::common {
         if(boost::iequals(cmd, "SET_DURATION")) {
             return CMD_SET_DURATION;
         }
-        throw IPCException(std::string("unknown command <" + cmd + ">"));
+        throw IPCException{std::string("unknown command <" + cmd + ">")};
     }
 
     std::string IPC::getCMDAsString(IPC::Command cmd) {
@@ -169,7 +169,7 @@ namespace moba::common {
                 return "SET_DURATION";
 
             default:
-                throw UnsupportedOperationException("IPC::Command is invalid");
+                throw UnsupportedOperationException{"IPC::Command is invalid"};
         }
     }
 }
