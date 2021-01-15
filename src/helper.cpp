@@ -23,11 +23,11 @@
 #include <cerrno>
 #include <cstring>
 #include <iosfwd>
+#include <iostream>
 #include <sstream>
 #include <cstdio>
 
 #include "helper.h"
-#include "log.h"
 
 namespace moba::common {
 
@@ -53,13 +53,12 @@ namespace moba::common {
         return std::string(path, p + 1, i - p);
     }
 
-    bool setCoreFileSizeToULimit() {
+    void setCoreFileSizeToULimit() {
         struct rlimit currResource;
         errno = 0;
 
         if(getrlimit(RLIMIT_CORE, &currResource) != 0) {
-            LOG(LogLevel::ERROR) << "unable to get resource limitations for core files!" << std::endl;
-            return false;
+            throw HelperException{getErrno("unable to get resource limitations for core files!")};
         }
 
         currResource.rlim_cur = RLIM_INFINITY;
@@ -68,11 +67,8 @@ namespace moba::common {
         int setRetu = setrlimit(RLIMIT_CORE, &currResource);
 
         if(setRetu != 0) {
-            LOG(LogLevel::WARNING) << getErrno("unable to set core file size to unlimited") << std::endl;
-            return false;
+            throw HelperException{getErrno("unable to set core file size to unlimited!")};
         }
-        LOG(LogLevel::NOTICE) << "core file size set to unlimited." << std::endl;
-        return true;
     }
 
     std::string getLicense(bool briefly) {

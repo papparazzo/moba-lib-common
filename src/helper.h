@@ -21,9 +21,28 @@
 #pragma once
 
 #include <string>
+#include <exception>
 #include "version.h"
 
 namespace moba::common {
+
+    class HelperException : public std::exception {
+
+        public:
+            virtual ~HelperException() throw() {
+            }
+
+            HelperException(const std::string &what) {
+                this->what__ = what;
+            }
+
+            virtual const char *what() const throw() {
+                return this->what__.c_str();
+            }
+
+        private:
+            std::string what__;
+    };
 
     struct AppData {
         std::string appName;
@@ -39,7 +58,7 @@ namespace moba::common {
 
     std::string baseName(const std::string &path);
 
-    bool setCoreFileSizeToULimit();
+    void setCoreFileSizeToULimit();
 
     std::string getLicense(bool briefly);
 
