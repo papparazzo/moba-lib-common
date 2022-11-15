@@ -75,3 +75,6 @@ Makefile.in
 /src/Makefile
 /src/.libs/libmobacommon.so.0.0.0
 /src/.libs/libmobacommon.so.0
+
+*.o     
+*~
