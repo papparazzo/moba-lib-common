@@ -80,7 +80,11 @@ namespace moba::common {
         Message msg;
         msg.mtype = type;
         memset(msg.mtext, '\0', IPC::MSG_LEN);
+
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Wstringop-truncation"
         strncpy(msg.mtext, data.c_str(), IPC::MSG_LEN);
+        #pragma GCC diagnostic pop
         return this->send(msg);
     }
 
