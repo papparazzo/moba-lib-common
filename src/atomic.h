@@ -22,7 +22,7 @@
 
 #include <pthread.h>
 
-namespace moba:common {
+namespace moba::common {
     template <typename T> class Atomic {
         public:
             Atomic() {
