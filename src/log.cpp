@@ -26,7 +26,7 @@
 #include "helper.h"
 #include "log.h"
 
-namespace moba::common {
+namespace moba { namespace common {
 
     std::ostream &writeLoggerPrefix(std::ostream &stream, const std::string &file, const int &line, const LogLevel &logLevel) {
         auto now = std::chrono::system_clock::now();
@@ -71,4 +71,4 @@ namespace moba::common {
         }
         return stream;
     }
-}
+}}

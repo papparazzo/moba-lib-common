@@ -33,7 +33,7 @@
 #include "log.h"
 #include "exception.h"
 
-namespace moba::common {
+namespace moba { namespace common {
 
     IPC::IPC(key_t key, Type type) {
         int flags = S_IRWXU | S_IWGRP | S_IWOTH;;
@@ -176,4 +176,4 @@ namespace moba::common {
                 throw UnsupportedOperationException{"IPC::Command is invalid"};
         }
     }
-}
+}}

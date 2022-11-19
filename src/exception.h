@@ -22,7 +22,7 @@
 
 #include <exception>
 
-namespace moba::common {
+namespace moba { namespace common {
     class UnsupportedOperationException : public std::exception {
         public:
             explicit UnsupportedOperationException(const std::string &err) throw() : what_{err} {
@@ -41,5 +41,4 @@ namespace moba::common {
         private:
             std::string what_;
     };
-}
-
+}}

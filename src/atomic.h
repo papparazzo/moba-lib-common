@@ -22,7 +22,7 @@
 
 #include <pthread.h>
 
-namespace moba::common {
+namespace moba { namespace common {
     template <typename T> class Atomic {
         public:
             Atomic() {
@@ -82,4 +82,4 @@ namespace moba::common {
             T v;
             pthread_mutex_t m;
     };
-}
+}}

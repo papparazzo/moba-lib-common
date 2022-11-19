@@ -25,7 +25,7 @@
 
 #include <boost/lexical_cast.hpp>
 
-namespace moba::common {
+namespace moba { namespace common {
 
     Version::Version(const std::string &version) {
         parseFromString(version);
@@ -142,4 +142,4 @@ namespace moba::common {
         out << v.getString();
         return out;
     }
-}
+}}

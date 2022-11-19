@@ -29,7 +29,7 @@
 
 #include "helper.h"
 
-namespace moba::common {
+namespace moba { namespace common {
 
     std::string getErrno(const std::string &txt) {
         std::stringstream ss;
@@ -115,5 +115,4 @@ namespace moba::common {
         std::cerr << "------------------------------------------------------";
         std::cerr << "------------------------------------------------------" << std::endl;
     }
-}
-
+}}

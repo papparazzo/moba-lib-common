@@ -24,7 +24,7 @@
 #include <exception>
 #include "version.h"
 
-namespace moba::common {
+namespace moba { namespace common {
 
     class HelperException : public std::exception {
 
@@ -63,5 +63,4 @@ namespace moba::common {
     std::string getLicense(bool briefly);
 
     void printAppData(const AppData &appData);
-}
-
+}}

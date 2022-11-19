@@ -25,7 +25,7 @@
 #include <string>
 #include <boost/noncopyable.hpp>
 
-namespace moba::common {
+namespace moba { namespace common {
 
     class SignalHandlerException : public std::exception {
 
@@ -59,4 +59,4 @@ namespace moba::common {
             void lockSignal(int signr);
             void unlockSignal(int signr);
     };
-}
+}}

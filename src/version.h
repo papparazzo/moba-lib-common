@@ -23,7 +23,7 @@
 #include <string>
 #include <exception>
 
-namespace moba::common {
+namespace moba { namespace common {
 
     class VersionException : public std::exception {
 
@@ -120,5 +120,4 @@ namespace moba::common {
 
             void parseFromString(std::string version);
     };
-}
-
+}}
