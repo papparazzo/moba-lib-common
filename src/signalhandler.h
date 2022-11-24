@@ -23,40 +23,40 @@
 #include <csignal>
 #include <exception>
 #include <string>
-#include <boost/noncopyable.hpp>
 
 namespace moba { namespace common {
 
     class SignalHandlerException : public std::exception {
+    public:
+        virtual ~SignalHandlerException() throw() {
 
-        public:
-            virtual ~SignalHandlerException() throw() {
+        }
 
-            }
+        SignalHandlerException(const std::string &what) {
+            this->what__ = what;
+        }
 
-            SignalHandlerException(const std::string &what) {
-                this->what__ = what;
-            }
+        virtual const char* what() const throw() {
+            return this->what__.c_str();
+        }
 
-            virtual const char* what() const throw() {
-                return this->what__.c_str();
-            }
-
-        private:
-            std::string what__;
+    private:
+        std::string what__;
     };
 
-    class SignalHandler : private boost::noncopyable {
+    class SignalHandler {
+    public:
+        SignalHandler(const SignalHandler&) = delete;
+        SignalHandler& operator=(const SignalHandler&) = delete;
 
-        public:
-            bool observeSignal(int signr);
-            void resetSignalState(int signr);
-            bool hasSignalTriggered(int signr);
-            bool hasAnySignalTriggered();
-            bool removeSignal(int signr);
+        bool observeSignal(int signr);
+        void resetSignalState(int signr);
+        bool hasSignalTriggered(int signr);
+        bool hasAnySignalTriggered();
+        bool removeSignal(int signr);
 
-        protected:
-            void lockSignal(int signr);
-            void unlockSignal(int signr);
+    protected:
+        void lockSignal(int signr);
+        void unlockSignal(int signr);
     };
 }}

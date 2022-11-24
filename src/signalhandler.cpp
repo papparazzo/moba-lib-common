@@ -43,7 +43,7 @@ namespace {
 namespace moba { namespace common {
     bool SignalHandler::observeSignal(int signr) {
         if(signr < 1 || signr > MAX_SIG) {
-            throw SignalHandlerException("signr out of range");
+            throw SignalHandlerException{"signr out of range"};
         }
 
         if(sigmap[signr] != -1) {
@@ -57,7 +57,7 @@ namespace moba { namespace common {
         handler.sa_flags = SA_RESTART;
 
         if(sigaction(signr, &handler, NULL) < 0) {
-            throw SignalHandlerException(getErrno("sigaction failed"));
+            throw SignalHandlerException{getErrno("sigaction failed")};
         }
         sigmap[signr] = 0;
         return true;
@@ -66,7 +66,7 @@ namespace moba { namespace common {
     bool SignalHandler::hasSignalTriggered(int signr) {
         this->lockSignal(signr);
         if(sigmap[signr] == -1) {
-            throw SignalHandlerException("Signal not observed");
+            throw SignalHandlerException{"Signal not observed"};
         }
 
         bool retVal = (bool)sigmap[signr];
