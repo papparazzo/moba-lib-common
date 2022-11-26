@@ -23,9 +23,7 @@
 #include <vector>
 #include <iomanip>
 
-#include <boost/lexical_cast.hpp>
-
-namespace moba { namespace common {
+namespace moba {
 
     Version::Version(const std::string &version) {
         parseFromString(version);
@@ -108,7 +106,7 @@ namespace moba { namespace common {
 
     void Version::parseFromString(std::string version) {
         if(version.length() == 0) {
-            throw VersionException("version-string is empty or not set");
+            throw VersionException{"version-string is empty or not set"};
         }
 
         try {
@@ -118,10 +116,10 @@ namespace moba { namespace common {
                 p = version.rfind('.');
             }
             if(p == std::string::npos) {
-                throw VersionException("invalid version-string given");
+                throw VersionException{"invalid version-string given"};
             }
 
-            ver[3] = boost::lexical_cast<int>(version.substr(p + 1));
+            ver[3] = std::stoi(version.substr(p + 1));
 
             size_t f;
             --p;
@@ -130,11 +128,11 @@ namespace moba { namespace common {
                 if(f == std::string::npos) {
                     f = -1;
                 }
-                ver[i] = boost::lexical_cast<int>(version.substr(f + 1, p - f));
+                ver[i] = std::stoi(version.substr(f + 1, p - f));
                 p = f - 1;
             }
         } catch(...) {
-            throw VersionException("converting failed");
+            throw VersionException{"converting failed"};
         }
     }
 
@@ -142,4 +140,4 @@ namespace moba { namespace common {
         out << v.getString();
         return out;
     }
-}}
+}
