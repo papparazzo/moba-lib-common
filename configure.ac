@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([moba-common], [0.1.0-0000], [pappi-@gmx.de])
+AC_INIT([moba-common], [0.2.0-0000], [pappi-@gmx.de])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
@@ -31,6 +31,8 @@ AC_TYPE_SSIZE_T
 
 # Checks for library functions.
 AC_CHECK_FUNCS([ftime gethostbyname memset mkfifo select socket strerror strtol])
+
+PKG_CHECK_MODULES([GLIB], [glib-2.0 >= 2.24.1])
 
 AX_CXX_COMPILE_STDCXX_17()
 
