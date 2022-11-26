@@ -40,7 +40,7 @@ namespace {
     }
 }
 
-namespace moba { namespace common {
+namespace moba {
     bool SignalHandler::observeSignal(int signr) {
         if(signr < 1 || signr > MAX_SIG) {
             throw SignalHandlerException{"signr out of range"};
@@ -124,4 +124,4 @@ namespace moba { namespace common {
         sigaddset(&lockMask, signr);
         sigprocmask(SIG_UNBLOCK, &lockMask, NULL);
     }
-}}
+}

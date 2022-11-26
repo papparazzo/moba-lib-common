@@ -24,7 +24,7 @@
 #include <string>
 #include <cstddef>
 
-namespace moba { namespace common {
+namespace moba {
 
     class RingbufferException : public std::exception {
 
@@ -130,4 +130,4 @@ namespace moba { namespace common {
                 return this->ptrR != this->ptrW;
             }
     };
-}}
+}

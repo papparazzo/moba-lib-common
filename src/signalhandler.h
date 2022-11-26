@@ -24,7 +24,7 @@
 #include <exception>
 #include <string>
 
-namespace moba { namespace common {
+namespace moba {
 
     class SignalHandlerException : public std::exception {
     public:
@@ -59,4 +59,4 @@ namespace moba { namespace common {
         void lockSignal(int signr);
         void unlockSignal(int signr);
     };
-}}
+}
