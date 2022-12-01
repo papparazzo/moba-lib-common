@@ -25,72 +25,72 @@
 #include <exception>
 #include <boost/noncopyable.hpp>
 
-namespace moba { namespace common {
+namespace moba {
 
     class IPCException : public std::exception {
 
-        public:
-            explicit IPCException(const std::string &err) throw() : what_(err) {
-            }
+    public:
+        explicit IPCException(const std::string &err) throw() : what_{err} {
+        }
 
-            IPCException() throw() : what_("Unknown error") {
-            }
+        IPCException() throw() : what_{"Unknown error"} {
+        }
 
-            virtual ~IPCException() throw() {
-            }
+        virtual ~IPCException() throw() {
+        }
 
-            virtual const char *what() const throw() {
-                return what_.c_str();
-            }
+        virtual const char *what() const throw() {
+            return what_.c_str();
+        }
 
-        private:
-            std::string what_;
+    private:
+        std::string what_;
     };
 
     class IPC : private boost::noncopyable {
 
-        public:
-            static const size_t MSG_LEN     = 1024;
-            static const int    DEFAULT_KEY = 123133;
+    public:
+        static const size_t MSG_LEN     = 1024;
+        static const int    DEFAULT_KEY = 123133;
 
-            struct Message {
-                long mtype;
-                char mtext[IPC::MSG_LEN];
-            };
+        struct Message {
+            long mtype;
+            char mtext[IPC::MSG_LEN];
+        };
 
-            enum Type {
-                TYPE_SERVER,
-                TYPE_CLIENT
-            };
+        enum Type {
+            TYPE_SERVER,
+            TYPE_CLIENT
+        };
 
-            enum Command {
-                CMD_EMERGENCY_STOP    = 1,
-                CMD_EMERGENCY_RELEASE = 2,
-                CMD_TEST              = 3,
-                CMD_RUN               = 4,
-                CMD_HALT              = 5,
-                CMD_CONTINUE          = 6,
-                CMD_RESET             = 7,
-                CMD_TERMINATE         = 8,
-                CMD_INTERRUPT         = 9,
-                CMD_RESUME            = 10,
-                CMD_SET_DURATION      = 11,
-            };
+        enum class Command {
+            EMERGENCY_STOP    = 1,
+            EMERGENCY_RELEASE = 2,
+            TEST              = 3,
+            RUN               = 4,
+            HALT              = 5,
+            CONTINUE          = 6,
+            RESET             = 7,
+            TERMINATE         = 8,
+            INTERRUPT         = 9,
+            RESUME            = 10,
+            SET_DURATION      = 11,
+        };
 
-            IPC(key_t key = IPC::DEFAULT_KEY, Type type = TYPE_CLIENT);
+        IPC(key_t key = IPC::DEFAULT_KEY, Type type = TYPE_CLIENT);
 
-            bool receive(long type, bool except = false);
-            bool receive(Message &msg, long type = 0, bool except = false);
-            bool send(const std::string &data, long type);
-            bool send(const Message &msg);
+        bool receive(long type, bool except = false);
+        bool receive(Message &msg, long type = 0, bool except = false);
+        bool send(const std::string &data, long type);
+        bool send(const Message &msg);
 
-            static Command getCMDFromString(const std::string &cmd);
-            static std::string getCMDAsString(Command cmd);
+        static Command getCMDFromString(const std::string &cmd);
+        static std::string getCMDAsString(Command cmd);
 
-            virtual ~IPC();
+        virtual ~IPC();
 
-        protected:
-            int mID;
-            Type type;
+    protected:
+        int mID;
+        Type type;
     };
-}}
+}

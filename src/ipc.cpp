@@ -30,10 +30,9 @@
 
 #include "helper.h"
 #include "ipc.h"
-#include "log.h"
 #include "exception.h"
 
-namespace moba { namespace common {
+namespace moba {
 
     IPC::IPC(key_t key, Type type) {
         int flags = S_IRWXU | S_IWGRP | S_IWOTH;;
@@ -51,9 +50,7 @@ namespace moba { namespace common {
         if(this->type == TYPE_CLIENT) {
             return;
         }
-        if(msgctl(this->mID, IPC_RMID, NULL) == -1) {
-            LOG(LogLevel::ERROR) << getErrno("unable to delete msg-queue! ") << std::endl;
-        }
+        msgctl(this->mID, IPC_RMID, NULL);
     }
 
     bool IPC::receive(long msgtyp, bool except) {
@@ -101,79 +98,79 @@ namespace moba { namespace common {
     }
 
     IPC::Command IPC::getCMDFromString(const std::string &cmd) {
-        if(boost::iequals(cmd, "EMERGENCY_STOP")) {
-            return CMD_EMERGENCY_STOP;
+        if(cmd == "EMERGENCY_STOP") {
+            return Command::EMERGENCY_STOP;
         }
-        if(boost::iequals(cmd, "EMERGENCY_RELEASE")) {
-            return CMD_EMERGENCY_RELEASE;
+        if(cmd == "EMERGENCY_RELEASE") {
+            return Command::EMERGENCY_RELEASE;
         }
-        if(boost::iequals(cmd, "TEST")) {
-            return CMD_TEST;
+        if(cmd == "TEST") {
+            return Command::TEST;
         }
-        if(boost::iequals(cmd, "RUN")) {
-            return CMD_RUN;
+        if(cmd == "RUN") {
+            return Command::RUN;
         }
-        if(boost::iequals(cmd, "HALT")) {
-            return CMD_HALT;
+        if(cmd == "HALT") {
+            return Command::HALT;
         }
-        if(boost::iequals(cmd, "CONTINUE")) {
-            return CMD_CONTINUE;
+        if(cmd == "CONTINUE") {
+            return Command::CONTINUE;
         }
-        if(boost::iequals(cmd, "RESET")) {
-            return CMD_RESET;
+        if(cmd == "RESET") {
+            return Command::RESET;
         }
-        if(boost::iequals(cmd, "TERMINATE")) {
-            return CMD_TERMINATE;
+        if(cmd == "TERMINATE") {
+            return Command::TERMINATE;
         }
-        if(boost::iequals(cmd, "INTERRUPT")) {
-            return CMD_INTERRUPT;
+        if(cmd == "INTERRUPT") {
+            return Command::INTERRUPT;
         }
-        if(boost::iequals(cmd, "RESUME")) {
-            return CMD_RESUME;
+        if(cmd == "RESUME") {
+            return Command::RESUME;
         }
-        if(boost::iequals(cmd, "SET_DURATION")) {
-            return CMD_SET_DURATION;
+        if(cmd == "SET_DURATION") {
+            return Command::SET_DURATION;
         }
         throw IPCException{std::string("unknown command <" + cmd + ">")};
     }
 
     std::string IPC::getCMDAsString(IPC::Command cmd) {
         switch(cmd) {
-            case CMD_EMERGENCY_STOP:
+            case Command::EMERGENCY_STOP:
                 return "EMERGENCY_STOP";
 
-            case CMD_EMERGENCY_RELEASE:
+            case Command::EMERGENCY_RELEASE:
                 return "EMERGENCY_RELEASE";
 
-            case CMD_TEST:
+            case Command::TEST:
                 return "TEST";
 
-            case CMD_RUN:
+            case Command::RUN:
                 return "RUN";
 
-            case CMD_HALT:
+            case Command::HALT:
                 return "HALT";
 
-            case CMD_CONTINUE:
+            case Command::CONTINUE:
                 return "CONTINUE";
 
-            case CMD_RESET:
+            case Command::RESET:
                 return "RESET";
 
-            case CMD_TERMINATE:
+            case Command::TERMINATE:
                 return "TERMINATE";
 
-            case CMD_INTERRUPT:
+            case Command::INTERRUPT:
                 return "INTERRUPT";
 
-            case CMD_RESUME:
+            case Command::RESUME:
                 return "RESUME";
 
-            case CMD_SET_DURATION:
+            case Command::SET_DURATION:
                 return "SET_DURATION";
 
             default:
                 throw UnsupportedOperationException{"IPC::Command is invalid"};
         }
     }
-}}
+}
