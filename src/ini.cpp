@@ -29,7 +29,7 @@ Ini::Ini(const std::string &fileName) {
     keyFile = g_key_file_new();
 
     if(!g_key_file_load_from_file(keyFile, fileName.c_str(), static_cast<GKeyFileFlags>(G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS), &error)) {
-        throw moba::common::UnsupportedOperationException{error->message};
+        throw moba::UnsupportedOperationException{error->message};
     }
 }
 
@@ -48,7 +48,7 @@ std::string Ini::getString(const std::string &group, const std::string &key, con
     gchar *tmp;
     tmp = g_key_file_get_string(keyFile, group.c_str(), key.c_str(), &error);
     if(tmp == nullptr && error != nullptr) {
-        throw moba::common::UnsupportedOperationException{error->message};
+        throw moba::UnsupportedOperationException{error->message};
     }
     std::string value{tmp};
     g_free(tmp);
@@ -64,7 +64,7 @@ int Ini::getInt(const std::string &group, const std::string &key, int def) {
 
     auto val = g_key_file_get_integer(keyFile, group.c_str(), key.c_str(), &error);
     if(error != nullptr) {
-        throw moba::common::UnsupportedOperationException{error->message};
+        throw moba::UnsupportedOperationException{error->message};
     }
     return val;
 }
