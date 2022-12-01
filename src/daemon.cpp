@@ -28,6 +28,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <iostream>
+
 namespace moba {
     Daemon::Daemon(const std::string &appName) : pidFileName{"/run/" + appName + ".pid"}, appName{appName} {
         openlog(appName.c_str(), LOG_PID | LOG_CONS | LOG_NDELAY, LOG_DAEMON);

@@ -21,50 +21,52 @@
 #include <ini.h>
 #include "exception.h"
 
-// for further information have a look at https://docs.gtk.org/glib/struct.KeyFile.html
+namespace moba {
+    // for further information have a look at https://docs.gtk.org/glib/struct.KeyFile.html
 
-Ini::Ini(const std::string &fileName) {
-    GError *error = nullptr;
+    Ini::Ini(const std::string &fileName) {
+        GError *error = nullptr;
 
-    keyFile = g_key_file_new();
+        keyFile = g_key_file_new();
 
-    if(!g_key_file_load_from_file(keyFile, fileName.c_str(), static_cast<GKeyFileFlags>(G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS), &error)) {
-        throw moba::UnsupportedOperationException{error->message};
-    }
-}
-
-Ini::~Ini() {
-    //g_key_file_save_to_file(key_file, "test2.ini", &error);
-    g_key_file_free(keyFile);
-}
-
-std::string Ini::getString(const std::string &group, const std::string &key, const std::string &def) {
-    GError *error = nullptr;
-
-    if(!g_key_file_has_key(keyFile, group.c_str(), key.c_str(), nullptr)) {
-        return def;
+        if(!g_key_file_load_from_file(keyFile, fileName.c_str(), static_cast<GKeyFileFlags>(G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS), &error)) {
+            throw moba::UnsupportedOperationException{error->message};
+        }
     }
 
-    gchar *tmp;
-    tmp = g_key_file_get_string(keyFile, group.c_str(), key.c_str(), &error);
-    if(tmp == nullptr && error != nullptr) {
-        throw moba::UnsupportedOperationException{error->message};
-    }
-    std::string value{tmp};
-    g_free(tmp);
-    return value;
-}
-
-int Ini::getInt(const std::string &group, const std::string &key, int def) {
-    GError *error = nullptr;
-
-    if(!g_key_file_has_key(keyFile, group.c_str(), key.c_str(), nullptr)) {
-        return def;
+    Ini::~Ini() {
+        //g_key_file_save_to_file(key_file, "test2.ini", &error);
+        g_key_file_free(keyFile);
     }
 
-    auto val = g_key_file_get_integer(keyFile, group.c_str(), key.c_str(), &error);
-    if(error != nullptr) {
-        throw moba::UnsupportedOperationException{error->message};
+    std::string Ini::getString(const std::string &group, const std::string &key, const std::string &def) {
+        GError *error = nullptr;
+
+        if(!g_key_file_has_key(keyFile, group.c_str(), key.c_str(), nullptr)) {
+            return def;
+        }
+
+        gchar *tmp;
+        tmp = g_key_file_get_string(keyFile, group.c_str(), key.c_str(), &error);
+        if(tmp == nullptr && error != nullptr) {
+            throw moba::UnsupportedOperationException{error->message};
+        }
+        std::string value{tmp};
+        g_free(tmp);
+        return value;
     }
-    return val;
+
+    int Ini::getInt(const std::string &group, const std::string &key, int def) {
+        GError *error = nullptr;
+
+        if(!g_key_file_has_key(keyFile, group.c_str(), key.c_str(), nullptr)) {
+            return def;
+        }
+
+        auto val = g_key_file_get_integer(keyFile, group.c_str(), key.c_str(), &error);
+        if(error != nullptr) {
+            throw moba::UnsupportedOperationException{error->message};
+        }
+        return val;
+    }
 }

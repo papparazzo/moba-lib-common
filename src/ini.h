@@ -21,14 +21,17 @@
 #include <glib.h>
 #include <string>
 
-class Ini {
-public:
-    Ini(const std::string &fileName);
-    virtual ~Ini();
+namespace moba {
 
-    std::string getString(const std::string &group, const std::string &key, const std::string &def = "");
-    int getInt(const std::string &group, const std::string &key, int def);
+    class Ini {
+    public:
+        Ini(const std::string &fileName);
+        virtual ~Ini();
 
-protected:
-    GKeyFile *keyFile;
-};
+        std::string getString(const std::string &group, const std::string &key, const std::string &def = "");
+        int getInt(const std::string &group, const std::string &key, int def);
+
+    protected:
+        GKeyFile *keyFile;
+    };
+}
