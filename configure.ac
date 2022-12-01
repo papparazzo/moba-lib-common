@@ -20,16 +20,7 @@ AC_PROG_MAKE_SET
 # Checks for libraries.
 
 # Checks for header files.
-AC_CHECK_HEADERS([
-    arpa/inet.h
-    fcntl.h
-    netdb.h
-    netinet/in.h
-    sys/socket.h
-    sys/time.h
-    sys/timeb.h
-    unistd.h
-])
+AC_CHECK_HEADERS([arpa/inet.h fcntl.h netdb.h netinet/in.h sys/socket.h sys/time.h sys/timeb.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
