@@ -5,7 +5,6 @@ lib_LTLIBRARIES = \
 libmobacommon_la_SOURCES = \
     helper.cpp \
     ipc.cpp \
-    log.cpp \
     signalhandler.cpp \
     version.cpp \
     ini.cpp \
@@ -18,7 +17,6 @@ otherinclude_HEADERS = \
     exception.h \
     helper.h \
     ipc.h \
-    log.h \
     ringbuffer.h \
     signalhandler.h \
     version.h \
