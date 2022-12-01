@@ -22,23 +22,23 @@
 
 #include <exception>
 
-namespace moba { namespace common {
+namespace moba {
     class UnsupportedOperationException : public std::exception {
-        public:
-            explicit UnsupportedOperationException(const std::string &err) throw() : what_{err} {
-            }
+    public:
+        explicit UnsupportedOperationException(const std::string &err) throw() : what_{err} {
+        }
 
-            UnsupportedOperationException() throw() : what_{"Unknown error"} {
-            }
+        UnsupportedOperationException() throw() : what_{"Unknown error"} {
+        }
 
-            virtual ~UnsupportedOperationException() throw() {
-            }
+        virtual ~UnsupportedOperationException() throw() {
+        }
 
-            virtual const char *what() const throw() {
-                return this->what_.c_str();
-            }
+        virtual const char *what() const throw() {
+            return this->what_.c_str();
+        }
 
-        private:
-            std::string what_;
+    private:
+        std::string what_;
     };
-}}
+}

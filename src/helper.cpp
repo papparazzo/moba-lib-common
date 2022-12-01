@@ -29,7 +29,7 @@
 
 #include "helper.h"
 
-namespace moba { namespace common {
+namespace moba {
 
     std::string getErrno(const std::string &txt) {
         std::stringstream ss;
@@ -51,24 +51,6 @@ namespace moba { namespace common {
             return path;
         }
         return std::string(path, p + 1, i - p);
-    }
-
-    void setCoreFileSizeToULimit() {
-        struct rlimit currResource;
-        errno = 0;
-
-        if(getrlimit(RLIMIT_CORE, &currResource) != 0) {
-            throw HelperException{getErrno("unable to get resource limitations for core files!")};
-        }
-
-        currResource.rlim_cur = RLIM_INFINITY;
-        //currResource.rlim_max = RLIM_INFINITY;
-
-        int setRetu = setrlimit(RLIMIT_CORE, &currResource);
-
-        if(setRetu != 0) {
-            throw HelperException{getErrno("unable to set core file size to unlimited!")};
-        }
     }
 
     std::string getLicense(bool briefly) {
@@ -94,8 +76,7 @@ namespace moba { namespace common {
     }
 
     void printAppData(const AppData &appData) {
-        std::cerr << "------------------------------------------------------";
-        std::cerr << "------------------------------------------------------" << std::endl;
+        std::cerr << "------------------------------------------------------------------------------------------------------------" << std::endl;
         std::cerr << "  name:     " << appData.appName << std::endl;
         std::cerr << "  version:  " << appData.version << " ";
     #ifdef DEBUG_MODE
@@ -109,10 +90,8 @@ namespace moba { namespace common {
         std::cerr << std::endl;
         std::cerr << "  " << getLicense(true) << std::endl;
         std::cerr << std::endl;
-        std::cerr << "  You should have received a copy of the license" ;
-        std::cerr << " along with this program." << std::endl;
-        std::cerr << "  If not, see <http://www.gnu.org/licenses/agpl.txt> for further informations!" << std::endl;
-        std::cerr << "------------------------------------------------------";
-        std::cerr << "------------------------------------------------------" << std::endl;
+        std::cerr << "  You should have received a copy of the license along with this program." << std::endl;
+        std::cerr << "  If not, see <http://www.gnu.org/licenses/agpl.txt> for further information!" << std::endl;
+        std::cerr << "------------------------------------------------------------------------------------------------------------" << std::endl;
     }
-}}
+}

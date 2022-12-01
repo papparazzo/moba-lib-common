@@ -24,24 +24,23 @@
 #include <exception>
 #include "version.h"
 
-namespace moba { namespace common {
+namespace moba {
 
     class HelperException : public std::exception {
+    public:
+        virtual ~HelperException() throw() {
+        }
 
-        public:
-            virtual ~HelperException() throw() {
-            }
+        HelperException(const std::string &what) {
+            this->what__ = what;
+        }
 
-            HelperException(const std::string &what) {
-                this->what__ = what;
-            }
+        virtual const char *what() const throw() {
+            return this->what__.c_str();
+        }
 
-            virtual const char *what() const throw() {
-                return this->what__.c_str();
-            }
-
-        private:
-            std::string what__;
+    private:
+        std::string what__;
     };
 
     struct AppData {
@@ -58,9 +57,7 @@ namespace moba { namespace common {
 
     std::string baseName(const std::string &path);
 
-    void setCoreFileSizeToULimit();
-
     std::string getLicense(bool briefly);
 
     void printAppData(const AppData &appData);
-}}
+}
