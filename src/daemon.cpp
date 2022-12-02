@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <string.h>
 
 #include <stdlib.h>
 #include <sys/types.h>
@@ -50,27 +51,42 @@ namespace moba {
 
     void Daemon::daemonize() {
         if(geteuid() != 0) {
-            std::cerr << "This daemon can only be run by root user, exiting" << std::endl;
+            syslog(LOG_EMERG, "This daemon can only be run by root user, exiting");
             exit(EXIT_FAILURE);
         }
 
         signal(SIGHUP, SIG_IGN); // no configs to read at this time
 
         if(chdir("/")) {
+            syslog(LOG_EMERG, "unable to change dir /");
             exit(EXIT_FAILURE);
         }
         umask(0);
 
         int pidFd = open(pidFileName.c_str(), O_RDWR|O_CREAT, 0640);
+
         if(pidFd < 0) {
+            syslog(LOG_EMERG, "unable to open file <%s> for locking", pidFileName.c_str());
             exit(EXIT_FAILURE);
         }
-        if(lockf(pidFd, F_TLOCK, 0) < 0) {
+
+        struct flock lock;
+        memset(&lock, 0, sizeof(struct flock));
+        lock.l_type = F_WRLCK;
+        lock.l_whence = SEEK_SET;
+        lock.l_start = 0;
+        lock.l_len = 0;
+
+        if(fcntl(pidFd, F_GETLK, &lock) == -1) {
+            syslog(LOG_EMERG, "unable to lock file <%s>", pidFileName.c_str());
             exit(EXIT_FAILURE);
         }
 
         auto spid = std::to_string(getpid());
 
-        (void)!write(pidFd, spid.c_str(), spid.length());
+        if(write(pidFd, spid.c_str(), spid.length()) <= 0) {
+            syslog(LOG_EMERG, "unable to write in file <%s>", pidFileName.c_str());
+            exit(EXIT_FAILURE);
+        }
     }
 }
