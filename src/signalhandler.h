@@ -46,6 +46,7 @@ namespace moba {
 
     class SignalHandler {
     public:
+        SignalHandler() = default;
         SignalHandler(const SignalHandler&) = delete;
         SignalHandler& operator=(const SignalHandler&) = delete;
 
