@@ -24,7 +24,7 @@
 namespace moba {
     // for further information have a look at https://docs.gtk.org/glib/struct.KeyFile.html
 
-    Ini::Ini(const std::string &fileName) {
+    Ini::Ini(const std::string &fileName): fileName{fileName} {
         GError *error = nullptr;
 
         keyFile = g_key_file_new();
@@ -37,6 +37,18 @@ namespace moba {
     Ini::~Ini() {
         //g_key_file_save_to_file(key_file, "test2.ini", &error);
         g_key_file_free(keyFile);
+    }
+
+    void Ini::reopen() {
+        GError *error = nullptr;
+
+        g_key_file_free(keyFile);
+
+        keyFile = g_key_file_new();
+
+        if(!g_key_file_load_from_file(keyFile, fileName.c_str(), static_cast<GKeyFileFlags>(G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS), &error)) {
+            throw moba::UnsupportedOperationException{error->message};
+        }
     }
 
     std::string Ini::getString(const std::string &group, const std::string &key, const std::string &def) {

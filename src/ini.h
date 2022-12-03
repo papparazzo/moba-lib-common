@@ -28,10 +28,13 @@ namespace moba {
         Ini(const std::string &fileName);
         virtual ~Ini();
 
+        void reopen();
+
         std::string getString(const std::string &group, const std::string &key, const std::string &def = "");
         int getInt(const std::string &group, const std::string &key, int def);
 
     protected:
         GKeyFile *keyFile;
+        std::string fileName;
     };
 }
