@@ -26,6 +26,9 @@ otherinclude_HEADERS = \
 ACLOCAL_AMFLAGS = \
     -I m4
 
+libmobacommon_la_LIBADD = \
+    $(GLIB_LIBS)
+
 AM_CPPFLAGS = \
     $(GLIB_CFLAGS) \
     -ggdb -g3 -O3 -Wall -Wno-deprecated-declarations
