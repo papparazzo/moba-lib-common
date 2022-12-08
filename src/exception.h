@@ -21,6 +21,7 @@
 #pragma once
 
 #include <exception>
+#include <string>
 
 namespace moba {
     class UnsupportedOperationException : public std::exception {
