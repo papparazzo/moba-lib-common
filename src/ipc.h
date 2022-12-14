@@ -23,7 +23,6 @@
 #include <cstdio>
 #include <string>
 #include <exception>
-#include <boost/noncopyable.hpp>
 
 namespace moba {
 
@@ -47,7 +46,7 @@ namespace moba {
         std::string what_;
     };
 
-    class IPC : private boost::noncopyable {
+    class IPC {
 
     public:
         static const size_t MSG_LEN     = 1024;
@@ -78,6 +77,8 @@ namespace moba {
         };
 
         IPC(key_t key = IPC::DEFAULT_KEY, Type type = TYPE_CLIENT);
+        IPC(const IPC&) = delete;
+        IPC& operator=(const IPC&) = delete;
 
         bool receive(long type, bool except = false);
         bool receive(Message &msg, long type = 0, bool except = false);
