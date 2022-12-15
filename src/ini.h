@@ -18,8 +18,11 @@
  *
  */
 
+#pragma once
+
 #include <glib.h>
 #include <string>
+#include <memory>
 
 namespace moba {
 
@@ -33,8 +36,13 @@ namespace moba {
         std::string getString(const std::string &group, const std::string &key, const std::string &def = "");
         int getInt(const std::string &group, const std::string &key, int def);
 
+        void setString(const std::string &group, const std::string &key, const std::string &value);
+        void setInt(const std::string &group, const std::string &key, int value);
+
     protected:
         GKeyFile *keyFile;
         std::string fileName;
     };
+
+    using IniPtr = std::shared_ptr<Ini>;
 }

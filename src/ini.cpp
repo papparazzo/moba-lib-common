@@ -35,7 +35,8 @@ namespace moba {
     }
 
     Ini::~Ini() {
-        //g_key_file_save_to_file(key_file, "test2.ini", &error);
+        GError *error = nullptr;
+        g_key_file_save_to_file(keyFile, fileName.c_str(), &error);
         g_key_file_free(keyFile);
     }
 
@@ -81,4 +82,13 @@ namespace moba {
         }
         return val;
     }
+
+    void Ini::setString(const std::string &group, const std::string &key, const std::string &value) {
+        g_key_file_set_string(keyFile, group.c_str(), key.c_str(), value.c_str());
+    }
+
+    void Ini::setInt(const std::string &group, const std::string &key, int value) {
+        g_key_file_set_integer(keyFile, group.c_str(), key.c_str(), value);
+    }
+
 }
