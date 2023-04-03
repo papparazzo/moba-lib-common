@@ -6,6 +6,7 @@ AC_INIT([moba-common], [0.2.0-0000], [pappi-@gmx.de])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIRS([m4])
 LT_INIT
 
 # Checks for programs.
