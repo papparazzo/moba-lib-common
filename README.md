@@ -1,4 +1,4 @@
-## moba-lib-common
+# moba-lib-common
 
 ```sh
 sudo apt-get install autoconf
@@ -8,7 +8,6 @@ sudo apt-get install libtool # see https://stackoverflow.com/questions/18978252/
 
 ```sh
 autoreconf -i
-configure
-make
+./configure && make
 sudo make install
 ```
