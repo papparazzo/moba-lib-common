@@ -50,6 +50,8 @@ namespace moba {
         SignalHandler(const SignalHandler&) = delete;
         SignalHandler& operator=(const SignalHandler&) = delete;
 
+        virtual ~SignalHandler() noexcept = default;
+        
         bool observeSignal(int signr);
         void resetSignalState(int signr);
         bool hasSignalTriggered(int signr);
