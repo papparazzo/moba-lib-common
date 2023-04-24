@@ -78,8 +78,7 @@ namespace moba {
             return *this;
         }
 
-        virtual ~Version() {
-        };
+        virtual ~Version() noexcept = default;
 
         int compareMajor(const Version &v) const;
 
