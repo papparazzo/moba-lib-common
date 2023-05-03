@@ -24,9 +24,10 @@
 #include <string>
 
 namespace moba {
-    class UnsupportedOperationException : public std::exception {
+    class UnsupportedOperationException: public std::exception {
     public:
-        explicit UnsupportedOperationException(const std::string &err) throw() : what_{err} {
+        explicit UnsupportedOperationException(const std::string &err) throw(): 
+        what_{err} {
         }
 
         UnsupportedOperationException() throw() : what_{"Unknown error"} {
