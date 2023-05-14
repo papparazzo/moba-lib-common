@@ -33,7 +33,7 @@
 namespace moba {
 
     IPC::IPC(key_t key, Type type) {
-        int flags = S_IRWXU | S_IWGRP | S_IWOTH;;
+        int flags = S_IRWXU | S_IWGRP | S_IWOTH;
         if(type == TYPE_SERVER) {
             flags |= IPC_CREAT | IPC_EXCL;
         }

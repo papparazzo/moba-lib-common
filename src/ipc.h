@@ -26,8 +26,7 @@
 
 namespace moba {
 
-    class IPCException : public std::exception {
-
+    class IPCException: public std::exception {
     public:
         explicit IPCException(const std::string &err) throw() : what_{err} {
         }
@@ -47,7 +46,6 @@ namespace moba {
     };
 
     class IPC {
-
     public:
         static const size_t MSG_LEN     = 1024;
         static const int    DEFAULT_KEY = 123133;

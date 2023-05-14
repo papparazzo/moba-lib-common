@@ -25,7 +25,7 @@
 
 namespace moba {
 
-    class VersionException : public std::exception {
+    class VersionException: public std::exception {
     public:
         virtual ~VersionException() throw() = default;
 
