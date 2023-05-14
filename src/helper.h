@@ -26,10 +26,9 @@
 
 namespace moba {
 
-    class HelperException : public std::exception {
+    class HelperException: public std::exception {
     public:
-        virtual ~HelperException() throw() {
-        }
+        virtual ~HelperException() throw() = default;
 
         HelperException(const std::string &what) {
             this->what__ = what;

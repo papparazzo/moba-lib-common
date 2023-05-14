@@ -30,11 +30,10 @@ namespace moba {
         what_{err} {
         }
 
-        UnsupportedOperationException() throw() : what_{"Unknown error"} {
+        UnsupportedOperationException() throw(): what_{"Unknown error"} {
         }
 
-        virtual ~UnsupportedOperationException() throw() {
-        }
+        virtual ~UnsupportedOperationException() throw() = default;
 
         virtual const char *what() const throw() {
             return this->what_.c_str();

@@ -31,7 +31,8 @@
 #include <iostream>
 
 namespace moba {
-    Daemon::Daemon(const std::string &appName) : pidFileName{"/run/" + appName + ".pid"}, appName{appName} {
+    Daemon::Daemon(const std::string &appName):
+    pidFileName{"/run/" + appName + ".pid"}, appName{appName} {
         openlog(appName.c_str(), LOG_PID | LOG_CONS | LOG_NDELAY, LOG_DAEMON);
         syslog(LOG_INFO, "<%s> started", appName.c_str());
     }
@@ -51,7 +52,10 @@ namespace moba {
 
     void Daemon::daemonize() {
         if(geteuid() != 0) {
-            std::cerr << "This daemon can only be run by root user, exiting" << std::endl;
+            std::cerr <<
+                "This daemon can only be run by root user, exiting" <<
+                std::endl;
+            
             exit(EXIT_FAILURE);
         }
 
@@ -66,19 +70,26 @@ namespace moba {
         pidFd = open(pidFileName.c_str(), O_RDWR|O_CREAT, 0640);
 
         if(pidFd < 0) {
-            std::cerr << "unable to open file <" << pidFileName << "> for locking" << std::endl;
+            std::cerr << 
+                "unable to open file <" << pidFileName << "> for locking" << 
+                std::endl;
+            
             exit(EXIT_FAILURE);
         }
 
         if(lockf(pidFd, F_TLOCK, 0) < 0) {
-            std::cerr << "unable to lock file <" << pidFileName << ">" << std::endl;
+            std::cerr << 
+                "unable to lock file <" << pidFileName << ">" << std::endl;
+            
             exit(EXIT_FAILURE);
         }
 
         auto spid = std::to_string(getpid());
 
         if(write(pidFd, spid.c_str(), spid.length()) <= 0) {
-            std::cerr << "unable to write in file <" << pidFileName << ">" << std::endl;
+            std::cerr <<
+                "unable to write in file <" << pidFileName << ">" << std::endl;
+            
             exit(EXIT_FAILURE);
         }
     }
