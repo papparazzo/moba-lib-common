@@ -21,16 +21,17 @@
 #include <string>
 
 namespace moba {
-    class Daemon {
-    public:
-        Daemon(const std::string &appName);
-        virtual ~Daemon();
+class Daemon {
 
-        void daemonize();
+    std::string pidFileName;
+    std::string appName;
+    int pidFd;
 
-    private:
-        std::string pidFileName;
-        std::string appName;
-        int pidFd;
-    };
+public:
+    Daemon(const std::string &appName);
+    virtual ~Daemon() noexcept;
+
+    void daemonize();
+
+};
 }
