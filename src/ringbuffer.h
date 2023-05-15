@@ -26,18 +26,16 @@
 
 namespace moba {
 
-    class RingbufferException : public std::exception {
+    class RingbufferException: public std::exception {
 
         public:
-            virtual ~RingbufferException() throw() {
-
-            }
+            virtual ~RingbufferException() noexcept = default;
 
             RingbufferException(const std::string &what) {
                 this->what__ = what;
             }
 
-            virtual const char* what() const throw() {
+            virtual const char* what() const noexcept {
                 return this->what__.c_str();
             }
 
@@ -46,88 +44,88 @@ namespace moba {
     };
 
     template <typename T> class Ringbuffer {
-        public:
-            static const std::size_t BUFFER_SIZE = 1024;
+    public:
+        static const std::size_t BUFFER_SIZE = 1024;
 
-            std::size_t size;
-            std::size_t ptrW;
-            std::size_t ptrR;
+        std::size_t size;
+        std::size_t ptrW;
+        std::size_t ptrR;
 
-            bool isFull;
+        bool isFull;
 
-            T *items;
+        T *items;
 
-            explicit Ringbuffer(std::size_t size = Ringbuffer::BUFFER_SIZE) :
-            size(size), ptrW(0), ptrR(0), isFull(false) {
-                this->items = new T[this->size];
+        explicit Ringbuffer(std::size_t size = Ringbuffer::BUFFER_SIZE) :
+        size(size), ptrW(0), ptrR(0), isFull(false) {
+            this->items = new T[this->size];
+        }
+
+        virtual ~Ringbuffer() {
+            delete[] this->items;
+        }
+
+        void reset(std::size_t newSize = 0) {
+            delete[] this->items;
+            if(newSize > 0) {
+                this->size = newSize;
+            }
+            this->items = new T[this->size];
+            this->ptrW = 0;
+            this->ptrR = 0;
+        }
+
+        void push(const T item) {
+            if(this->isFull) {
+                throw RingbufferException("Ring-buffer is full");
             }
 
-            virtual ~Ringbuffer() {
-                delete[] this->items;
+            this->items[this->ptrW] = item;
+            this->ptrW = ++this->ptrW % this->size;
+            if(this->ptrR == this->ptrW) {
+                this->isFull = true;
             }
+        }
 
-            void reset(std::size_t newSize = 0) {
-                delete[] this->items;
-                if(newSize > 0) {
-                    this->size = newSize;
-                }
-                this->items = new T[this->size];
-                this->ptrW = 0;
-                this->ptrR = 0;
+        T peek() {
+            if(this->ptrR == this->ptrW && !this->isFull) {
+                throw RingbufferException("Ring-buffer is empty");
             }
+            return this->items[this->ptrR];
+        }
 
-            void push(const T item) {
-                if(this->isFull) {
-                    throw RingbufferException("Ring-buffer is full");
-                }
+        T pop() {
+            T tmp = this->peek();
+            this->ptrR = ++this->ptrR % this->size;
+            this->isFull = false;
+            return tmp;
+        }
 
-                this->items[this->ptrW] = item;
-                this->ptrW = ++this->ptrW % this->size;
-                if(this->ptrR == this->ptrW) {
-                    this->isFull = true;
-                }
-            }
+        bool full() {
+            this->isFull;
+        }
 
-            T peek() {
-                if(this->ptrR == this->ptrW && !this->isFull) {
-                    throw RingbufferException("Ring-buffer is empty");
-                }
-                return this->items[this->ptrR];
-            }
+        std::size_t getBufferSize() {
+            return this->size;
+        }
 
-            T pop() {
-                T tmp = this->peek();
-                this->ptrR = ++this->ptrR % this->size;
-                this->isFull = false;
-                return tmp;
-            }
-
-            bool full() {
-                this->isFull;
-            }
-
-            std::size_t getBufferSize() {
+        std::size_t getItemsCount() {
+            if(this->isFull) {
                 return this->size;
             }
-
-            std::size_t getItemsCount() {
-                if(this->isFull) {
-                    return this->size;
-                }
-                if(this->ptrR == this->ptrW) {
-                    return 0;
-                }
-                if(this->ptrR < this->ptrW) {
-                    return this->ptrW - this->ptrR;
-                }
-                return this->size - this->ptrR + this->ptrW;
+            if(this->ptrR == this->ptrW) {
+                return 0;
             }
-
-            bool hasItems() {
-                if(this->isFull) {
-                    return true;
-                }
-                return this->ptrR != this->ptrW;
+            if(this->ptrR < this->ptrW) {
+                return this->ptrW - this->ptrR;
             }
+            return this->size - this->ptrR + this->ptrW;
+        }
+
+        bool hasItems() {
+            if(this->isFull) {
+                return true;
+            }
+            return this->ptrR != this->ptrW;
+        }
     };
 }

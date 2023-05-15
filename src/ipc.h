@@ -27,6 +27,9 @@
 namespace moba {
 
     class IPCException: public std::exception {
+
+        std::string what_;
+        
     public:
         explicit IPCException(const std::string &err) throw() : what_{err} {
         }
@@ -34,15 +37,11 @@ namespace moba {
         IPCException() throw() : what_{"Unknown error"} {
         }
 
-        virtual ~IPCException() throw() {
-        }
+        virtual ~IPCException() noexcept = default;
 
-        virtual const char *what() const throw() {
+        virtual const char *what() const noexcept {
             return what_.c_str();
         }
-
-    private:
-        std::string what_;
     };
 
     class IPC {
