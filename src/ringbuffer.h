@@ -27,20 +27,19 @@
 namespace moba {
 
     class RingbufferException: public std::exception {
+        
+        std::string what__;
+        
+    public:
+        virtual ~RingbufferException() noexcept = default;
 
-        public:
-            virtual ~RingbufferException() noexcept = default;
+        RingbufferException(const std::string &what) {
+            this->what__ = what;
+        }
 
-            RingbufferException(const std::string &what) {
-                this->what__ = what;
-            }
-
-            virtual const char* what() const noexcept {
-                return this->what__.c_str();
-            }
-
-        private:
-            std::string what__;
+        virtual const char* what() const noexcept {
+            return this->what__.c_str();
+        }
     };
 
     template <typename T> class Ringbuffer {

@@ -27,6 +27,9 @@
 namespace moba {
 
     class HelperException: public std::exception {
+
+        std::string what__;
+    
     public:
         virtual ~HelperException() throw() = default;
 
@@ -34,12 +37,9 @@ namespace moba {
             this->what__ = what;
         }
 
-        virtual const char *what() const throw() {
+        virtual const char *what() const noexcept {
             return this->what__.c_str();
         }
-
-    private:
-        std::string what__;
     };
 
     struct AppData {

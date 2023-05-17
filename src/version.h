@@ -26,19 +26,19 @@
 namespace moba {
 
     class VersionException: public std::exception {
+
+        std::string what__;
+
     public:
-        virtual ~VersionException() throw() = default;
+        virtual ~VersionException() noexcept = default;
 
         VersionException(const std::string &what) {
             this->what__ = what;
         }
 
-        virtual const char *what() const throw() {
+        virtual const char *what() const noexcept {
             return this->what__.c_str();
         }
-
-    private:
-        std::string what__;
     };
 
     class Version {

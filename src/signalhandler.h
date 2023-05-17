@@ -27,19 +27,19 @@
 namespace moba {
 
     class SignalHandlerException : public std::exception {
+        
+        std::string what__;    
+    
     public:
-        virtual ~SignalHandlerException() throw() = default;
+        virtual ~SignalHandlerException() noexcept = default;
 
         SignalHandlerException(const std::string &what) {
             this->what__ = what;
         }
 
-        virtual const char* what() const throw() {
+        virtual const char* what() const noexcept {
             return this->what__.c_str();
         }
-
-    private:
-        std::string what__;
     };
 
     class SignalHandler {
