@@ -14,14 +14,16 @@ otherincludedir = \
     $(includedir)/moba-common
 
 otherinclude_HEADERS = \
+    daemon.h \
+    drivingdirection.h \
+    enumswitchstand.h \
     exception.h \
     helper.h \
+    ini.h \
     ipc.h \
     ringbuffer.h \
     signalhandler.h \
-    version.h \
-    ini.h \
-    daemon.h
+    version.h
 
 ACLOCAL_AMFLAGS = \
     -I m4
