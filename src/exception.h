@@ -25,6 +25,9 @@
 
 namespace moba {
     class UnsupportedOperationException: public std::exception {
+
+        std::string what_;
+
     public:
         explicit UnsupportedOperationException(const std::string &err) throw(): 
         what_{err} {
@@ -38,8 +41,5 @@ namespace moba {
         virtual const char *what() const throw() {
             return this->what_.c_str();
         }
-
-    private:
-        std::string what_;
     };
 }
