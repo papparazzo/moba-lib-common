@@ -90,5 +90,4 @@ namespace moba {
     void Ini::setInt(const std::string &group, const std::string &key, int value) {
         g_key_file_set_integer(keyFile, group.c_str(), key.c_str(), value);
     }
-
 }
