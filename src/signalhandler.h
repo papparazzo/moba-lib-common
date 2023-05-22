@@ -26,7 +26,7 @@
 
 namespace moba {
 
-    class SignalHandlerException : public std::exception {
+    class SignalHandlerException: public std::exception {
         
         std::string what__;    
     
