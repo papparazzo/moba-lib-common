@@ -36,7 +36,7 @@ namespace moba {
         UnsupportedOperationException() throw(): what_{"Unknown error"} {
         }
 
-        virtual ~UnsupportedOperationException() throw() = default;
+        virtual ~UnsupportedOperationException() noexcept = default;
 
         virtual const char *what() const throw() {
             return this->what_.c_str();
