@@ -29,7 +29,7 @@ namespace moba {
     class Ini {
     public:
         Ini(const std::string &fileName);
-        virtual ~Ini();
+        virtual ~Ini() noexcept;
 
         void reopen();
 
