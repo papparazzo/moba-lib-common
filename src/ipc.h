@@ -31,10 +31,10 @@ namespace moba {
         std::string what_;
         
     public:
-        explicit IPCException(const std::string &err) throw() : what_{err} {
+        explicit IPCException(const std::string &err) noexcept : what_{err} {
         }
 
-        IPCException() throw() : what_{"Unknown error"} {
+        IPCException() noexcept : what_{"Unknown error"} {
         }
 
         virtual ~IPCException() noexcept = default;

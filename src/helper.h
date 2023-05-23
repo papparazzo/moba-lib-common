@@ -31,7 +31,7 @@ namespace moba {
         std::string what__;
     
     public:
-        virtual ~HelperException() throw() = default;
+        virtual ~HelperException() noexcept = default;
 
         HelperException(const std::string &what) {
             this->what__ = what;
