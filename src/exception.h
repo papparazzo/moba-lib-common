@@ -24,22 +24,23 @@
 #include <string>
 
 namespace moba {
-    class UnsupportedOperationException: public std::exception {
+    
+class UnsupportedOperationException: public std::exception {
 
-        std::string what_;
+    std::string what_;
 
-    public:
-        explicit UnsupportedOperationException(const std::string &err) noexcept: 
-        what_{err} {
-        }
+public:
+    explicit UnsupportedOperationException(const std::string &err) noexcept: 
+    what_{err} {
+    }
 
-        UnsupportedOperationException() noexcept: what_{"Unknown error"} {
-        }
+    UnsupportedOperationException() noexcept: what_{"Unknown error"} {
+    }
 
-        virtual ~UnsupportedOperationException() noexcept = default;
+    virtual ~UnsupportedOperationException() noexcept = default;
 
-        virtual const char *what() const noexcept {
-            return this->what_.c_str();
-        }
-    };
+    virtual const char *what() const noexcept {
+        return this->what_.c_str();
+    }
+};
 }

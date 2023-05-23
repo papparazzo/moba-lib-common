@@ -25,95 +25,95 @@
 
 namespace moba {
 
-    class VersionException: public std::exception {
+class VersionException: public std::exception {
 
-        std::string what__;
+    std::string what__;
 
-    public:
-        virtual ~VersionException() noexcept = default;
+public:
+    virtual ~VersionException() noexcept = default;
 
-        VersionException(const std::string &what) {
-            this->what__ = what;
-        }
+    VersionException(const std::string &what) {
+        this->what__ = what;
+    }
 
-        virtual const char *what() const noexcept {
-            return this->what__.c_str();
-        }
+    virtual const char *what() const noexcept {
+        return this->what__.c_str();
+    }
+};
+
+class Version {
+public:
+
+    Version() {
+        this->ver[MAJOR] = -1;
+    }
+
+    Version(int major, int minor = 0, int build = 0, int patch = 0) {
+        ver[MAJOR] = major;
+        ver[MINOR] = minor;
+        ver[BUILD] = build;
+        ver[PATCH] = patch;
+    }
+
+    Version(const Version &orig) {
+        ver[MAJOR] = orig.ver[MAJOR];
+        ver[MINOR] = orig.ver[MINOR];
+        ver[BUILD] = orig.ver[BUILD];
+        ver[PATCH] = orig.ver[PATCH];
+    }
+
+    Version(const std::string &version);
+
+    Version& operator=(Version v) {
+        ver[MAJOR] = v.ver[MAJOR];
+        ver[MINOR] = v.ver[MINOR];
+        ver[BUILD] = v.ver[BUILD];
+        ver[PATCH] = v.ver[PATCH];
+        return *this;
+    }
+
+    Version& operator=(const std::string &version) {
+        parseFromString(version);
+        return *this;
+    }
+
+    virtual ~Version() noexcept = default;
+
+    int compareMajor(const Version &v) const;
+
+    int compareMinor(const Version &v) const;
+
+    inline bool operator == (const Version &v) const {
+        return
+            ver[MAJOR] == v.ver[MAJOR] &&
+            ver[MINOR] == v.ver[MINOR] &&
+            ver[BUILD] == v.ver[BUILD] &&
+            ver[PATCH] == v.ver[PATCH];
+    }
+
+    inline bool operator != (const Version &v) const {
+        return !this->operator ==(v);
+    }
+
+    bool operator <(const Version &v) const;
+    bool operator >(const Version &v) const;
+
+    bool operator <=(const Version &v) const;
+    bool operator >=(const Version &v) const;
+
+    friend std::ostream& operator<<(std::ostream &out, const Version &v);
+
+    std::string getString() const;
+
+protected:
+    enum VersionPart {
+        MAJOR = 0,
+        MINOR = 1,
+        BUILD = 2,
+        PATCH = 3
     };
+    int ver[4];
 
-    class Version {
-    public:
-
-        Version() {
-            this->ver[MAJOR] = -1;
-        }
-
-        Version(int major, int minor = 0, int build = 0, int patch = 0) {
-            ver[MAJOR] = major;
-            ver[MINOR] = minor;
-            ver[BUILD] = build;
-            ver[PATCH] = patch;
-        }
-
-        Version(const Version &orig) {
-            ver[MAJOR] = orig.ver[MAJOR];
-            ver[MINOR] = orig.ver[MINOR];
-            ver[BUILD] = orig.ver[BUILD];
-            ver[PATCH] = orig.ver[PATCH];
-        }
-
-        Version(const std::string &version);
-
-        Version& operator=(Version v) {
-            ver[MAJOR] = v.ver[MAJOR];
-            ver[MINOR] = v.ver[MINOR];
-            ver[BUILD] = v.ver[BUILD];
-            ver[PATCH] = v.ver[PATCH];
-            return *this;
-        }
-
-        Version& operator=(const std::string &version) {
-            parseFromString(version);
-            return *this;
-        }
-
-        virtual ~Version() noexcept = default;
-
-        int compareMajor(const Version &v) const;
-
-        int compareMinor(const Version &v) const;
-
-        inline bool operator == (const Version &v) const {
-            return
-                ver[MAJOR] == v.ver[MAJOR] &&
-                ver[MINOR] == v.ver[MINOR] &&
-                ver[BUILD] == v.ver[BUILD] &&
-                ver[PATCH] == v.ver[PATCH];
-        }
-
-        inline bool operator != (const Version &v) const {
-            return !this->operator ==(v);
-        }
-
-        bool operator <(const Version &v) const;
-        bool operator >(const Version &v) const;
-
-        bool operator <=(const Version &v) const;
-        bool operator >=(const Version &v) const;
-
-        friend std::ostream& operator<<(std::ostream &out, const Version &v);
-
-        std::string getString() const;
-
-    protected:
-        enum VersionPart {
-            MAJOR = 0,
-            MINOR = 1,
-            BUILD = 2,
-            PATCH = 3
-        };
-        int ver[4];
-
-        void parseFromString(std::string version);
-    };
+    void parseFromString(std::string version);
+};
 }

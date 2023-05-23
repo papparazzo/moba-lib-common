@@ -26,69 +26,69 @@
 
 namespace moba {
 
-    class IPCException: public std::exception {
+class IPCException: public std::exception {
 
-        std::string what_;
-        
-    public:
-        explicit IPCException(const std::string &err) noexcept : what_{err} {
-        }
+    std::string what_;
+    
+public:
+    explicit IPCException(const std::string &err) noexcept: what_{err} {
+    }
 
-        IPCException() noexcept : what_{"Unknown error"} {
-        }
+    IPCException() noexcept: what_{"Unknown error"} {
+    }
 
-        virtual ~IPCException() noexcept = default;
+    virtual ~IPCException() noexcept = default;
 
-        virtual const char *what() const noexcept {
-            return what_.c_str();
-        }
+    virtual const char *what() const noexcept {
+        return what_.c_str();
+    }
+};
+
+class IPC {
+public:
+    static const size_t MSG_LEN     = 1024;
+    static const int    DEFAULT_KEY = 123133;
+
+    struct Message {
+        long mtype;
+        char mtext[IPC::MSG_LEN];
     };
 
-    class IPC {
-    public:
-        static const size_t MSG_LEN     = 1024;
-        static const int    DEFAULT_KEY = 123133;
-
-        struct Message {
-            long mtype;
-            char mtext[IPC::MSG_LEN];
-        };
-
-        enum Type {
-            TYPE_SERVER,
-            TYPE_CLIENT
-        };
-
-        enum class Command {
-            EMERGENCY_STOP    = 1,
-            EMERGENCY_RELEASE = 2,
-            TEST              = 3,
-            RUN               = 4,
-            HALT              = 5,
-            CONTINUE          = 6,
-            RESET             = 7,
-            TERMINATE         = 8,
-            INTERRUPT         = 9,
-            RESUME            = 10,
-            SET_DURATION      = 11,
-        };
-
-        IPC(key_t key = IPC::DEFAULT_KEY, Type type = TYPE_CLIENT);
-        IPC(const IPC&) = delete;
-        IPC& operator=(const IPC&) = delete;
-
-        bool receive(long type, bool except = false);
-        bool receive(Message &msg, long type = 0, bool except = false);
-        bool send(const std::string &data, long type);
-        bool send(const Message &msg);
-
-        static Command getCMDFromString(const std::string &cmd);
-        static std::string getCMDAsString(Command cmd);
-
-        virtual ~IPC();
-
-    protected:
-        int mID;
-        Type type;
+    enum Type {
+        TYPE_SERVER,
+        TYPE_CLIENT
     };
+
+    enum class Command {
+        EMERGENCY_STOP    = 1,
+        EMERGENCY_RELEASE = 2,
+        TEST              = 3,
+        RUN               = 4,
+        HALT              = 5,
+        CONTINUE          = 6,
+        RESET             = 7,
+        TERMINATE         = 8,
+        INTERRUPT         = 9,
+        RESUME            = 10,
+        SET_DURATION      = 11,
+    };
+
+    IPC(key_t key = IPC::DEFAULT_KEY, Type type = TYPE_CLIENT);
+    IPC(const IPC&) = delete;
+    IPC& operator=(const IPC&) = delete;
+
+    bool receive(long type, bool except = false);
+    bool receive(Message &msg, long type = 0, bool except = false);
+    bool send(const std::string &data, long type);
+    bool send(const Message &msg);
+
+    static Command getCMDFromString(const std::string &cmd);
+    static std::string getCMDAsString(Command cmd);
+
+    virtual ~IPC();
+
+protected:
+    int mID;
+    Type type;
+};
 }

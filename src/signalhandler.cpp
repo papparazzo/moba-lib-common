@@ -22,106 +22,106 @@
 #include "helper.h"
 
 namespace {
-    const int MAX_SIG = 31;
-    int sigmap[MAX_SIG] = {
-        -1, -1, -1, -1,
-        -1, -1, -1, -1,
-        -1, -1, -1, -1,
-        -1, -1, -1, -1,
+const int MAX_SIG = 31;
+int sigmap[MAX_SIG] = {
+    -1, -1, -1, -1,
+    -1, -1, -1, -1,
+    -1, -1, -1, -1,
+    -1, -1, -1, -1,
 
-        -1, -1, -1, -1,
-        -1, -1, -1, -1,
-        -1, -1, -1, -1,
-        -1, -1, -1
-    };
+    -1, -1, -1, -1,
+    -1, -1, -1, -1,
+    -1, -1, -1, -1,
+    -1, -1, -1
+};
 
-    void signalCallBack(int sig) {
-        sigmap[sig]++;
-    }
+void signalCallBack(int sig) {
+    sigmap[sig]++;
+}
 }
 
 namespace moba {
-    bool SignalHandler::observeSignal(int signr) {
-        if(signr < 1 || signr > MAX_SIG) {
-            throw SignalHandlerException{"signr out of range"};
-        }
-
-        if(sigmap[signr] != -1) {
-            return false;
-        }
-
-        struct sigaction handler;
-
-        handler.sa_handler = &signalCallBack;
-        sigemptyset(&handler.sa_mask);
-        handler.sa_flags = SA_RESTART;
-
-        if(sigaction(signr, &handler, NULL) < 0) {
-            throw SignalHandlerException{getErrno("sigaction failed")};
-        }
-        sigmap[signr] = 0;
-        return true;
+bool SignalHandler::observeSignal(int signr) {
+    if(signr < 1 || signr > MAX_SIG) {
+        throw SignalHandlerException{"signr out of range"};
     }
 
-    bool SignalHandler::hasSignalTriggered(int signr) {
-        this->lockSignal(signr);
-        if(sigmap[signr] == -1) {
-            throw SignalHandlerException{"Signal not observed"};
-        }
-
-        bool retVal = (bool)sigmap[signr];
-        if(retVal) {
-            sigmap[signr]--;
-        }
-        this->unlockSignal(signr);
-        return retVal;
-    }
-
-    bool SignalHandler::hasAnySignalTriggered() {
-        for(int i = 0; i < MAX_SIG; ++i) {
-            if(sigmap[i] == -1) {
-                continue;
-            }
-            if(this->hasSignalTriggered(i)) {
-                return true;
-            }
-        }
+    if(sigmap[signr] != -1) {
         return false;
     }
 
-    bool SignalHandler::removeSignal(int signr) {
-        if(sigmap[signr] == -1) {
-            return false;
+    struct sigaction handler;
+
+    handler.sa_handler = &signalCallBack;
+    sigemptyset(&handler.sa_mask);
+    handler.sa_flags = SA_RESTART;
+
+    if(sigaction(signr, &handler, NULL) < 0) {
+        throw SignalHandlerException{getErrno("sigaction failed")};
+    }
+    sigmap[signr] = 0;
+    return true;
+}
+
+bool SignalHandler::hasSignalTriggered(int signr) {
+    this->lockSignal(signr);
+    if(sigmap[signr] == -1) {
+        throw SignalHandlerException{"Signal not observed"};
+    }
+
+    bool retVal = (bool)sigmap[signr];
+    if(retVal) {
+        sigmap[signr]--;
+    }
+    this->unlockSignal(signr);
+    return retVal;
+}
+
+bool SignalHandler::hasAnySignalTriggered() {
+    for(int i = 0; i < MAX_SIG; ++i) {
+        if(sigmap[i] == -1) {
+            continue;
         }
+        if(this->hasSignalTriggered(i)) {
+            return true;
+        }
+    }
+    return false;
+}
 
-        struct sigaction handler;
-
-        handler.sa_handler = SIG_DFL;
-        sigemptyset(&handler.sa_mask);
-        handler.sa_flags = SA_RESTART;
-
-        sigaction(signr, &handler, NULL);
-        sigmap[signr] = -1;
-        return true;
+bool SignalHandler::removeSignal(int signr) {
+    if(sigmap[signr] == -1) {
+        return false;
     }
 
-    void SignalHandler::resetSignalState(int signr) {
-        this->lockSignal(signr);
-        sigmap[signr] = 0;
-        this->unlockSignal(signr);
-    }
+    struct sigaction handler;
 
-    void SignalHandler::lockSignal(int signr) {
-        sigset_t lockMask;
-        sigemptyset(&lockMask);
-        sigaddset(&lockMask, signr);
-        sigprocmask(SIG_BLOCK, &lockMask, NULL);
-    }
+    handler.sa_handler = SIG_DFL;
+    sigemptyset(&handler.sa_mask);
+    handler.sa_flags = SA_RESTART;
 
-    void SignalHandler::unlockSignal(int signr) {
-        sigset_t lockMask;
-        sigemptyset(&lockMask);
-        sigaddset(&lockMask, signr);
-        sigprocmask(SIG_UNBLOCK, &lockMask, NULL);
-    }
+    sigaction(signr, &handler, NULL);
+    sigmap[signr] = -1;
+    return true;
+}
+
+void SignalHandler::resetSignalState(int signr) {
+    this->lockSignal(signr);
+    sigmap[signr] = 0;
+    this->unlockSignal(signr);
+}
+
+void SignalHandler::lockSignal(int signr) {
+    sigset_t lockMask;
+    sigemptyset(&lockMask);
+    sigaddset(&lockMask, signr);
+    sigprocmask(SIG_BLOCK, &lockMask, NULL);
+}
+
+void SignalHandler::unlockSignal(int signr) {
+    sigset_t lockMask;
+    sigemptyset(&lockMask);
+    sigaddset(&lockMask, signr);
+    sigprocmask(SIG_UNBLOCK, &lockMask, NULL);
+}
 }
