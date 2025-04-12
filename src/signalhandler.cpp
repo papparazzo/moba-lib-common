@@ -42,7 +42,7 @@ void signalCallBack(int sig) {
 
 namespace moba {
 bool SignalHandler::observeSignal(int signr) {
-    if(signr < 1 || signr > MAX_SIG) {
+    if(signr < 0 || signr >= MAX_SIG) {
         throw SignalHandlerException{"signr out of range"};
     }
 
