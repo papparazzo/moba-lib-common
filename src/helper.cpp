@@ -18,8 +18,6 @@
  *
  */
 
-#include <sys/time.h>
-#include <sys/resource.h>
 #include <cerrno>
 #include <cstring>
 #include <iosfwd>
@@ -91,7 +89,7 @@ void printAppData(const AppData &appData) {
     std::cerr << "  " << getLicense(true) << std::endl;
     std::cerr << std::endl;
     std::cerr << "  You should have received a copy of the license along with this program." << std::endl;
-    std::cerr << "  If not, see <http://www.gnu.org/licenses/agpl.txt> for further information!" << std::endl;
+    std::cerr << "  If not, see <https://www.gnu.org/licenses/agpl.txt> for further information!" << std::endl;
     std::cerr << "------------------------------------------------------------------------------------------------------------" << std::endl;
 }
 }

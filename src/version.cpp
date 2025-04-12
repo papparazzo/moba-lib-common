@@ -20,7 +20,6 @@
 
 #include "version.h"
 #include <sstream>
-#include <vector>
 #include <iomanip>
 
 namespace moba {
