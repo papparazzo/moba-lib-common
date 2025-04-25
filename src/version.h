@@ -103,7 +103,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream &out, const Version &v);
 
-    std::string getString() const;
+    std::string toString() const;
 
 protected:
     enum VersionPart {

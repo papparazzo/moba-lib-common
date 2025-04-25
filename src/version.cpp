@@ -28,7 +28,7 @@ namespace moba {
         parseFromString(version);
     }
 
-    std::string Version::getString() const {
+    std::string Version::toString() const {
         if(ver[Version::MAJOR] == -1) {
             return "0.0.0-0000";
         }
@@ -136,7 +136,7 @@ namespace moba {
     }
 
     std::ostream& operator<<(std::ostream &out, const Version &v) {
-        out << v.getString();
+        out << v.toString();
         return out;
     }
 }
