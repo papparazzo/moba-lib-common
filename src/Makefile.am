@@ -21,6 +21,7 @@ otherinclude_HEADERS = \
     helper.h \
     ini.h \
     ipc.h \
+    loggerprefix.h \
     ringbuffer.h \
     signalhandler.h \
     version.h
