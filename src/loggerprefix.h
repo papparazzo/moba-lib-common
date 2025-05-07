@@ -26,6 +26,7 @@
 #include <sys/timeb.h>
 
 #include <string>
+#include <sstream>
 #include <ostream>
 #include <iostream>
 
@@ -40,8 +41,13 @@ namespace moba {
         NOTICE
     };
 
-    inline std::ostream &operator<< (std::ostream &stream, const LogLevel &logLevel) {
-        auto now = std::chrono::system_clock::now();
+    inline std::string getTimeStamp() {
+        return getTimeStamp(std::chrono::system_clock::now());
+    }
+
+    inline std::string getTimeStamp(const time_point& t) {
+        std::stringstream ss;
+
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
         auto timer = std::chrono::system_clock::to_time_t(now);
 
@@ -49,27 +55,31 @@ namespace moba {
 
         localtime_r(&timer, &bt);
 
-        stream <<
+        ss <<
             std::put_time(&bt, "%Y-%m-%d %H:%M:%S.") << std::right <<
             std::setw(3) << std::setfill('0') << ms.count();
+        return ss.str();
+    }
 
+    inline std::string getLogLevelString(const LogLevel &logLevel) {
         switch(logLevel) {
             case LogLevel::CRITICAL:
-                stream << " Critical: ";
-                break;
+                return " Critical: ";
 
             case LogLevel::ERROR:
-                stream << " Error:    ";
-                break;
+                return " Error:    ";
 
             case LogLevel::WARNING:
-                stream << " Warning:  ";
+                return " Warning:  ";
                 break;
 
             case LogLevel::NOTICE:
-                stream << " Notice:   ";
-                break;
+                return " Notice:   ";
         }
+    }
+
+    inline std::ostream &operator<< (std::ostream &stream, const LogLevel &logLevel) {
+        stream << getTimeStamp() << getLogLevelString(logLevel);
         return stream;
     }
 }
