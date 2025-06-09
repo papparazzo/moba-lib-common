@@ -41,15 +41,11 @@ namespace moba {
         NOTICE
     };
 
-    inline std::string getTimeStamp() {
-        return getTimeStamp(std::chrono::system_clock::now());
-    }
-
-    inline std::string getTimeStamp(const time_point& t) {
+    inline std::string getTimeStamp(const std::chrono::time_point<std::chrono::system_clock>& timestamp) {
         std::stringstream ss;
 
-        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
-        auto timer = std::chrono::system_clock::to_time_t(now);
+        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(timestamp.time_since_epoch()) % 1000;
+        auto timer = std::chrono::system_clock::to_time_t(timestamp);
 
         std::tm bt;
 
@@ -59,6 +55,10 @@ namespace moba {
             std::put_time(&bt, "%Y-%m-%d %H:%M:%S.") << std::right <<
             std::setw(3) << std::setfill('0') << ms.count();
         return ss.str();
+    }
+
+    inline std::string getTimeStamp() {
+        return getTimeStamp(std::chrono::system_clock::now());
     }
 
     inline std::string getLogLevelString(const LogLevel &logLevel) {
