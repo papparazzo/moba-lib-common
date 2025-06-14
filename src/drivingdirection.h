@@ -26,8 +26,8 @@ namespace moba {
     
 struct DrivingDirection {
     enum DrivingDirectionEnum {
-        FORWARD,
-        BACKWARD
+        FORWARD  = 1,
+        BACKWARD = 2
     };
 
     DrivingDirection(std::uint8_t drivingDirection) {
@@ -35,26 +35,26 @@ struct DrivingDirection {
             static_cast<DrivingDirectionEnum>(drivingDirection);
     }
 
-    DrivingDirection(
-        DrivingDirectionEnum drivingDirection = DrivingDirection::FORWARD
+    explicit  DrivingDirection(
+        DrivingDirectionEnum drivingDirection = FORWARD
     ): drivingDirection{drivingDirection} {
     }
 
-    DrivingDirection(const std::string &drivingDirection) {
+    explicit DrivingDirection(const std::string &drivingDirection) {
         setDrivingDirection(drivingDirection);
     }
 
     DrivingDirection(const DrivingDirection &) = default;
 
     void toggle() {
-        drivingDirection = DrivingDirection::flip(drivingDirection);
+        drivingDirection = flip(drivingDirection);
     }
 
     void setDrivingDirection(const std::string &s) {
         if(s == "FORWARD") {
-            drivingDirection = DrivingDirection::FORWARD;
+            drivingDirection = FORWARD;
         } else if(s == "BACKWARD") {
-            drivingDirection = DrivingDirection::BACKWARD;
+            drivingDirection = BACKWARD;
         } else {
             throw moba::UnsupportedOperationException{"invalid value given"};
         }
@@ -62,20 +62,20 @@ struct DrivingDirection {
 
     std::string getDrivingDirection() const {
         switch(drivingDirection) {
-            case DrivingDirection::FORWARD:
+            case FORWARD:
                 return "FORWARD";
 
-            case DrivingDirection::BACKWARD:
+            case BACKWARD:
                 return "BACKWARD";
         }
         throw moba::UnsupportedOperationException{"Not supported."};
     }
 
-    static DrivingDirectionEnum flip(DrivingDirection d) {
+    static DrivingDirectionEnum flip(const DrivingDirection d) {
         return flip(d.drivingDirection);
     }
 
-    static DrivingDirectionEnum flip(DrivingDirectionEnum d) {
+    static DrivingDirectionEnum flip(const DrivingDirectionEnum d) {
         switch(d) {
             case BACKWARD:
                 return FORWARD;

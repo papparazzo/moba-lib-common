@@ -45,7 +45,7 @@ inline SwitchStand stringToSwitchStandEnum(const std::string &s) {
     }
 }
 
-inline std::string switchStandEnumToString(SwitchStand s) {
+inline std::string switchStandEnumToString(const SwitchStand s) {
     switch(s) {
         case SwitchStand::STRAIGHT_1:
             return "STRAIGHT_1";
