@@ -61,7 +61,9 @@ void Screen::init(const std::string &title) {
     move(0, width - 6);
     addch(ACS_HLINE);
     addch(' ');
+    attron(A_BOLD);
     addch('x');
+    attroff(A_BOLD);
     addch(' ');
     addch(ACS_HLINE);
     addch(ACS_URCORNER);
@@ -117,7 +119,7 @@ void Screen::refresh() const {
 }
 
 void Screen::printException(const std::string &where, const std::string &what) const {
-    std::string txt = std::string("Exception in <") + what + "> in <" + where + "> occurred!";
+    std::string txt = std::string("Exception \"") + what + "\" in \"" + where + "\" occurred!";
 
     if(debug) {
         std::cerr << txt << std::endl;
