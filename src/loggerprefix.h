@@ -34,11 +34,12 @@
 
 namespace moba {
 
-    enum class LogLevel {
-        CRITICAL,
-        ERROR,
-        WARNING,
-        NOTICE
+    enum class LogLevel: std::uint8_t {
+        CRITICAL = 0,
+        ERROR    = 1,
+        WARNING  = 2,
+        NOTICE   = 3,
+        DEBUG    = 4
     };
 
     inline std::string getTimeStamp(const std::chrono::time_point<std::chrono::system_clock>& timestamp) {
@@ -75,7 +76,11 @@ namespace moba {
 
             case LogLevel::NOTICE:
                 return " Notice:   ";
+
+            case LogLevel::DEBUG:
+                return " Debug:    ";
         }
+        return " Unknown:  ";
     }
 
     inline std::ostream &operator<< (std::ostream &stream, const LogLevel &logLevel) {
