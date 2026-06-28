@@ -18,6 +18,8 @@
  *
  */
 
+#pragma once
+
 #include <string>
 
 namespace moba {
@@ -28,7 +30,7 @@ class Daemon {
     int pidFd;
 
 public:
-    Daemon(const std::string &appName);
+    explicit Daemon(const std::string &appName);
     virtual ~Daemon() noexcept;
 
     void daemonize();

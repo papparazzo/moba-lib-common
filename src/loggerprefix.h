@@ -38,7 +38,8 @@ namespace moba {
         ERROR    = 1,
         WARNING  = 2,
         NOTICE   = 3,
-        DEBUG    = 4
+        DEBUG    = 4,
+        TRACE    = 5
     };
 
     inline std::string getTimeStamp(const std::chrono::time_point<std::chrono::system_clock>& timestamp) {
@@ -67,6 +68,9 @@ namespace moba {
 
             case LogLevel::DEBUG:
                 return " Debug:    ";
+
+            case LogLevel::TRACE:
+                return " Trace:    ";
         }
         return " Unknown:  ";
     }
