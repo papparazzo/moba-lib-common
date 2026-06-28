@@ -34,7 +34,7 @@ AC_CHECK_FUNCS([ftime gethostbyname memset mkfifo select socket strerror strtol]
 
 PKG_CHECK_MODULES([GLIB], [glib-2.0 >= 2.24.1])
 
-AX_CXX_COMPILE_STDCXX_17()
+AX_CXX_COMPILE_STDCXX([20])
 
 AC_CONFIG_FILES([
     Makefile

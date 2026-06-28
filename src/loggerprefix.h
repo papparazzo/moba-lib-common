@@ -29,8 +29,7 @@
 #include <sstream>
 #include <ostream>
 #include <iostream>
-
-#include "helper.h"
+#include <format>
 
 namespace moba {
 
@@ -43,19 +42,8 @@ namespace moba {
     };
 
     inline std::string getTimeStamp(const std::chrono::time_point<std::chrono::system_clock>& timestamp) {
-        std::stringstream ss;
-
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(timestamp.time_since_epoch()) % 1000;
-        auto timer = std::chrono::system_clock::to_time_t(timestamp);
-
-        std::tm bt;
-
-        localtime_r(&timer, &bt);
-
-        ss <<
-            std::put_time(&bt, "%Y-%m-%d %H:%M:%S.") << std::right <<
-            std::setw(3) << std::setfill('0') << ms.count();
-        return ss.str();
+        return std::format("{:%Y-%m-%d %H:%M:%S}.{:03}", timestamp, ms.count());
     }
 
     inline std::string getTimeStamp() {

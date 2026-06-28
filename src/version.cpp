@@ -21,6 +21,7 @@
 #include "version.h"
 #include <sstream>
 #include <iomanip>
+#include <format>
 
 namespace moba {
 
@@ -29,18 +30,11 @@ namespace moba {
     }
 
     std::string Version::toString() const {
-        if(ver[Version::MAJOR] == -1) {
+        if(ver[MAJOR] == -1) {
             return "0.0.0-0000";
         }
 
-        std::stringstream o;
-
-        o <<
-            ver[Version::MAJOR] << "." << ver[Version::MINOR] << "." <<
-            ver[Version::BUILD] << "-" << std::setw(4) <<
-            std::setfill('0') << ver[Version::PATCH];
-
-        return o.str();
+        return std::format("{}.{}.{}-{:04}", ver[MAJOR], ver[MINOR], ver[BUILD], ver[PATCH]);
     }
 
     int Version::compareMajor(const Version &v) const {
